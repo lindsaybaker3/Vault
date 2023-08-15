@@ -14,11 +14,11 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-public class TransactionsJdbcTamplateRepository implements TransactionsRepository {
+public class TransactionsJdbcTemplateRepository implements TransactionsRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public TransactionsJdbcTamplateRepository(JdbcTemplate jdbcTemplate) {
+    public TransactionsJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
