@@ -40,7 +40,7 @@ class TransactionsJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldFindByReportId() {
+    void shouldFindByTransactionId() {
 //        int reportId = 1;
 //       Transaction transaction = repository.findByReportId(reportId);
 //        assertTrue( transaction.size() >= 1);

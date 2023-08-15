@@ -32,13 +32,14 @@ public class TransactionsJdbcTemplateRepository implements TransactionsRepositor
         return jdbcTemplate.query(sql, new TransactionMapper(), appUserId);
     }
 
+
     @Override
-    public Transaction findByReportId(int reportId) {
+    public Transaction findByTransactionId(int transactionId) {
         final String sql = "SELECT transaction_id, app_user_id, goals_id, amount, description, transaction_date " +
                 "FROM transaction " +
                 "WHERE transaction_id = ?";
 
-        List<Transaction> transactions = jdbcTemplate.query(sql, new TransactionMapper(), reportId);
+        List<Transaction> transactions = jdbcTemplate.query(sql, new TransactionMapper(), transactionId);
         return transactions.stream().findFirst().orElse(null);
     }
 

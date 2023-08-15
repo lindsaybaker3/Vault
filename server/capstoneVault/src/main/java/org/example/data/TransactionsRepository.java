@@ -8,7 +8,7 @@ public interface TransactionsRepository {
 
     List<Transaction> findByUserId(int appUserId);
 
-    Transaction findByReportId(int reportI);
+    Transaction findByTransactionId(int transactionId);
 
     List<Transaction> findByGoalsId(int goalsId);
 
