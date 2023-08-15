@@ -6,6 +6,8 @@ public class BudgetCategory {
     private int categoryId;
     private String categoryName;
 
+    public BudgetCategory() {}
+
     public int getCategoryId() {
         return categoryId;
     }
