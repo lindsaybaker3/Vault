@@ -1,6 +1,6 @@
-drop database if exists budget;
-create database budget;
-use budget;
+drop database if exists budget_test;
+create database budget_test;
+use budget_test;
 
 
 drop table if exists app_user_role;
@@ -79,6 +79,33 @@ create table `transaction` (
         references goals(goals_id)
 );
 
+
+    delimiter //
+create procedure set_known_good_state()
+begin
+
+    delete from `transaction`;
+    alter table `transaction` auto_increment = 1;
+    
+	delete from reports;
+    alter table reports auto_increment = 1;
+    
+    delete from goals;
+    alter table goals auto_increment = 1;
+    
+    delete from category;
+    alter table category auto_increment = 1;
+    
+     delete from app_user_role;
+	alter table app_user_role auto_increment = 1;
+    
+	delete from app_user;
+    alter table app_user auto_increment = 1;
+    
+	delete from app_role;
+	alter table app_role auto_increment = 1;
+    
+    
 insert into app_role (`name`) values
     ('USER'),
     ('ADMIN');
@@ -121,8 +148,10 @@ insert into transaction (app_user_id, goals_id, amount, transaction_date, `descr
     (1, 3, 1100.00, '2023-08-20', 'rent'),
     (2, 4, 280.00, '2023-08-07', 'groceries');
     
-     select * from goals where app_user_id = 1 ;
-     
-     
-     
-     select * from transaction;
+    end //
+
+delimiter ;
+
+-- SET SQL_SAFE_UPDATES = 0;
+-- CALL set_known_good_state();
+-- select * from transaction;
