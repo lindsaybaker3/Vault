@@ -68,7 +68,6 @@ create table `transaction` (
 	transaction_id int primary key auto_increment, 
     app_user_id int not null,
     goals_id int not null,
-    `type` text, 
     amount decimal,
     `description` text,
     transaction_date date not null,
@@ -142,12 +141,12 @@ insert into reports (app_user_id, start_date, end_date, report_url)
     (1, '2023-08-01', '2023-08-31', 'https://example.com/report/john_august.pdf'), 
     (2, '2023-08-01', '2023-08-31', 'https://example.com/report/sally_august.pdf');
     
-insert into transaction (app_user_id, goals_id, `type`, amount, transaction_date, `description`)
+insert into transaction (app_user_id, goals_id, amount, transaction_date, `description`)
 	values
-    (1, 1, income, 8000.00, '2023-08-05', 'paycheck'),
-    (1, 2, income, 1000.00, '2023-08-10', 'dog sitting'),
-    (1, 3, expense, 1100.00, '2023-08-20', 'rent'),
-    (2, 4, espense, 280.00, '2023-08-07', 'groceries');
+    (1, 1, 8000.00, '2023-08-05', 'paycheck'),
+    (1, 2, 1000.00, '2023-08-10', 'dog sitting'),
+    (1, 3, 1100.00, '2023-08-20', 'rent'),
+    (2, 4, 280.00, '2023-08-07', 'groceries');
     
     end //
 
@@ -156,3 +155,6 @@ delimiter ;
 -- SET SQL_SAFE_UPDATES = 0;
 -- CALL set_known_good_state();
 -- select * from transaction;
+
+
+ select * from transaction;
