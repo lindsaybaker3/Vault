@@ -155,3 +155,6 @@ delimiter ;
 -- SET SQL_SAFE_UPDATES = 0;
 -- CALL set_known_good_state();
 -- select * from transaction;
+
+
+ select * from transaction;

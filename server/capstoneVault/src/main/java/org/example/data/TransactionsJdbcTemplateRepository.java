@@ -33,7 +33,7 @@ public class TransactionsJdbcTemplateRepository implements TransactionsRepositor
     }
 
     @Override
-    public Transaction finfByReportId(int reportId) {
+    public Transaction findByReportId(int reportId) {
         final String sql = "SELECT transaction_id, app_user_id, goals_id, amount, description, transaction_date " +
                 "FROM transaction " +
                 "WHERE transaction_id = ?";

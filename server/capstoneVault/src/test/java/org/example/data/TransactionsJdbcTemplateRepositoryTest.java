@@ -1,9 +1,12 @@
 package org.example.data;
 
+import org.example.models.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,11 +27,27 @@ class TransactionsJdbcTemplateRepositoryTest {
 
 
     @Test
-    void findByUserId() {
+    void shouldFindByUserId() {
+        int appUserId = 1;
+        List<Transaction> result = repository.findByUserId(appUserId);
+            assertTrue(result.size() >= 1);
+    }
+    @Test
+    void shouldNotFindByUserId() {
+        int appUserId = 1000;
+        List<Transaction> result = repository.findByUserId(appUserId);
+        assertTrue(result.isEmpty());
     }
 
     @Test
-    void finfByReportId() {
+    void shouldFindByReportId() {
+//        int reportId = 1;
+//       Transaction transaction = repository.findByReportId(reportId);
+//        assertTrue( transaction.size() >= 1);
+    }
+
+    @Test
+    void shouldNotFindByReportId() {
     }
 
     @Test

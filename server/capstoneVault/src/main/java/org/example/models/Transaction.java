@@ -7,17 +7,15 @@ import java.util.Objects;
 public class Transaction {
     private int transactionId;
     private int appUserId;
-    private int appUsername;
     private int  goalsId;
     private String description;
     private BigDecimal amount;
     private LocalDate transactionDate;
 
 
-    public Transaction(int transactionId, int appUserId, int appUsername, int goalsId, String description, BigDecimal amount, LocalDate transactionDate) {
+    public Transaction(int transactionId, int appUserId, int goalsId, String description, BigDecimal amount, LocalDate transactionDate) {
         this.transactionId = transactionId;
         this.appUserId = appUserId;
-        this.appUsername = appUsername;
         this.goalsId = goalsId;
         this.description= description;
         this.amount = amount;
@@ -44,14 +42,6 @@ public class Transaction {
 
     public void setAppUserId(int appUserId) {
         this.appUserId = appUserId;
-    }
-
-    public int getAppUsername() {
-        return appUsername;
-    }
-
-    public void setAppUsername(int appUsername) {
-        this.appUsername = appUsername;
     }
 
     public int getGoalsId() {
@@ -90,13 +80,12 @@ public class Transaction {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Transaction that = (Transaction) o;
-        return transactionId == that.transactionId && appUserId == that.appUserId && appUsername == that.appUsername && goalsId == that.goalsId && Objects.equals(description, that.description) && Objects.equals(amount, that.amount) && Objects.equals(transactionDate, that.transactionDate);
+        if (!(o instanceof Transaction that)) return false;
+        return getTransactionId() == that.getTransactionId() && getAppUserId() == that.getAppUserId() && getGoalsId() == that.getGoalsId() && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getAmount(), that.getAmount()) && Objects.equals(getTransactionDate(), that.getTransactionDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionId, appUserId, appUsername, goalsId, description, amount, transactionDate);
+        return Objects.hash(getTransactionId(), getAppUserId(), getGoalsId(), getDescription(), getAmount(), getTransactionDate());
     }
 }
