@@ -1,27 +1,27 @@
 package org.example.models;
 
 import org.apache.tomcat.jni.Local;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Goals {
     private int goalsId;
     private int appUserId;
-    private String appUsername;
     private int categoryId;
     private String type;
     private BigDecimal amount;
     private LocalDate startDate;
     private LocalDate endDate;
-    List<Transaction> transactionsList;
+    List<Transaction> transactionsList = new ArrayList<>();
 
-    public Goals(int goalsId, int appUserId, String appUsername, int categoryId, String type, BigDecimal amount, LocalDate startDate, LocalDate endDate, List<Transaction> transactionsList) {
+    public Goals(int goalsId, int appUserId, int categoryId, String type, BigDecimal amount, LocalDate startDate, LocalDate endDate, List<Transaction> transactionsList) {
         this.goalsId = goalsId;
         this.appUserId = appUserId;
-        this.appUsername = appUsername;
         this.categoryId = categoryId;
         this.type = type;
         this.amount = amount;
@@ -46,13 +46,6 @@ public class Goals {
         this.appUserId = appUserId;
     }
 
-    public String getAppUsername() {
-        return appUsername;
-    }
-
-    public void setAppUsername(String appUsername) {
-        this.appUsername = appUsername;
-    }
 
     public int getCategoryId() {
         return categoryId;
@@ -102,16 +95,20 @@ public class Goals {
         this.transactionsList = transactionsList;
     }
 
+    public void setGoalsId(int goalsId) {
+        this.goalsId = goalsId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Goals goals = (Goals) o;
-        return goalsId == goals.goalsId && appUserId == goals.appUserId && categoryId == goals.categoryId && Objects.equals(appUsername, goals.appUsername) && Objects.equals(type, goals.type) && Objects.equals(amount, goals.amount) && Objects.equals(startDate, goals.startDate) && Objects.equals(endDate, goals.endDate) && Objects.equals(transactionsList, goals.transactionsList);
+        return goalsId == goals.goalsId && appUserId == goals.appUserId && categoryId == goals.categoryId && Objects.equals(type, goals.type) && Objects.equals(amount, goals.amount) && Objects.equals(startDate, goals.startDate) && Objects.equals(endDate, goals.endDate) && Objects.equals(transactionsList, goals.transactionsList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(goalsId, appUserId, appUsername, categoryId, type, amount, startDate, endDate, transactionsList);
+        return Objects.hash(goalsId, appUserId, categoryId, type, amount, startDate, endDate, transactionsList);
     }
 }
