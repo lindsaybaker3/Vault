@@ -3,6 +3,10 @@ package org.example.models;
 import java.util.Objects;
 
 public class BudgetCategory {
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
     private int categoryId;
     private String categoryName;
 
