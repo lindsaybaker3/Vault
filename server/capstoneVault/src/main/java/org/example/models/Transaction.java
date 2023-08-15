@@ -8,23 +8,34 @@ public class Transaction {
     private int transactionId;
     private int appUserId;
     private int appUsername;
-    private int budgetId;
-    private String type;
+    private int  goalsId;
+    private String description;
     private BigDecimal amount;
     private LocalDate transactionDate;
 
-    public Transaction(int transactionId, int appUserId, int appUsername, int budgetId, String type, BigDecimal amount, LocalDate transactionDate) {
+
+    public Transaction(int transactionId, int appUserId, int appUsername, int goalsId, String description, BigDecimal amount, LocalDate transactionDate) {
         this.transactionId = transactionId;
         this.appUserId = appUserId;
         this.appUsername = appUsername;
-        this.budgetId = budgetId;
-        this.type = type;
+        this.goalsId = goalsId;
+        this.description= description;
         this.amount = amount;
         this.transactionDate = transactionDate;
     }
 
+
+
+    public Transaction() {
+    }
+
+
     public int getTransactionId() {
         return transactionId;
+    }
+
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
     }
 
     public int getAppUserId() {
@@ -43,20 +54,21 @@ public class Transaction {
         this.appUsername = appUsername;
     }
 
-    public int getBudgetId() {
-        return budgetId;
+    public int getGoalsId() {
+        return goalsId;
     }
 
-    public void setBudgetId(int budgetId) {
-        this.budgetId = budgetId;
+    public void setGoalsId(int goalsId) {
+        this.goalsId = goalsId;
     }
 
-    public String getType() {
-        return type;
+
+    public String getDescription() {
+        return description;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public BigDecimal getAmount() {
@@ -80,11 +92,11 @@ public class Transaction {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return transactionId == that.transactionId && appUserId == that.appUserId && appUsername == that.appUsername && budgetId == that.budgetId && Objects.equals(type, that.type) && Objects.equals(amount, that.amount) && Objects.equals(transactionDate, that.transactionDate);
+        return transactionId == that.transactionId && appUserId == that.appUserId && appUsername == that.appUsername && goalsId == that.goalsId && Objects.equals(description, that.description) && Objects.equals(amount, that.amount) && Objects.equals(transactionDate, that.transactionDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionId, appUserId, appUsername, budgetId, type, amount, transactionDate);
+        return Objects.hash(transactionId, appUserId, appUsername, goalsId, description, amount, transactionDate);
     }
 }
