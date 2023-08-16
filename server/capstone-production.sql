@@ -122,7 +122,4 @@ insert into transaction (app_user_id, goals_id, amount, transaction_date, `descr
     (2, 4, 280.00, '2023-08-07', 'groceries');
     
      select * from goals where app_user_id = 1 ;
-     
-     
-     
-     select * from transaction;
+
