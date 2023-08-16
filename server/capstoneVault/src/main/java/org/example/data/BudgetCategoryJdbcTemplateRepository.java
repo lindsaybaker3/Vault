@@ -24,7 +24,7 @@ public class BudgetCategoryJdbcTemplateRepository implements BudgetCategoryRepos
 
     @Override
     public BudgetCategory findByCategoryId(int categoryId){
-        final String sql= "select category_name from category " +
+        final String sql= "select * from category " +
                 "where category_id = ?;";
         BudgetCategory category = jdbcTemplate.query(sql,new BudgetCategoryMapper(),categoryId).stream()
                 .findFirst().orElse(null);

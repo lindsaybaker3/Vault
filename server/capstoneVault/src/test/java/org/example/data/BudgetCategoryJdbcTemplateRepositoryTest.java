@@ -35,7 +35,7 @@ class BudgetCategoryJdbcTemplateRepositoryTest {
 
         BudgetCategory result = repository.findByCategoryId(categoryId);
         assertTrue(result != null);
-        assertEquals(result,"Shopping");
+        assertEquals(result.getCategoryName(),"Shopping");
 
     }
 }
