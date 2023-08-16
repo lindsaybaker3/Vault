@@ -22,7 +22,15 @@ public class TransactionsJdbcTemplateRepository implements TransactionsRepositor
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
+    @Override
+    public boolean hasTransactions(int goalId){
+        final String sql = "select count(*) from transaction where goals_id = ?";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, goalId);
+        if(count>0){
+            return true;
+        }
+        return false;
+    }
     @Override
     public List<Transaction> findByUserId(int appUserId) {
         final String sql = "SELECT transaction_id, app_user_id, goals_id, amount, description, transaction_date " +

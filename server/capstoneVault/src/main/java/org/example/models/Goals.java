@@ -129,15 +129,16 @@ public class Goals {
 
             if(this.getGoalsId() == goal.getGoalsId()){
                 return true;
+
             }
             if(this.getCategoryId() != goal.getCategoryId()) {
-                return true;
+                return false;
             }
             if(goal.getEndDate().isBefore(this.getStartDate()) ||
                 goal.getStartDate().isAfter(this.getEndDate())) {
 
-                    return true;
+                    return false;
                 }
-            return false;
+            return true;
     }
 }
