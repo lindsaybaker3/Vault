@@ -39,6 +39,7 @@ public class GoalsController {
     @GetMapping("/goals/{goalId}")
     public ResponseEntity<Goals> findById(@PathVariable int goalId) throws DataAccessException {
 
+
         Goals goal = service.findById(goalId);
         if(goal == null){
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

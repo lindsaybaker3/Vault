@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.example.security.JwtConverter;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Configuration
 public class SecurityConfig {
@@ -29,18 +30,22 @@ public class SecurityConfig {
 
         http.cors();
 
+
         http.authorizeRequests()
                 .antMatchers("/authenticate").permitAll()
                 .antMatchers("/signup").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/vault/transaction/user/*").hasAnyAuthority("USER", "ADMIN")
+
+                .antMatchers(HttpMethod.GET, "/api/vault/personal").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/vault/transaction/*").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/vault/transaction/*").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/vault/transaction/create").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/vault/transaction/goals/*").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/vault").hasAnyAuthority("USER", "ADMIN")
+          
                 .antMatchers(HttpMethod.GET, "/api/vault/goals").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/vault/goals/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/vault/goal/create").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/vault/goal/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/vault/goal/*").hasAnyAuthority("USER", "ADMIN")
+
                 .antMatchers(HttpMethod.PUT, "/api/vault/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/vault/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/**").denyAll()
@@ -52,7 +57,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
