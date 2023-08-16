@@ -1,6 +1,8 @@
 package org.example.models;
 
 import org.apache.tomcat.jni.Local;
+import org.example.data.GoalsJdbcTemplateRepository;
+import org.example.data.GoalsRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.math.BigDecimal;
@@ -18,6 +20,8 @@ public class Goals {
     private LocalDate startDate;
     private LocalDate endDate;
     List<Transaction> transactionsList = new ArrayList<>();
+
+    GoalsJdbcTemplateRepository repository;
 
     public Goals(int goalsId, int appUserId, int categoryId, String type, BigDecimal amount, LocalDate startDate, LocalDate endDate, List<Transaction> transactionsList) {
         this.goalsId = goalsId;
@@ -119,5 +123,21 @@ public class Goals {
     @Override
     public int hashCode() {
         return Objects.hash(goalsId, appUserId, categoryId, type, amount, startDate, endDate, transactionsList);
+    }
+
+    public boolean isCategoryAllowed(Goals goal){
+
+            if(this.getGoalsId() == goal.getGoalsId()){
+                return true;
+            }
+            if(this.getCategoryId() != goal.getCategoryId()) {
+                return true;
+            }
+            if(goal.getEndDate().isBefore(this.getStartDate()) ||
+                goal.getStartDate().isAfter(this.getEndDate())) {
+
+                    return true;
+                }
+            return false;
     }
 }

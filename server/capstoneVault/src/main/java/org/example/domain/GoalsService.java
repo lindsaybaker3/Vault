@@ -1,5 +1,6 @@
 package org.example.domain;
 
+import org.example.data.BudgetCategoryRepository;
 import org.example.data.GoalsJdbcTemplateRepository;
 import org.example.data.TransactionsJdbcTemplateRepository;
 import org.example.models.Goals;
@@ -17,10 +18,12 @@ public class GoalsService {
     private final GoalsJdbcTemplateRepository repository;
 
     private final TransactionsJdbcTemplateRepository transactionRepository;
+    private final BudgetCategoryRepository budgetRepository;
 
-    public GoalsService(GoalsJdbcTemplateRepository repository, TransactionsJdbcTemplateRepository transactionRepository) {
+    public GoalsService(GoalsJdbcTemplateRepository repository, TransactionsJdbcTemplateRepository transactionRepository, BudgetCategoryRepository budgetRepository) {
         this.repository = repository;
         this.transactionRepository = transactionRepository;
+        this.budgetRepository = budgetRepository;
     }
 
     public List<Goals> findByUserId(int appUserId){
@@ -81,8 +84,8 @@ public class GoalsService {
             result.addErrorMessage("Goal cannot be null", ResultType.INVALID);
             return result;
         }
-        if (goal.getCategoryId() == 0) {
-            result.addErrorMessage("must choose a category", ResultType.INVALID);
+        if (goal.getCategoryId() == 0 || budgetRepository.findByCategoryId(goal.getCategoryId()) == null) {
+            result.addErrorMessage("must choose a valid category", ResultType.INVALID);
         }
         if (goal.getType() == null || goal.getType().isBlank()){
             result.addErrorMessage("must indicate if this is a spending or saving goal", ResultType.INVALID);
@@ -96,9 +99,11 @@ public class GoalsService {
         if(goal.getStartDate() != null && (goal.getEndDate() ==null || goal.getEndDate().isBefore(goal.getStartDate()))){
             result.addErrorMessage("end date cannot be before start date", ResultType.INVALID);
         }
-        if(repository.findByUserId(goal.getAppUserId()).stream().anyMatch(c -> c.getCategoryId()==goal.getCategoryId())){
+        if(!repository.findByUserId(goal.getAppUserId()).stream().anyMatch(c -> c.isCategoryAllowed(goal))){
             result.addErrorMessage("A goal with that category is already in use", ResultType.INVALID);
-        }
+        }//cat and id does not match and startdate and enddate overlaps existing that has the same catId
+        //move check into model class
+        //validate that the category does exist
 
         return result;
     }

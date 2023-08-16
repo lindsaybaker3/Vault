@@ -59,7 +59,15 @@ class GoalsServiceTest {
         Goals goal = new Goals(1, 1, 0, "spending", BigDecimal.valueOf(100.00), LocalDate.now(), LocalDate.now().plusDays(20));
         Result result = service.addGoal(goal);
         assertEquals(ResultType.INVALID, result.getResultType());
-        assertTrue(result.getErrorMessages().contains("must choose a category"));
+        assertTrue(result.getErrorMessages().contains("must choose a valid category"));
+    }
+
+    @Test
+    void shouldNotAddNonExistingCategory(){
+        Goals goal = new Goals(1, 1, 1000, "spending", BigDecimal.valueOf(100.00), LocalDate.now(), LocalDate.now().plusDays(20));
+        Result result = service.addGoal(goal);
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertTrue(result.getErrorMessages().contains("must choose a valid category"));
     }
 
     @Test
@@ -156,7 +164,7 @@ class GoalsServiceTest {
     void addGoal() {
         Goals goal = new Goals();
         goal.setAppUserId(1);
-        goal.setCategoryId(1);
+        goal.setCategoryId(2);
         goal.setType("spending");
         goal.setAmount(BigDecimal.valueOf(15.00));
         goal.setStartDate(LocalDate.now().plusDays(2));
@@ -173,7 +181,7 @@ class GoalsServiceTest {
         Goals goal = new Goals(1, 1, 0, "spending", BigDecimal.valueOf(100.00), LocalDate.now(), LocalDate.now().plusDays(20));
         Result result = service.update(goal);
         assertEquals(ResultType.INVALID, result.getResultType());
-        assertTrue(result.getErrorMessages().contains("must choose a category"));
+        assertTrue(result.getErrorMessages().contains("must choose a valid category"));
     }
 
     @Test
