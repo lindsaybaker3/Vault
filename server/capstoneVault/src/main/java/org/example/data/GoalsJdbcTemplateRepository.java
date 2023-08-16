@@ -69,10 +69,10 @@ public class GoalsJdbcTemplateRepository implements GoalsRepository {
     public boolean update(Goals goals) {
         final String sql = "update goals set " +
                 "app_user_id = ?, " +
-                "category_id = ? " +
-                "goal_type = ? " +
-                "goal_amount = ? " +
-                "start_date = ? " +
+                "category_id = ?, " +
+                "goal_type = ?, " +
+                "goal_amount = ?, " +
+                "start_date = ?, " +
                 "end_date = ? " +
                 "where goals_id = ?;";
 
@@ -88,7 +88,7 @@ public class GoalsJdbcTemplateRepository implements GoalsRepository {
 
     @Override
     public boolean deleteById(int goalId) {
-        final String sql = "delete from goals where goals_id?;"; //does there need to be another delete? is there something in the database relying on this?
+        final String sql = "delete from goals where goals_id = ?;"; //does there need to be another delete? is there something in the database relying on this?
         return jdbcTemplate.update(sql, goalId)>0;
 
     }

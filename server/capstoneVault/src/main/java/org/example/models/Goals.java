@@ -30,8 +30,17 @@ public class Goals {
         this.transactionsList = transactionsList;
     }
 
-    public Goals(){
 
+    public Goals(){}
+
+    public Goals(int goalsId, int appUserId, int categoryId, String type, BigDecimal amount, LocalDate startDate, LocalDate endDate) {
+        this.goalsId = goalsId;
+        this.appUserId = appUserId;
+        this.categoryId = categoryId;
+        this.type = type;
+        this.amount = amount;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public int getGoalsId() {
