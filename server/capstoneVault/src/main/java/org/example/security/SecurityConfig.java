@@ -34,10 +34,18 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .antMatchers("/authenticate").permitAll()
                 .antMatchers("/signup").permitAll()
+
                 .antMatchers(HttpMethod.GET, "/api/vault/personal").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/vault/transaction/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/vault/transaction/goals/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/vault").hasAnyAuthority("USER", "ADMIN")
+          
+                .antMatchers(HttpMethod.GET, "/api/vault/goals").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/vault/goals/*").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/vault/goal/create").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/vault/goal/*").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/vault/goal/*").hasAnyAuthority("USER", "ADMIN")
+
                 .antMatchers(HttpMethod.PUT, "/api/vault/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/vault/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/**").denyAll()
