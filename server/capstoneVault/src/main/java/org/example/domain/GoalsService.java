@@ -64,6 +64,10 @@ public class GoalsService {
 
     public Result deleteById(int id) throws DataAccessException {
         Result result = new Result();
+
+        if(!transactionRepository.findByGoalsId(id).isEmpty()){
+            result.addErrorMessage("This goal has transactions in it: cannot be deleted", ResultType.INVALID);
+        }
         if(!repository.deleteById(id)) {
             result.addErrorMessage("Goal id %s was not found", ResultType.NOT_FOUND, id);
         }
@@ -86,21 +90,16 @@ public class GoalsService {
         if (goal.getAmount() == null || goal.getAmount().compareTo(BigDecimal.ZERO)<0) {
             result.addErrorMessage("Amount must be a positive number", ResultType.INVALID);
         }
-        if (goal.getStartDate() == null) {
-            result.addErrorMessage("start date is required", ResultType.INVALID);
-        }
-        if(goal.getEndDate() ==null){
-            result.addErrorMessage("end date is required", ResultType.INVALID);
-        }
-//        if(goal.getAmount().compareTo(BigDecimal.ZERO)<0) {
-//            result.addErrorMessage("Amount must be a positive number", ResultType.INVALID);
-//        }
-        if(goal.getStartDate().isBefore(LocalDate.now())){
+        if (goal.getStartDate() == null || goal.getStartDate().isBefore(LocalDate.now())) {
             result.addErrorMessage("start date must be in the future", ResultType.INVALID);
         }
-        if(goal.getEndDate().isBefore(goal.getStartDate())){
+        if(goal.getStartDate() != null && (goal.getEndDate() ==null || goal.getEndDate().isBefore(goal.getStartDate()))){
             result.addErrorMessage("end date cannot be before start date", ResultType.INVALID);
         }
+        if(repository.findByUserId(goal.getAppUserId()).stream().anyMatch(c -> c.getCategoryId()==goal.getCategoryId())){
+            result.addErrorMessage("A goal with that category is already in use", ResultType.INVALID);
+        }
+
         return result;
     }
 }
