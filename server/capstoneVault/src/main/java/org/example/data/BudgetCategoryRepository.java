@@ -7,5 +7,5 @@ import java.util.List;
 public interface BudgetCategoryRepository {
     List<BudgetCategory> findAll();
 
-    BudgetCategory findByCategoryId();
+    BudgetCategory findByCategoryId(int categoryId);
 }
