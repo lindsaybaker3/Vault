@@ -1,56 +1,57 @@
-//package org.example.security;
-//
-//// imports
-//
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.http.HttpMethod;
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.http.SessionCreationPolicy;
-//import org.springframework.security.web.SecurityFilterChain;
-//
-//@Configuration
-//public class SecurityConfig {
-//
-//    private final JwtConverter converter;
-//
-//    public SecurityConfig(JwtConverter converter) {
-//        this.converter = converter;
-//    }
-//
-//    // new... add the parameter: `AuthenticationConfiguration authConfig`
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationConfiguration authConfig) throws Exception {
-//
-//        http.csrf().disable();
-//
-//        http.cors();
-//
-//        http.authorizeRequests()
+package org.example.security;
+
+// imports
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+import org.example.security.JwtConverter;
+
+@Configuration
+public class SecurityConfig {
+
+    private final JwtConverter converter;
+
+    public SecurityConfig(JwtConverter converter) {
+        this.converter = converter;
+    }
+
+    // new... add the parameter: `AuthenticationConfiguration authConfig`
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationConfiguration authConfig) throws Exception {
+
+        http.csrf().disable();
+
+        http.cors();
+
+        http.authorizeRequests()
 //                .antMatchers("/authenticate").permitAll()
-//                .antMatchers(HttpMethod.GET,
-//                        "/api/solarpanel", "/api/solarpanel/*").permitAll()
-//                .antMatchers(HttpMethod.POST,
-//                        "/api/solarpanel").hasAnyAuthority("USER", "ADMIN")
-//                .antMatchers(HttpMethod.PUT,
-//                        "/api/solarpanel/*").hasAnyAuthority("USER", "ADMIN")
-//                .antMatchers(HttpMethod.DELETE,
-//                        "/api/solarpanel/*").hasAnyAuthority("ADMIN")
+//                .antMatchers("/signup").permitAll()
+//                .antMatchers(HttpMethod.GET, "/api/vault/transaction/user/*").hasAnyAuthority("USER", "ADMIN")
+//                .antMatchers(HttpMethod.GET, "/api/vault/transaction/*").hasAnyAuthority("USER", "ADMIN")
+//                .antMatchers(HttpMethod.GET, "/api/vault/transaction/*").hasAnyAuthority("USER", "ADMIN")
+//                .antMatchers(HttpMethod.POST, "/api/vault/transaction/create").hasAnyAuthority("USER", "ADMIN")
+//                .antMatchers(HttpMethod.PUT, "/api/vault/*").hasAnyAuthority("USER", "ADMIN")
+//                .antMatchers(HttpMethod.DELETE, "/api/vault/*").hasAnyAuthority("USER", "ADMIN")
 //                .antMatchers("/**").denyAll()
-//                .and()
-//                // New...
+                .antMatchers("/**").permitAll()
+                .and()
+                // New...
 //                .addFilter(new JwtRequestFilter(authenticationManager(authConfig), converter))
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//
-//        return http.build();
-//    }
-//
-//
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-//        return config.getAuthenticationManager();
-//    }
-//}
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        return http.build();
+    }
+
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+}
