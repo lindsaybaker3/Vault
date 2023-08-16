@@ -81,21 +81,21 @@ class GoalsServiceTest {
         assertEquals(ResultType.INVALID, result.getResultType());
         assertTrue(result.getErrorMessages().contains("Amount must be a positive number"));
     }
-//    @Test
-//    void shouldNotAddWhenStartDateIsNull() {
-//        Goals goal = new Goals(1, 1, 1, "spending", BigDecimal.valueOf(100.00), null, LocalDate.now().plusDays(20));
-//        Result result = service.addGoal(goal);
-//        assertEquals(ResultType.INVALID, result.getResultType());
-//        assertTrue(result.getErrorMessages().contains("start date is required"));
-//    }
+    @Test
+    void shouldNotAddWhenStartDateIsNull() {
+        Goals goal = new Goals(1, 1, 1, "spending", BigDecimal.valueOf(100.00), null, LocalDate.now().plusDays(20));
+        Result result = service.addGoal(goal);
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertTrue(result.getErrorMessages().contains("start date must be in the future"));
+    }
 //
-//    @Test
-//    void shouldNotAddWhenEndDateIsNull(){
-//        Goals goal = new Goals(1, 1, 1, "spending", BigDecimal.valueOf(100.00), LocalDate.now(), null);
-//        Result result = service.addGoal(goal);
-//        assertEquals(ResultType.INVALID, result.getResultType());
-//        assertTrue(result.getErrorMessages().contains("end date is required"));
-//    }
+    @Test
+    void shouldNotAddWhenEndDateIsNull(){
+        Goals goal = new Goals(1, 1, 1, "spending", BigDecimal.valueOf(100.00), LocalDate.now(), null);
+        Result result = service.addGoal(goal);
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertTrue(result.getErrorMessages().contains("end date cannot be before start date"));
+    }
 
     @Test
     void shouldNotAddWhenAmountIsLessThan0(){
@@ -127,6 +127,32 @@ class GoalsServiceTest {
     }
 
     @Test
+    void shouldNotAddDuplicateCategory() {
+        Goals existing = new Goals();
+        existing.setAppUserId(1);
+        existing.setCategoryId(1);
+        existing.setType("spending");
+        existing.setAmount(BigDecimal.valueOf(15.00));
+        existing.setStartDate(LocalDate.now().plusDays(2));
+        existing.setEndDate(LocalDate.now().plusDays(30));
+        Goals goalsNew = new Goals();
+        goalsNew.setAppUserId(1);
+        goalsNew.setCategoryId(1);
+        goalsNew.setType("saving");
+        goalsNew.setAmount(BigDecimal.valueOf(20.00));
+        goalsNew.setStartDate(LocalDate.now().plusDays(2));
+        goalsNew.setEndDate(LocalDate.now().plusDays(30));
+
+        when(repository.findByUserId(1)).thenReturn(List.of(existing));
+
+        Result<Goals> result = service.addGoal(goalsNew);
+
+        assertFalse(result.isSuccess());
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertTrue(result.getErrorMessages().contains("A goal with that category is already in use"));
+    }
+
+    @Test
     void addGoal() {
         Goals goal = new Goals();
         goal.setAppUserId(1);
@@ -148,6 +174,29 @@ class GoalsServiceTest {
         Result result = service.update(goal);
         assertEquals(ResultType.INVALID, result.getResultType());
         assertTrue(result.getErrorMessages().contains("must choose a category"));
+    }
+
+    @Test
+    void shouldNotUpdateWhenAmountIsNull(){
+        Goals goal = new Goals(1, 1, 1, "spending", null, LocalDate.now(), LocalDate.now().plusDays(20));
+        Result result = service.update(goal);
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertTrue(result.getErrorMessages().contains("Amount must be a positive number"));
+    }
+    @Test
+    void shouldNotUpdateWhenStartDateIsNull() {
+        Goals goal = new Goals(1, 1, 1, "spending", BigDecimal.valueOf(100.00), null, LocalDate.now().plusDays(20));
+        Result result = service.update(goal);
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertTrue(result.getErrorMessages().contains("start date must be in the future"));
+    }
+    //
+    @Test
+    void shouldNotUpdateWhenEndDateIsNull(){
+        Goals goal = new Goals(1, 1, 1, "spending", BigDecimal.valueOf(100.00), LocalDate.now(), null);
+        Result result = service.update(goal);
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertTrue(result.getErrorMessages().contains("end date cannot be before start date"));
     }
 
     @Test
@@ -192,10 +241,66 @@ class GoalsServiceTest {
     }
 
     @Test
+    void shouldNotUpdateDuplicateCategory() {
+        Goals existing = new Goals();
+        existing.setGoalsId(1);
+        existing.setAppUserId(1);
+        existing.setCategoryId(1);
+        existing.setType("spending");
+        existing.setAmount(BigDecimal.valueOf(15.00));
+        existing.setStartDate(LocalDate.now().plusDays(2));
+        existing.setEndDate(LocalDate.now().plusDays(30));
+        Goals goalsNew = new Goals();
+        goalsNew.setGoalsId(1);
+        goalsNew.setAppUserId(1);
+        goalsNew.setCategoryId(1);
+        goalsNew.setType("saving");
+        goalsNew.setAmount(BigDecimal.valueOf(20.00));
+        goalsNew.setStartDate(LocalDate.now().plusDays(2));
+        goalsNew.setEndDate(LocalDate.now().plusDays(30));
+
+        when(repository.findByUserId(1)).thenReturn(List.of(existing));
+
+        Result<Goals> result = service.update(goalsNew);
+
+        assertFalse(result.isSuccess());
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertTrue(result.getErrorMessages().contains("A goal with that category is already in use"));
+    }
+
+    @Test
     void update() {
+        Goals goals = new Goals();
+        goals.setGoalsId(1);
+        goals.setAppUserId(1);
+        goals.setCategoryId(1);
+        goals.setType("spending");
+        goals.setAmount(BigDecimal.valueOf(15.00));
+        goals.setStartDate(LocalDate.now().plusDays(2));
+        goals.setEndDate(LocalDate.now().plusDays(30));
+
+        when(repository.update(goals)).thenReturn(true);
+        Result<Goals> actual = service.update(goals);
+        assertEquals(ResultType.SUCCESS, actual.getResultType());
+    }
+
+    @Test
+    void shouldNotDeleteAGoalWithTransaction() {
+        when(transactionsRepository.findByGoalsId(1)).thenReturn(List.of(
+                new Transaction(1, 1, 1, "groceries", BigDecimal.valueOf(20.00), LocalDate.now().plusDays(-3)),
+                new Transaction(2, 1, 1, "TacoBell", BigDecimal.valueOf(10.00), LocalDate.now().plusDays(-5))));
+        when(repository.deleteById(1)).thenReturn(false);
+        Result result = service.deleteById(1);
+
+        assertFalse(result.isSuccess());
     }
 
     @Test
     void deleteById() {
+        when(transactionsRepository.findByGoalsId(1)).thenReturn(List.of());
+        when(repository.deleteById(1)).thenReturn(true);
+        Result result = service.deleteById(1);
+
+        assertTrue(result.isSuccess());
     }
 }
