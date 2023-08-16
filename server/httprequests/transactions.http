@@ -1,5 +1,17 @@
+//Security
 
-// AUTH CONTROLLER - JWT CONVERTER (GENERATE THE TOKEN)
+####
+POST http://localhost:8080/signup HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "ariany@yahoo.com",
+  "password": "P@ssw0rd!",
+  "roles": ["USER"]
+}
+
+
+// 
 #####
 POST http://localhost:8080/authenticate HTTP/1.1
 Content-Type: application/json
@@ -11,39 +23,30 @@ Content-Type: application/json
 
 
 #####
-
 // Get transactions by user id
-GET http://localhost:8080/api/vault/transaction/user/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC12YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5MjIwNTcwNX0.p2tzWYQSBnqmLahICzCJu7Ii1d8hfqWP7ASC-XivjPI
+GET http://localhost:8080/api/vault/personal
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjE5NjMyfQ.kso79mNH4YqQ3bbwhUvkEAW6C9ve_TJoVFcXCXQoYxc
 
 
-// Get transactions by transaction id
-#####
+###
+GET http://localhost:8080/api/vault/transaction/2
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjE5NjMyfQ.kso79mNH4YqQ3bbwhUvkEAW6C9ve_TJoVFcXCXQoYxc
 
-GET http://localhost:8080/api/vault/transaction/1
-Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC12YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5MjIwNTcwNX0.p2tzWYQSBnqmLahICzCJu7Ii1d8hfqWP7ASC-XivjPI
-
-
-// Get transactions by goals id
 ####
+GET http://localhost:8080/api/vault/transaction/goals/1
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjE5NjMyfQ.kso79mNH4YqQ3bbwhUvkEAW6C9ve_TJoVFcXCXQoYxc
 
-GET http://localhost:8080/api/vault/transaction/goals/2
-Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC12YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5MjIwNTcwNX0.p2tzWYQSBnqmLahICzCJu7Ii1d8hfqWP7ASC-XivjPI
-
-
-#####
-
+####
 // Create an transaction
-POST http://localhost:8080/api/vault
+POST http://localhost:8080/api/vault HTTP/1.1
 Content-Type: application/json
-Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC12YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5MjIwNTcwNX0.p2tzWYQSBnqmLahICzCJu7Ii1d8hfqWP7ASC-XivjPI
-
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjE5NjMyfQ.kso79mNH4YqQ3bbwhUvkEAW6C9ve_TJoVFcXCXQoYxc
 
 {
   "appUserId": 1,
   "goalsId": 1,
-  "description": "Dog food",
-  "amount": 50,
+  "description": "Rent",
+  "amount": 5,
   "transactionDate": "2023-08-15"
 }
 
@@ -51,20 +54,22 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC12YXVsdCIsInN1
 ####
 //Update an transaction
 
-PUT http://localhost:8080/api/vault/1
+PUT http://localhost:8080/api/vault/2 HTTP/1.1
 Content-Type: application/json
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjE5NjMyfQ.kso79mNH4YqQ3bbwhUvkEAW6C9ve_TJoVFcXCXQoYxc
 
 {
   "transactionId": 2,
   "appUserId": 1,
   "goalsId": 1,
-  "description": "Dog and Cat Food",
+  "description": "Snake Food",
   "amount": 75,
-  "transactionDate": "2023-08-15"
+  "transactionDate": "2023-07-15"
 }
 
 
 ####
 //Delete a transaction
 
-DELETE http://localhost:8080/api/vault/1
+DELETE http://localhost:8080/api/vault/6 HTTP/1.1
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjE5MTI4fQ.SAdBvmJvyliiuosXnX1SSfC_mJ1_kWt6lkdV7HBOAu4

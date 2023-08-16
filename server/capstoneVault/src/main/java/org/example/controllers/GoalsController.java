@@ -29,6 +29,6 @@ public class GoalsController {
 
     @GetMapping("/goals/{goalId}")
     public ResponseEntity<Goals> findById(@PathVariable int goalId) throws DataAccessException {
-        
+    return null;
     }
 }
