@@ -20,27 +20,23 @@ public class JwtConverter {
     // 1. Signing key
     private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     // 2. "Configurable" constants
-    private final String ISSUER = "personal-solar-farm";
+    private final String ISSUER = "personal-vault";
     private final int EXPIRATION_MINUTES = 15;
     private final int EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 1000;
-
-    private final String BEARER_PREFIX = "Bearer ";
-
-    private final String AUTHORITIES_KEY = "authorities";
-
-    private final String AUTHORITIES_DELIMITER = ",";
+//    private final String BEARER_PREFIX = "Bearer ";
+//
 
     public String getTokenFromUser(UserDetails user) {
 
         String authorities = user.getAuthorities().stream()
                 .map(i -> i.getAuthority())
-                .collect(Collectors.joining(AUTHORITIES_DELIMITER));
+                .collect(Collectors.joining(","));
 
         // 3. Use JJWT classes to build a token.
         return Jwts.builder()
                 .setIssuer(ISSUER)
                 .setSubject(user.getUsername())
-                .claim(AUTHORITIES_KEY, authorities)
+                .claim("authorities", authorities)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MILLIS))
                 .signWith(key)
                 .compact();
@@ -48,7 +44,7 @@ public class JwtConverter {
 
     public UserDetails getUserFromToken(String token) {
 
-        if (token == null || !token.startsWith(BEARER_PREFIX)) {
+        if (token == null || !token.startsWith("Bearer ")) {
             return null;
         }
 
@@ -58,12 +54,12 @@ public class JwtConverter {
                     .requireIssuer(ISSUER)
                     .setSigningKey(key)
                     .build()
-                    .parseClaimsJws(token.substring(BEARER_PREFIX.length()));
+                    .parseClaimsJws(token.substring(7));
 
             String username = jws.getBody().getSubject();
-            String authStr = (String) jws.getBody().get(AUTHORITIES_KEY);
+            String authStr = (String) jws.getBody().get("authorities");
 
-            List<SimpleGrantedAuthority> roles = Arrays.stream(authStr.split(AUTHORITIES_DELIMITER))
+            List<SimpleGrantedAuthority> roles = Arrays.stream(authStr.split(","))
                     .map(r -> new SimpleGrantedAuthority(r))
                     .collect(Collectors.toList());
 

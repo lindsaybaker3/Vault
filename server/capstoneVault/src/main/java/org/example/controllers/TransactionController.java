@@ -38,7 +38,7 @@ public class TransactionController {
         return new ResponseEntity<>(transaction, HttpStatus.OK);
     }
 
-    @GetMapping("/goals/{goalsId}")
+    @GetMapping("/transaction/goals/{goalsId}")
     public List<Transaction> findByGoalsId(@PathVariable int goalsId) {
         return service.findByGoalsId(goalsId);
     }
