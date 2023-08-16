@@ -5,28 +5,34 @@ import org.example.domain.Result;
 import org.example.domain.ResultType;
 import org.example.domain.TransactionService;
 import org.example.models.Transaction;
+import org.example.domain.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.models.AppUser;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/vault")
-@CrossOrigin
 public class TransactionController {
 
     private final TransactionService service;
+    private final AppUserService appUserService;
 
     @Autowired
-    public TransactionController(TransactionService service) {
+    public TransactionController(TransactionService service, AppUserService appUserService) {
         this.service = service;
+        this.appUserService = appUserService;
     }
 
-    @GetMapping("/transaction/user/{appUserId}")
-    public List<Transaction> findByUserId(@PathVariable int appUserId) {
-        return service.findByUserId(appUserId);
+    @GetMapping("/personal")
+    public List<Transaction> findByUserId() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
+        return service.findByUserId(appUser.getAppUserId());
     }
 
     @GetMapping("/transaction/{transactionId}")
@@ -45,7 +51,11 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody Transaction transaction) {
-        Result<Void> result = service.create(transaction);
+        String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
+        transaction.setAppUserId(appUser.getAppUserId());
+
+        Result result = service.create(transaction);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
