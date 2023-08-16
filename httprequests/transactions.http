@@ -1,0 +1,53 @@
+#####
+
+// Get transactions by user id
+GET http://localhost:8080/api/vault/transaction/user/1
+
+
+// Get transactions by transaction id
+#####
+
+GET http://localhost:8080/api/vault/transaction/1
+
+
+// Get transactions by goals id
+####
+
+GET http://localhost:8080/api/vault/goals/2
+
+
+
+#####
+
+// Create an transaction
+POST http://localhost:8080/api/vault
+Content-Type: application/json
+
+{
+  "appUserId": 1,
+  "goalsId": 1,
+  "description": "Purchase",
+  "amount": 50,
+  "transactionDate": "2023-08-15"
+}
+
+
+####
+//Update an transaction
+
+PUT http://localhost:8080/api/vault/1
+Content-Type: application/json
+
+{
+  "appUserId": 1,
+  "goalsId": 1,
+  "description": "Updated Purchase",
+  "amount": 75,
+  "transactionDate": "2023-08-15"
+}
+
+
+####
+//Delete a transaction
+
+DELETE http://localhost:8080/api/vault/1

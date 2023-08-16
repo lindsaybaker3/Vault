@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 
 
-public class ErrorResponseController {
+public class ErrorResponse {
     public static <T> ResponseEntity<Object> build(Result<T> result) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         if (result.getResultType() == null || result.getResultType() == ResultType.INVALID) {
