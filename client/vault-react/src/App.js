@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from "react";
 import jwtDecode from 'jwt-decode';
@@ -11,6 +10,22 @@ import {
   redirect,
   useLocation,
 } from "react-router-dom";
+import AuthContext from "./context/AuthContext";
+import Navbar from "./components/Navbar";
+import Landing from "./components/Landing";
+import Login from "./components/Login";
+import NotFound from "./components/NotFound";
+import Signup from "./components/Signup";
+import Dashboard from "./components/Dashboard";
+import TransactionsList from "./components/TransactionsList.js";
+import TransactionForm from "./components/TransactionForm";
+import DeleteTransaction from "./components/DeleteTransaction";
+import GoalsList from "./components/GoalsList";
+import GoalsAndTransactions from "./components/GoalsAndTransactions";
+import GoalsForm from "./components/GoalsForm";
+import DeleteGoal from "./components/DeleteGoal";
+import ReportList from "./components/ReportList";
+
 
 function App() {
   const[transactions, setTransactions] = useState([])
@@ -57,7 +72,7 @@ function App() {
 
     <BrowserRouter>
       <h1> Welcome to Vault! </h1>
-      <Nav />
+      <Navbar />
 
       <Routes>
         {/* when logged out */}
