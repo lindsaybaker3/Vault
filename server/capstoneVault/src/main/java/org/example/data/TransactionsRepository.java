@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface TransactionsRepository {
 
+    boolean hasTransactions(int goalId);
+
     List<Transaction> findByUserId(int appUserId);
 
     Transaction findByTransactionId(int transactionId);

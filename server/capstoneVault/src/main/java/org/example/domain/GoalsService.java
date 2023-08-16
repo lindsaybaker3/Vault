@@ -67,13 +67,16 @@ public class GoalsService {
 
     public Result deleteById(int id) throws DataAccessException {
         Result result = new Result();
-
-        if(!transactionRepository.findByGoalsId(id).isEmpty()){
+        boolean hasTransactions = transactionRepository.hasTransactions(id);
+        if(hasTransactions){
             result.addErrorMessage("This goal has transactions in it: cannot be deleted", ResultType.INVALID);
+        } else{
+            repository.deleteById(id);
+            if(!result.isSuccess()){
+                result.addErrorMessage("Goal id %s was not found", ResultType.NOT_FOUND, id);
+            }
         }
-        if(!repository.deleteById(id)) {
-            result.addErrorMessage("Goal id %s was not found", ResultType.NOT_FOUND, id);
-        }
+
         return result;
     }
 
@@ -99,7 +102,7 @@ public class GoalsService {
         if(goal.getStartDate() != null && (goal.getEndDate() ==null || goal.getEndDate().isBefore(goal.getStartDate()))){
             result.addErrorMessage("end date cannot be before start date", ResultType.INVALID);
         }
-        if(!repository.findByUserId(goal.getAppUserId()).stream().anyMatch(c -> c.isCategoryAllowed(goal))){
+        if(!(repository.findByUserId(goal.getAppUserId()).stream().anyMatch(c -> c.isCategoryAllowed(goal)))){
             result.addErrorMessage("A goal with that category is already in use", ResultType.INVALID);
         }//cat and id does not match and startdate and enddate overlaps existing that has the same catId
         //move check into model class

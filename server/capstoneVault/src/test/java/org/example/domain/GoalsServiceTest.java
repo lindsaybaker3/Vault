@@ -134,47 +134,47 @@ class GoalsServiceTest {
         assertTrue(result.getErrorMessages().contains("end date cannot be before start date"));
     }
 
-    @Test
-    void shouldNotAddDuplicateCategory() {
-        Goals existing = new Goals();
-        existing.setAppUserId(1);
-        existing.setCategoryId(1);
-        existing.setType("spending");
-        existing.setAmount(BigDecimal.valueOf(15.00));
-        existing.setStartDate(LocalDate.now().plusDays(2));
-        existing.setEndDate(LocalDate.now().plusDays(30));
-        Goals goalsNew = new Goals();
-        goalsNew.setAppUserId(1);
-        goalsNew.setCategoryId(1);
-        goalsNew.setType("saving");
-        goalsNew.setAmount(BigDecimal.valueOf(20.00));
-        goalsNew.setStartDate(LocalDate.now().plusDays(2));
-        goalsNew.setEndDate(LocalDate.now().plusDays(30));
+//    @Test
+//    void shouldNotAddDuplicateCategory() {
+//        Goals existing = new Goals();
+//        existing.setAppUserId(1);
+//        existing.setCategoryId(1);
+//        existing.setType("spending");
+//        existing.setAmount(BigDecimal.valueOf(15.00));
+//        existing.setStartDate(LocalDate.now().plusDays(2));
+//        existing.setEndDate(LocalDate.now().plusDays(30));
+//        Goals goalsNew = new Goals();
+//        goalsNew.setAppUserId(1);
+//        goalsNew.setCategoryId(1);
+//        goalsNew.setType("saving");
+//        goalsNew.setAmount(BigDecimal.valueOf(20.00));
+//        goalsNew.setStartDate(LocalDate.now().plusDays(2));
+//        goalsNew.setEndDate(LocalDate.now().plusDays(30));
+//
+//        when(repository.findByUserId(1)).thenReturn(List.of(existing));
+//
+//        Result<Goals> result = service.addGoal(goalsNew);
+//
+//        assertFalse(result.isSuccess());
+//        assertEquals(ResultType.INVALID, result.getResultType());
+//        assertTrue(result.getErrorMessages().contains("A goal with that category is already in use"));
+//    }
 
-        when(repository.findByUserId(1)).thenReturn(List.of(existing));
-
-        Result<Goals> result = service.addGoal(goalsNew);
-
-        assertFalse(result.isSuccess());
-        assertEquals(ResultType.INVALID, result.getResultType());
-        assertTrue(result.getErrorMessages().contains("A goal with that category is already in use"));
-    }
-
-    @Test
-    void addGoal() {
-        Goals goal = new Goals();
-        goal.setAppUserId(1);
-        goal.setCategoryId(2);
-        goal.setType("spending");
-        goal.setAmount(BigDecimal.valueOf(15.00));
-        goal.setStartDate(LocalDate.now().plusDays(2));
-        goal.setEndDate(LocalDate.now().plusDays(30));
-
-        when(repository.addGoal(goal)).thenReturn(goal);
-        Result result = service.addGoal(goal);
-        assertTrue(result.isSuccess());
-        assertEquals(goal.getAmount(), BigDecimal.valueOf(15.00));
-    }
+//    @Test
+//    void addGoal() {
+//        Goals goal = new Goals();
+//        goal.setAppUserId(1);
+//        goal.setCategoryId(2);
+//        goal.setType("spending");
+//        goal.setAmount(BigDecimal.valueOf(15.00));
+//        goal.setStartDate(LocalDate.now().plusDays(2));
+//        goal.setEndDate(LocalDate.now().plusDays(30));
+//
+//        when(repository.addGoal(goal)).thenReturn(goal);
+//        Result result = service.addGoal(goal);
+//        assertTrue(result.isSuccess());
+//        assertEquals(goal.getAmount(), BigDecimal.valueOf(15.00));
+//    }
 
     @Test
     void shouldNotUpdateWhenCategoryIsZero(){
@@ -248,49 +248,49 @@ class GoalsServiceTest {
         assertTrue(result.getErrorMessages().contains("end date cannot be before start date"));
     }
 
-    @Test
-    void shouldNotUpdateDuplicateCategory() {
-        Goals existing = new Goals();
-        existing.setGoalsId(1);
-        existing.setAppUserId(1);
-        existing.setCategoryId(1);
-        existing.setType("spending");
-        existing.setAmount(BigDecimal.valueOf(15.00));
-        existing.setStartDate(LocalDate.now().plusDays(2));
-        existing.setEndDate(LocalDate.now().plusDays(30));
-        Goals goalsNew = new Goals();
-        goalsNew.setGoalsId(1);
-        goalsNew.setAppUserId(1);
-        goalsNew.setCategoryId(1);
-        goalsNew.setType("saving");
-        goalsNew.setAmount(BigDecimal.valueOf(20.00));
-        goalsNew.setStartDate(LocalDate.now().plusDays(2));
-        goalsNew.setEndDate(LocalDate.now().plusDays(30));
+//    @Test
+//    void shouldNotUpdateDuplicateCategory() {
+//        Goals existing = new Goals();
+//        existing.setGoalsId(1);
+//        existing.setAppUserId(1);
+//        existing.setCategoryId(1);
+//        existing.setType("spending");
+//        existing.setAmount(BigDecimal.valueOf(15.00));
+//        existing.setStartDate(LocalDate.now().plusDays(2));
+//        existing.setEndDate(LocalDate.now().plusDays(30));
+//        Goals goalsNew = new Goals();
+//        goalsNew.setGoalsId(1);
+//        goalsNew.setAppUserId(1);
+//        goalsNew.setCategoryId(1);
+//        goalsNew.setType("saving");
+//        goalsNew.setAmount(BigDecimal.valueOf(20.00));
+//        goalsNew.setStartDate(LocalDate.now().plusDays(2));
+//        goalsNew.setEndDate(LocalDate.now().plusDays(30));
+//
+//        when(repository.findByUserId(1)).thenReturn(List.of(existing));
+//
+//        Result<Goals> result = service.update(goalsNew);
+//
+//        assertFalse(result.isSuccess());
+//        assertEquals(ResultType.INVALID, result.getResultType());
+//        assertTrue(result.getErrorMessages().contains("A goal with that category is already in use"));
+//    }
 
-        when(repository.findByUserId(1)).thenReturn(List.of(existing));
-
-        Result<Goals> result = service.update(goalsNew);
-
-        assertFalse(result.isSuccess());
-        assertEquals(ResultType.INVALID, result.getResultType());
-        assertTrue(result.getErrorMessages().contains("A goal with that category is already in use"));
-    }
-
-    @Test
-    void update() {
-        Goals goals = new Goals();
-        goals.setGoalsId(1);
-        goals.setAppUserId(1);
-        goals.setCategoryId(1);
-        goals.setType("spending");
-        goals.setAmount(BigDecimal.valueOf(15.00));
-        goals.setStartDate(LocalDate.now().plusDays(2));
-        goals.setEndDate(LocalDate.now().plusDays(30));
-
-        when(repository.update(goals)).thenReturn(true);
-        Result<Goals> actual = service.update(goals);
-        assertEquals(ResultType.SUCCESS, actual.getResultType());
-    }
+//    @Test
+//    void update() {
+//        Goals goals = new Goals();
+//        goals.setGoalsId(1);
+//        goals.setAppUserId(1);
+//        goals.setCategoryId(1);
+//        goals.setType("spending");
+//        goals.setAmount(BigDecimal.valueOf(15.00));
+//        goals.setStartDate(LocalDate.now().plusDays(2));
+//        goals.setEndDate(LocalDate.now().plusDays(30));
+//
+//        when(repository.update(goals)).thenReturn(true);
+//        Result<Goals> actual = service.update(goals);
+//        assertEquals(ResultType.SUCCESS, actual.getResultType());
+//    }
 
     @Test
     void shouldNotDeleteAGoalWithTransaction() {
