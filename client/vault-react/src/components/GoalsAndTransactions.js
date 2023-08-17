@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router"
 import AuthContext from "../context/AuthContext";
 
@@ -28,8 +28,52 @@ const GoalsAndTransactions = () => {
     .catch((error) => {
         setErrors([error])
     })
-    
+        
+}
+
+const onSuccess = () => {
+   fetchGoalWithTransactions();
+}
+
+useEffect(() => {
+    if(!auth?.user?.token){
+        return;
+    }else {
+        fetchGoalWithTransactions()
     }
+}, [params.goalsId])
+
+return (
+    <div className = "Goals-details-container">
+        <div className = "goal-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th className = "goal-header">{goal.categoryName}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td className = "goal-amount">{goal.amount}</td>
+                        <td className = "goal-startDate">{goal.startDate}</td>
+                        <td className = "goal-endDate">{goal.endDate}</td>
+                        <td className="goal-CurrentBalance">{goal.getCurrentBalance}</td>
+                        {/* <td className = "transactions">{goal.transactionList}</td> */}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div className = "transactions-section">
+            {goal?.transactionsList?.map((transaction) => (
+                <div key = {transaction.transactionId} className = "transaction">
+                    <span className = "transaction-date">{transaction.transactionDate}</span>
+                    <span className="transaction-description">{transaction.description}</span>
+                    <span className="transaction-amount">{transaction.amount}</span>
+                </div>
+            ))}
+        </div>
+    </div>
+)
 
     //TODO: Do on success and create the actual return statement
 }
