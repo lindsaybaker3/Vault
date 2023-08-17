@@ -3,14 +3,14 @@ import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
-const TransactionForm = (props) => {
+const TransactionForm = () => {
   const params = useParams();
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
 
   const [errors, setErrors] = useState([]);
 
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
   const [goalsId, setGoalsId] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
@@ -24,31 +24,35 @@ const TransactionForm = (props) => {
   };
 
   useEffect(() => {
-    if (params.id !== undefined) {
-      const targetTransaction = props.transactions.find(
-        (transaction) => transaction.id === parseInt(params.id)
-      );
-      if (targetTransaction !== undefined) {
-        setGoalsId(targetTransaction.goalsId);
-        setDescription(targetTransaction.description);
-        setAmount(targetTransaction.amount);
-        setTransactionDate(targetTransaction.transactionDate);
-      }
+    if (params.transactionId !== undefined) {
+      fetch(
+        `http://localhost:8080/api/vault/transaction/${params.transactionId}`,
+        {
+          headers: {
+            Authorization: "Bearer " + auth.user.token,
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((targetTransaction) => {
+          setGoalsId(targetTransaction.goalsId);
+          setDescription(targetTransaction.description);
+          setAmount(targetTransaction.amount);
+          setTransactionDate(targetTransaction.transactionDate);
+        })
+        .catch((error) => {
+          console.error("Error fetching transaction:", error);
+        });
     } else {
       resetState();
     }
-  }, [props.transactions, params.id]);
-
-  useEffect(() => {
-    if (props?.user?.username) setUsername(props.user.username);
-  }, [props.user]);
+  }, [auth.user.token, params.transactionId]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
     const newTransaction = {
       goalsId: goalsId,
-      description: description, // Fixed typo here
+      description: description,
       amount: amount,
       transactionDate: transactionDate,
     };
@@ -58,10 +62,10 @@ const TransactionForm = (props) => {
 
     if (params.id !== undefined) {
       newTransaction.id = params.id;
-      url = `http://localhost:8080/api/vault/${params.id}`;
+      url = `http://localhost:8080/api/vault/transaction/${params.id}`;
       method = "PUT";
     } else {
-      url = "http://localhost:8080/api/vault";
+      url = "http://localhost:8080/api/vault/transaction/create";
       method = "POST";
     }
 
@@ -147,7 +151,7 @@ const TransactionForm = (props) => {
         />
       </fieldset>
       <div className="group-button">
-        <Link className="btn btn-warning" to="/">
+        <Link className="btn btn-warning" to="/transactions">
           Cancel
         </Link>
         <button type="submit" className="btn btn-primary">
