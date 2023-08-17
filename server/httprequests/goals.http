@@ -12,7 +12,7 @@ Content-Type: application/json
 #####
 
 GET http://localhost:8080/api/vault/goals
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjI5OTY0fQ.tl74sJN9T7-TEzqoNxTvoUlYcVCv7V3FUHQAYWFTz-0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjMyMzAzfQ.bw_7GcSyeNISdaKrDTofSv1Sy0wuK25kY_B0aLc8B2U
 
 
 // Get goal by goal id
@@ -27,7 +27,7 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJt
 // Create a goal
 POST http://localhost:8080/api/vault/goal/create
 Content-Type: application/json
-Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjI5MDY3fQ.EWRaPBrDdZH-E9Tsa4VRufuxsoDLspDPhq0l7GEU9Xg
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjMyNTk3fQ.gYmOhvbobiucS7ClsIZgdgcLGA9vjdwvXGgxK3nY_Tc
 
 
 {
@@ -44,14 +44,14 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJt
 
 PUT http://localhost:8080/api/vault/goal/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjI5MDY3fQ.EWRaPBrDdZH-E9Tsa4VRufuxsoDLspDPhq0l7GEU9Xg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjMyMzAzfQ.bw_7GcSyeNISdaKrDTofSv1Sy0wuK25kY_B0aLc8B2U
 
 {
   "goalsId": 1,
   "appUserId": 1,
   "categoryId": 1,
   "type": "spending",
-  "amount": 20,
+  "amount": 100,
   "startDate": "2023-08-17",
   "endDate": "2023-08-30"
 }

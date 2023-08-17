@@ -131,14 +131,16 @@ public class Goals {
                 return true;
 
             }
-            if(this.getCategoryId() != goal.getCategoryId()) {
-                return false;
+            if(this.getCategoryId() != goal.getCategoryId()){
+                return true;
             }
-            if(goal.getEndDate().isBefore(this.getStartDate()) ||
-                goal.getStartDate().isAfter(this.getEndDate())) {
-
-                    return false;
+            if(this.getCategoryId() == goal.getCategoryId()) {
+                if(goal.getEndDate().isBefore(this.getStartDate()) ||
+                        goal.getStartDate().isAfter(this.getEndDate())){
+                    return true;
                 }
-            return true;
+            }
+
+            return false;
     }
 }
