@@ -95,7 +95,31 @@ const TransactionForm = (props) => {
           <li key={error}>{error}</li>
         ))}
       </ul>
-      <h2 className="title">Ask your question !</h2>
+      <h2 className="title">Add your Transaction !</h2>
+      <fieldset>
+        <label htmlFor="goal-input">Goal:</label>
+        <select
+          id="goal-input"
+          value={goalsId}
+          onChange={(evt) => setGoalsId(evt.target.value)}
+        >
+          <option value="1">Emergency Fund</option>
+          <option value="2">Vacation Fund</option>
+          <option value="3">Pay Off High-Interest Debt</option>
+          <option value="4">Buy a Car</option>
+          <option value="5">Home Down Payment</option>
+          <option value="6">Higher Education</option>
+          <option value="7">Starting a Business</option>
+          <option value="8">Family Planning</option>
+          <option value="9">Retirement Savings</option>
+          <option value="10">Mortgage Payoff</option>
+          <option value="11">Financial Independence</option>
+          <option value="12">Education Fund for Children</option>
+          <option value="13">Estate Planning</option>
+          <option value="14">World Travel</option>
+          <option value="15">Investment Portfolio Growthl</option>
+        </select>
+      </fieldset>
       <fieldset>
         <label htmlFor="description-input">Description: </label>
         <input
@@ -108,7 +132,7 @@ const TransactionForm = (props) => {
         <label htmlFor="amount-input">Amount: </label>
         <input
           id="amount-input"
-          type="number" // Use appropriate input type
+          type="number"
           value={amount}
           onChange={(evt) => setAmount(evt.target.value)}
         />
@@ -117,7 +141,7 @@ const TransactionForm = (props) => {
         <label htmlFor="date-input">Date: </label>
         <input
           id="date-input"
-          type="date" // Use appropriate input type
+          type="date"
           value={transactionDate}
           onChange={(evt) => setTransactionDate(evt.target.value)}
         />

@@ -16,6 +16,7 @@ const Navbar = () => {
           {/* THIS IS THE CORRECT ROUT FOR ADD /questions/add */}
           <Link to="/questions/add">Ask Question</Link>{" "}
           <Link onClick={auth.logout}>Logout</Link>
+          <Link to="/transactions">Transaction</Link>
         </>
       )}
       {/* only logged out */}
