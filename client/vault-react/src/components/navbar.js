@@ -9,7 +9,6 @@ const Navbar = () => {
   return (
     <nav className="nav-list">
       {/* always */}
-      
       {/* only logged in */}
       {user && (
         <>
