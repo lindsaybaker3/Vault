@@ -118,7 +118,8 @@ function App() {
           />
           <Route
             path="/budgets/edit/:goalsId"
-            element={user ? <GoalsForm /> : <Navigate to="/" />}
+            element = {<GoalsForm />}
+            // element={user ? <GoalsForm /> : <Navigate to="/" />}
           />
           <Route
             path="delete/:budgetsId"
