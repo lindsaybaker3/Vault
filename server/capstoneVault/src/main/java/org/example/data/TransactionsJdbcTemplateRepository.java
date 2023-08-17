@@ -23,29 +23,25 @@ public class TransactionsJdbcTemplateRepository implements TransactionsRepositor
     }
 
     @Override
-    public boolean hasTransactions(int goalId){
-        final String sql = "select count(*) from transaction where goals_id = ?";
-        int count = jdbcTemplate.queryForObject(sql, Integer.class, goalId);
-        if(count>0){
-            return true;
-        }
-        return false;
-    }
-    @Override
     public List<Transaction> findByUserId(int appUserId) {
-        final String sql = "SELECT transaction_id, app_user_id, goals_id, amount, description, transaction_date " +
-                "FROM transaction " +
-                "WHERE app_user_id = ?";
+        final String sql = "SELECT t.transaction_id, t.app_user_id, t.goals_id, g.goal_type, c.category_name, " +
+                "t.description, t.amount, t.transaction_date " +
+                "FROM `transaction` t " +
+                "JOIN goals g ON t.goals_id = g.goals_id " +
+                "JOIN category c ON g.category_id = c.category_id " +
+                "WHERE t.app_user_id = ?";
 
         return jdbcTemplate.query(sql, new TransactionMapper(), appUserId);
     }
 
 
-    @Override
     public Transaction findByTransactionId(int transactionId) {
-        final String sql = "SELECT transaction_id, app_user_id, goals_id, amount, description, transaction_date " +
-                "FROM transaction " +
-                "WHERE transaction_id = ?";
+        final String sql = "SELECT t.transaction_id, t.app_user_id, t.goals_id, g.goal_type, c.category_name, " +
+                "t.description, t.amount, t.transaction_date " +
+                "FROM `transaction` t " +
+                "JOIN goals g ON t.goals_id = g.goals_id " +
+                "JOIN category c ON g.category_id = c.category_id " +
+                "WHERE t.transaction_id = ?";
 
         List<Transaction> transactions = jdbcTemplate.query(sql, new TransactionMapper(), transactionId);
         return transactions.stream().findFirst().orElse(null);
@@ -54,9 +50,12 @@ public class TransactionsJdbcTemplateRepository implements TransactionsRepositor
 
     @Override
     public List<Transaction> findByGoalsId(int goalsId) {
-        final String sql = "SELECT transaction_id, app_user_id, goals_id, amount, description, transaction_date " +
-                "FROM transaction " +
-                "WHERE goals_id = ?";
+        final String sql = "SELECT t.transaction_id, t.app_user_id, t.goals_id, g.goal_type, c.category_name, " +
+                "t.description, t.amount, t.transaction_date " +
+                "FROM `transaction` t " +
+                "JOIN goals g ON t.goals_id = g.goals_id " +
+                "JOIN category c ON g.category_id = c.category_id " +
+                "WHERE t.goals_id = ?";
 
         return jdbcTemplate.query(sql, new TransactionMapper(), goalsId);
     }
@@ -107,6 +106,17 @@ public class TransactionsJdbcTemplateRepository implements TransactionsRepositor
     @Override
     public boolean deleteById(int transactionId) {
         return jdbcTemplate.update(
-                "delete from transaction where transaction_id = ?", transactionId) > 0;
+                "delete from `transaction` where transaction_id = ?", transactionId) > 0;
+    }
+
+
+    @Override
+    public boolean hasTransactions(int goalId){
+        final String sql = "select count(*) from `transaction` where goals_id = ?";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, goalId);
+        if(count>0){
+            return true;
+        }
+        return false;
     }
 }

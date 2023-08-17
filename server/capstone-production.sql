@@ -64,20 +64,21 @@ create table reports (
         references app_user(app_user_id)
 );
 
-create table `transaction` (
-	transaction_id int primary key auto_increment, 
-    app_user_id int not null,
+CREATE TABLE `transaction` (
+    transaction_id INT PRIMARY KEY AUTO_INCREMENT, 
+    app_user_id INT NOT NULL,
     goals_id int not null,
-    amount decimal,
-    `description` text,
-    transaction_date date not null,
-     constraint fk_transaction_app_user_app_user_id
-        foreign key (app_user_id)
-        references app_user(app_user_id),
-	constraint fk_goals_goals_id
-		foreign key (goals_id)
-        references goals(goals_id)
+    amount DECIMAL,
+    `description` TEXT,
+    transaction_date DATE NOT NULL,
+    CONSTRAINT fk_transaction_app_user_app_user_id
+        FOREIGN KEY (app_user_id)
+        REFERENCES app_user(app_user_id),
+    CONSTRAINT fk_goals_goals_id
+        FOREIGN KEY (goals_id)
+        REFERENCES goals(goals_id)
 );
+
 
 insert into app_role (`name`) values
     ('USER'),
@@ -156,7 +157,24 @@ JOIN
     category c ON g.category_id = c.category_id;
 
 
+    
+    -- Insert data into transaction table
+INSERT INTO `transaction` (app_user_id, goals_id, amount, transaction_date, `description`)
+VALUES
+    (1, 1, 8000.00, '2023-08-05', 'spending'),   
+    (1, 2, 1000.00, '2023-08-10', 'saving'),      
+    (1, 3, 1100.00, '2023-08-20', 'saving'),      
+    (2, 4, 280.00, '2023-08-07', 'spending');     
+
+
 select * from app_role;
 select * from app_user;
 select * from category;
 select * from goals;
+
+select * from goals;
+
+drop table if exists transaction;
+
+
+select * from transaction;
