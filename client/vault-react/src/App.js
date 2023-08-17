@@ -101,7 +101,8 @@ function App() {
 
           <Route
             path="/budgets"
-            element={user ? <GoalsList /> : <Navigate to="/" />}
+            element = {<GoalsList type = "spending" />}
+            // element={user ? <GoalsList /> : <Navigate to="/" />}
           />
           <Route
             path="/budgets/:goalsId"
@@ -112,7 +113,7 @@ function App() {
             element={user ? <GoalsForm /> : <Navigate to="/" />}
           />
           <Route
-            path="edit/:budgetsId"
+            path="/budgets/edit/:goalsId"
             element={user ? <GoalsForm /> : <Navigate to="/" />}
             />
           <Route
@@ -122,11 +123,12 @@ function App() {
           {/* the budgets and savings are using the same table in the backend, do they just use the same forms in the Front end? */}
 
           <Route
-            path="/user/:userId/savings"
-            element={user ? <GoalsList /> : <Navigate to="/" />}
+            path="/savings"
+            element = {<GoalsList type = "saving" />}
+            // element={user ? <GoalsList /> : <Navigate to="/" />}
           />
           <Route
-            path="/user/:userId/savings/:goalId"
+            path="savings/:goalId"
             element={user ? <GoalsAndTransactions /> : <Navigate to="/" />}
           />
           <Route

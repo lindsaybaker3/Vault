@@ -29,7 +29,7 @@ const GoalsForm = () => {
 
     useEffect(() => {
         if (params.goalsId !== undefined){
-            fetch(`http://localhost:8080/api/vault/goal/${params.goalsId}`)
+            fetch(`http://localhost:8080/api/vault/goals/${params.goalsId}`)
             .then(response => {
                 if(response.ok){
                     response.json()
