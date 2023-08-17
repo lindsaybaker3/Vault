@@ -1,4 +1,4 @@
-import vaultlanding from "../images/vault-landing-1.png";
+import vaultlanding from "../images/vault-landing-2.jpeg";
 
 function Landing() {
   return (
