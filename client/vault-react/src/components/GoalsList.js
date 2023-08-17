@@ -46,7 +46,7 @@ const GoalsList = ({ type }) => {
                     <td>{goal.categoryName}</td>
                     
                     <td>
-                        <Link to = {`edit/${goal.goalsId}`}>Edit</Link>
+                        <Link to = {`/budgets/edit/${goal.goalsId}`}>Edit</Link>
                         <Link to = {`/budgets/${goal.goalsId}`}>View Goal</Link>
                     </td>
 
