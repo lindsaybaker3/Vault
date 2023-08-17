@@ -9,19 +9,22 @@ const Navbar = () => {
   return (
     <nav className="nav-list">
       {/* always */}
-      <Link to="/">Home</Link> <Link to="/questions/all">Questions</Link>{" "}
+      
       {/* only logged in */}
       {user && (
         <>
-          {/* THIS IS THE CORRECT ROUT FOR ADD /questions/add */}
-          <Link to="/questions/add">Ask Question</Link>{" "}
+          <Link to="/dashboard">Home</Link>
+          <Link to="/user/:userId/transactions">Transactions</Link>
+          <Link to= "/user/:userId/budgets">Budgets</Link>
+          <Link to="/user/:userId/savings">Savings</Link>
+          <Link to="/user/:userId/reports">Reports</Link>
           <Link onClick={auth.logout}>Logout</Link>
-          <Link to="/transactions">Transaction</Link>
         </>
       )}
       {/* only logged out */}
       {!user && (
         <>
+          <Link to="/">Home</Link> {" "}
           <Link to="/login">Log In</Link> <Link to="/signup">Signup</Link>
         </>
       )}
