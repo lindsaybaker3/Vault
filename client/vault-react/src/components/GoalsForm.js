@@ -9,7 +9,7 @@ const GoalsForm = () => {
 
     const [errors, setErrors] = useState([])
 
-    const [category, setCategory] = useState("")
+    const [categoryId, setCategoryId] = useState("")
     // TODO: put in a default category here
     // TODO: find a way to get the category Name here
     const[type, setType] = useState("spending")
@@ -18,7 +18,7 @@ const GoalsForm = () => {
     const[endDate, setEndDate] = useState("")
 
     const resetState = () => {
-        setCategory("")
+        setCategoryId("")
         //TODO: Give this default category
         //TODO: is this a category Id, category Name, or both?
         setType("")
@@ -34,7 +34,7 @@ const GoalsForm = () => {
                 if(response.ok){
                     response.json()
                     .then(targetGoal => {
-                        setCategory(targetGoal.category)
+                        setCategoryId(targetGoal.categoryId)
                         setType(targetGoal.type)
                         setAmount(targetGoal.amount)
                         setStartDate(targetGoal.startDate)
@@ -47,14 +47,14 @@ const GoalsForm = () => {
         } else{
             resetState()
         }
-    }, [params.goalsId])
+    }, [auth.user.token, params.goalsId])
 
     //TODO: Handle Submit and the return form
     //TODO: figure out what needs to be different for a budget vs a savings goal
     const handleSubmit = (evt) => {
         evt.preventDefault()
         const newGoal = {
-            category: category,
+            categoryId: categoryId,
             type: type,
             amount: amount,
             startDate: startDate,
@@ -96,10 +96,28 @@ const GoalsForm = () => {
             }
         })
     }
+    console.log(categoryId)
 
     return (
         <form onSubmit = {handleSubmit}>
-
+            <ul>
+             {errors.map((error) => (
+                 <li key={error}>{error}</li>
+             ))}
+            </ul>
+            <fieldset>
+                <label htmlFor = "category-input">Category</label>
+                <select id = "category-input" value = {categoryId} onChange={(evt) => setCategoryId(evt.target.value)}>
+                    <option value = "1">Groceries</option>
+                    <option value = "2">Vacation</option>
+                    <option value = "3">Rent</option>
+                    <option value = "4">Shopping</option>
+                </select>
+            </fieldset>
+            <fieldset>
+                <label htmlFor = "type-input"></label>
+            </fieldset>
+            
 
         </form>
     )
