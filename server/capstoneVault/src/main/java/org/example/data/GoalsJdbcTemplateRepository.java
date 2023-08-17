@@ -23,7 +23,8 @@ public class GoalsJdbcTemplateRepository implements GoalsRepository {
 
     @Override
     public List<Goals> findByUserId(int appUserId) {
-        final String sql = "select * from goals "
+        final String sql = "select g.*, c.* from goals g " +
+                "join category c on g.category_id = c.category_id "
                 + "where app_user_id = ?;";
 
         return jdbcTemplate.query(sql, new GoalsMapper(), appUserId);
