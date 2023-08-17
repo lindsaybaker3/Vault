@@ -82,7 +82,7 @@ function App() {
             element={user ? <TransactionsList /> : <Navigate to="/" />}
           /> */}
           <Route
-            path="/transaction"
+            path="/transactions"
             element={user ? <TransactionsList /> : <Navigate to="/" />}
           />
 
