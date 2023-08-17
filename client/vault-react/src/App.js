@@ -83,7 +83,9 @@ function App() {
           /> */}
           <Route
             path="/transactions"
-            element={user ? <TransactionsList /> : <Navigate to="/" />}
+            element={
+              user ? <TransactionsList user={user} /> : <Navigate to="/" />
+            }
           />
 
           <Route
@@ -92,7 +94,9 @@ function App() {
           />
           <Route
             path="/transaction/add"
-            element={user ? <TransactionForm /> : <Navigate to="/" />}
+            element={
+              user ? <TransactionForm user={user} /> : <Navigate to="/" />
+            }
           />
           <Route
             path="delete/:transactionId"
@@ -115,7 +119,7 @@ function App() {
           <Route
             path="/budgets/edit/:goalsId"
             element={user ? <GoalsForm /> : <Navigate to="/" />}
-            />
+          />
           <Route
             path="delete/:budgetsId"
             element={user ? <DeleteGoal /> : <Navigate to="/" />}

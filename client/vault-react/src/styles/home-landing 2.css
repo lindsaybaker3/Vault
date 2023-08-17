@@ -1,0 +1,11 @@
+/* HOME PAGE */
+
+.background-image {
+    object-fit: cover;
+    position: absolute;
+    height: 30px;
+    width: 80px;
+    left: 0;
+    top: 0;
+    z-index: -1;
+  }

@@ -28,7 +28,7 @@ public class TransactionController {
         this.appUserService = appUserService;
     }
 
-    @GetMapping("/personal")
+    @GetMapping("/transactions")
     public List<Transaction> findByUserId() {
         String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
@@ -49,7 +49,7 @@ public class TransactionController {
         return service.findByGoalsId(goalsId);
     }
 
-    @PostMapping
+    @PostMapping("/transaction/create")
     public ResponseEntity<Object> create(@RequestBody Transaction transaction) {
         String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
@@ -62,7 +62,7 @@ public class TransactionController {
         return ErrorResponse.build(result);
     }
 
-    @PutMapping("/{transactionId}")
+    @PutMapping("/transaction/{transactionId}")
     public ResponseEntity<?> update(@PathVariable int transactionId, @RequestBody Transaction transaction) {
         Result<Void> result = service.update(transaction);
         if (result.isSuccess()) {
@@ -71,7 +71,7 @@ public class TransactionController {
         return ErrorResponse.build(result);
     }
 
-    @DeleteMapping("/{transactionId}")
+    @DeleteMapping("/transaction/{transactionId}")
     public ResponseEntity<Void> delete(@PathVariable int transactionId) {
         Result result = service.deleteById(transactionId);
         if (result.getResultType() == ResultType.NOT_FOUND) {

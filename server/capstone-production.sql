@@ -94,19 +94,35 @@ insert into app_user_role
     (1, 2),
     (2, 1);
     
-insert into category (category_name)
-	values
-    ('Groceries'),
-    ('Vacation to Rome'),
-    ('Rent'), 
-    ('Shopping');
+INSERT INTO category (category_name)
+VALUES
+    ('Emergency Fund'),
+    ('Vacation Fund'),
+    ('Pay Off High-Interest Debt'),
+    ('Buy a Car'),
+    ('Home Down Payment'),
+    ('Higher Education'),
+    ('Starting a Business'),
+    ('Family Planning'),
+    ('Retirement Savings'),
+    ('Mortgage Payoff'),
+    ('Financial Independence'),
+    ('Education Fund for Children'),
+    ('Estate Planning'),
+    ('World Travel'),
+    ('Investment Portfolio Growth');
+
     
 insert into goals (app_user_id, category_id, goal_type, goal_amount, start_date, end_date)
 	values
     (1, 1, 'spending', 120.00, '2023-08-01', '2023-08-31'),
     (1, 2, 'saving', 1200.00, '2023-08-01', '2023-08-31'),
     (1, 3, 'saving', 1500.00, '2023-08-01', '2023-08-31'),
-    (2, 4, 'spending', 65.00, '2023-08-01', '2023-08-31');
+    (2, 4, 'spending', 65.00, '2023-08-01', '2023-08-31'),
+    (1, 5, 'saving', 5000.00, '2023-08-01', '2023-12-31'),
+    (2, 7, 'spending', 150.00, '2023-08-01', '2023-09-30'),
+    (1, 9, 'saving', 800.00, '2023-08-01', '2023-12-31'),
+    (1, 12, 'saving', 300.00, '2023-08-01', '2023-11-30');
     
 
 insert into reports (app_user_id, start_date, end_date, report_url)
@@ -116,10 +132,31 @@ insert into reports (app_user_id, start_date, end_date, report_url)
     
 insert into transaction (app_user_id, goals_id, amount, transaction_date, `description`)
 	values
-    (1, 1, 8000.00, '2023-08-05', 'paycheck'),
-    (1, 2, 1000.00, '2023-08-10', 'dog sitting'),
-    (1, 3, 1100.00, '2023-08-20', 'rent'),
-    (2, 4, 280.00, '2023-08-07', 'groceries');
+    (1, 1, 8000.00, '2023-08-05', 'spending'),
+    (1, 2, 1000.00, '2023-08-10', 'saving'),
+    (1, 3, 1100.00, '2023-08-20', 'saving'),
+    (2, 4, 280.00, '2023-08-07', 'spending');
     
      select * from goals where app_user_id = 1 ;
+     
+     
+SELECT
+    t.transaction_id,
+    t.app_user_id,
+    t.goals_id,
+    t.amount,
+    t.description,
+    t.transaction_date,
+    c.category_name
+FROM
+    `transaction` t
+JOIN
+    goals g ON t.goals_id = g.goals_id
+JOIN
+    category c ON g.category_id = c.category_id;
 
+
+select * from app_role;
+select * from app_user;
+select * from category;
+select * from goals;
