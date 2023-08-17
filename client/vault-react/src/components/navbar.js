@@ -19,6 +19,7 @@ const Navbar = () => {
           <Link to="/user/:userId/savings">Savings</Link>
           <Link to="/user/:userId/reports">Reports</Link>
           <Link onClick={auth.logout}>Logout</Link>
+
         </>
       )}
       {/* only logged out */}

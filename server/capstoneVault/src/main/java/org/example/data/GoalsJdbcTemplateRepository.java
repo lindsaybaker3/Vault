@@ -34,7 +34,8 @@ public class GoalsJdbcTemplateRepository implements GoalsRepository {
 
     @Override
     public Goals findById(int goalId) {
-            final String sql = "select * from goals "
+            final String sql = "select g.*, c.* from goals g " +
+                    "join category c on g.category_id = c.category_id "
                     + "where goals_id = ?;";
 
             Goals goal = jdbcTemplate.query(sql, new GoalsMapper(), goalId).stream()

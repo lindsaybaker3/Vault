@@ -1,20 +1,24 @@
-import React, { useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
-const TransactionsList = (props) => {
-  const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
+const TransactionsList = () => {
+  const auth = useContext(AuthContext);
+  const [transactions, setTransactions] = useState([]);
 
-  //   if (!user || !user.token) {
-  //     return (
-  //       <div>
-  //         You must be logged in to view the list of transactions.
-  //         <br />
-  //         <Link to="/login">Log in</Link>
-  //       </div>
-  //     );
-  //   }
+  const loadTransactions = () => {
+    fetch("http://localhost:8080/api/vault/transactions", {
+      headers: {
+        Authorization: "Bearer " + auth.user.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((payload) => setTransactions(payload));
+  };
+
+  useEffect(() => {
+    loadTransactions();
+  }, []);
 
   return (
     <table className="table table-bordered table-striped">
@@ -31,7 +35,7 @@ const TransactionsList = (props) => {
         </tr>
       </thead>
       <tbody>
-        {props.transactions.map((transaction) => (
+        {transactions.map((transaction) => (
           <tr key={transaction.transactionId}>
             <td>{transaction.transactionId}</td>
             <td>{transaction.appUserId}</td>
@@ -40,10 +44,14 @@ const TransactionsList = (props) => {
             <td>{transaction.amount}</td>
             <td>{transaction.transactionDate}</td>
             <td>
-              <Link to={`/edit/${transaction.id}`}>Edit</Link>
+              {auth.user && (
+                <Link to={`/edit/${transaction.transactionId}`}>Edit</Link>
+              )}
             </td>
             <td>
-              <Link to={`/delete/${transaction.id}`}>Delete</Link>
+              {auth.user && (
+                <Link to={`/delete/${transaction.transactionId}`}>Delete</Link>
+              )}
             </td>
           </tr>
         ))}

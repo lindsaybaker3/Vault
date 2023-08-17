@@ -3,19 +3,34 @@ import AuthContext from "../context/AuthContext"
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
-const GoalsList = () => {
+const GoalsList = ({ type }) => {
     const auth = useContext(AuthContext);
     const navigate = useNavigate();
     const [goals, setGoals] = useState([]);
 
+
    
     const loadGoals = () => {
-        fetch("http://localhost:8080/api/vault/goals")
+        if(!auth.user || !auth.user.token){
+            navigate("/");
+            return;
+        }
+        fetch("http://localhost:8080/api/vault/goals", {
+            headers: {
+                Authorization: "Bearer " + auth.user.token,
+            },
+
+        })
         .then(response => response.json())
         .then(payload => setGoals(payload))
+        .catch((error) => console.error("error Fetching questions:", error))
     }
 
     useEffect(loadGoals, [])
+
+    const filteredGoals = goals.filter(goal => goal.type === type);
+        
+    
 
     return (
         <table>
@@ -27,11 +42,12 @@ const GoalsList = () => {
 
             </thead>
             <tbody>
-                {goals.map(goal => <tr key = {goal.goalsId}>
+                {filteredGoals.map(goal => <tr key = {goal.goalsId}>
                     <td>{goal.categoryName}</td>
-                    {/* TODO: get category name in here */}
+                    
                     <td>
-                        { auth.user ? <Link to = {`edit/${goal.goalsId}`}>Edit</Link> : <Link to = "/login">Login To View Details</Link>}
+                        <Link to = {`/budgets/edit/${goal.goalsId}`}>Edit</Link>
+                        <Link to = {`/budgets/${goal.goalsId}`}>View Goal</Link>
                     </td>
 
 

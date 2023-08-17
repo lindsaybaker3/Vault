@@ -163,4 +163,14 @@ public class Goals {
 
             return false;
     }
+
+    public BigDecimal getCurrentBalance(){
+        BigDecimal total = BigDecimal.ZERO;
+        for(Transaction transaction: transactionsList){
+            total = total.add(transaction.getAmount());
+        }
+        return total;
+    }
+
+
 }

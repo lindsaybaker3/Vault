@@ -83,7 +83,9 @@ function App() {
           /> */}
           <Route
             path="/transactions"
-            element={user ? <TransactionsList /> : <Navigate to="/" />}
+            element={
+              user ? <TransactionsList user={user} /> : <Navigate to="/" />
+            }
           />
 
           <Route
@@ -92,7 +94,9 @@ function App() {
           />
           <Route
             path="/transaction/add"
-            element={user ? <TransactionForm /> : <Navigate to="/" />}
+            element={
+              user ? <TransactionForm user={user} /> : <Navigate to="/" />
+            }
           />
           <Route
             path="delete/:transactionId"
@@ -101,7 +105,8 @@ function App() {
 
           <Route
             path="/budgets"
-            element={user ? <GoalsList /> : <Navigate to="/" />}
+            element = {<GoalsList type = "spending" />}
+            // element={user ? <GoalsList /> : <Navigate to="/" />}
           />
           <Route
             path="/budgets/:goalsId"
@@ -112,9 +117,10 @@ function App() {
             element={user ? <GoalsForm /> : <Navigate to="/" />}
           />
           <Route
-            path="edit/:budgetsId"
-            element={user ? <GoalsForm /> : <Navigate to="/" />}
-            />
+            path="/budgets/edit/:goalsId"
+            element = {<GoalsForm />}
+            // element={user ? <GoalsForm /> : <Navigate to="/" />}
+          />
           <Route
             path="delete/:budgetsId"
             element={user ? <DeleteGoal /> : <Navigate to="/" />}
@@ -122,11 +128,12 @@ function App() {
           {/* the budgets and savings are using the same table in the backend, do they just use the same forms in the Front end? */}
 
           <Route
-            path="/user/:userId/savings"
-            element={user ? <GoalsList /> : <Navigate to="/" />}
+            path="/savings"
+            element = {<GoalsList type = "saving" />}
+            // element={user ? <GoalsList /> : <Navigate to="/" />}
           />
           <Route
-            path="/user/:userId/savings/:goalId"
+            path="savings/:goalId"
             element={user ? <GoalsAndTransactions /> : <Navigate to="/" />}
           />
           <Route

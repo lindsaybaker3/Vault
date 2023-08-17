@@ -34,7 +34,7 @@ public class GoalsController {
         String username = authentication.getName(); // Assuming username is the identifier
         AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
         return service.findByUserId(appUser.getAppUserId());
-    }///ask about this
+    }
 
     @GetMapping("/goals/{goalId}")
     public ResponseEntity<Goals> findById(@PathVariable int goalId) throws DataAccessException {
@@ -44,6 +44,8 @@ public class GoalsController {
         if(goal == null){
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+        //invoke the current balance here
+        goal.getCurrentBalance();
         return new ResponseEntity<>(goal, HttpStatus.OK);
     }
 
