@@ -18,6 +18,7 @@ public Goals mapRow(ResultSet resultSet, int i) throws SQLException {
     goal.setAmount(resultSet.getBigDecimal("goal_amount"));
     goal.setStartDate(resultSet.getDate("start_date").toLocalDate());
     goal.setEndDate(resultSet.getDate("end_date").toLocalDate());
+    goal.setCategoryName(resultSet.getString("category_name"));
     return goal;
 }
 }

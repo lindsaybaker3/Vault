@@ -19,9 +19,29 @@ public class Goals {
     private BigDecimal amount;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String categoryName;
     List<Transaction> transactionsList = new ArrayList<>();
 
-    GoalsJdbcTemplateRepository repository;
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public Goals(int goalsId, int appUserId, int categoryId, String type, BigDecimal amount, LocalDate startDate, LocalDate endDate, List<Transaction> transactionsList, String categoryName) {
+        this.goalsId = goalsId;
+        this.appUserId = appUserId;
+        this.categoryId = categoryId;
+        this.type = type;
+        this.amount = amount;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.transactionsList = transactionsList;
+        this.categoryName = categoryName;
+    }
 
     public Goals(int goalsId, int appUserId, int categoryId, String type, BigDecimal amount, LocalDate startDate, LocalDate endDate, List<Transaction> transactionsList) {
         this.goalsId = goalsId;

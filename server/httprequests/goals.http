@@ -12,7 +12,7 @@ Content-Type: application/json
 #####
 
 GET http://localhost:8080/api/vault/goals
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjMyMzAzfQ.bw_7GcSyeNISdaKrDTofSv1Sy0wuK25kY_B0aLc8B2U
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjgyMDg2fQ.qiTxXU1MJFJm3rO-3LnrV5t0k-a-g8XQbdL1Ch0myKM
 
 
 // Get goal by goal id
@@ -27,7 +27,7 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJt
 // Create a goal
 POST http://localhost:8080/api/vault/goal/create
 Content-Type: application/json
-Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjMyNTk3fQ.gYmOhvbobiucS7ClsIZgdgcLGA9vjdwvXGgxK3nY_Tc
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjgyMjkzfQ.mcCeFJ3eY5ztleP-q9wDjRVglVNuVm3nT4TbpJrY-EU
 
 
 {
@@ -44,7 +44,7 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJt
 
 PUT http://localhost:8080/api/vault/goal/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjMyMzAzfQ.bw_7GcSyeNISdaKrDTofSv1Sy0wuK25kY_B0aLc8B2U
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjgyNDU1fQ.MsnlPN49cXyGNw-d4hn_IN98MqkMIrJE-FybjTg7Tgg
 
 {
   "goalsId": 1,

@@ -3,6 +3,7 @@ package org.example.domain;
 import org.example.data.BudgetCategoryRepository;
 import org.example.data.GoalsJdbcTemplateRepository;
 import org.example.data.TransactionsJdbcTemplateRepository;
+import org.example.models.BudgetCategory;
 import org.example.models.Goals;
 import org.example.models.Transaction;
 import org.springframework.dao.DataAccessException;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class GoalsService {
@@ -102,7 +105,7 @@ public class GoalsService {
         if(goal.getStartDate() != null && (goal.getEndDate() ==null || goal.getEndDate().isBefore(goal.getStartDate()))){
             result.addErrorMessage("end date cannot be before start date", ResultType.INVALID);
         }
-        if(!(repository.findByUserId(goal.getAppUserId()).stream().anyMatch(c -> c.isCategoryAllowed(goal)))){
+        if(!(repository.findByUserId(goal.getAppUserId()).stream().allMatch(c -> c.isCategoryAllowed(goal)))){
             result.addErrorMessage("A goal with that category is already in use", ResultType.INVALID);
         }//cat and id does not match and startdate and enddate overlaps existing that has the same catId
         //move check into model class

@@ -78,7 +78,7 @@ function App() {
           {/* loggin in only */}
           <Route path="/dashboard" element={<Dashboard />} />
           {/* <Route
-            path="/user/:userId/transactions"
+            path="/transactions"
             element={user ? <TransactionsList /> : <Navigate to="/" />}
           /> */}
           <Route
@@ -87,32 +87,36 @@ function App() {
           />
 
           <Route
-            path="/user/:userId/transaction/:transactionId/edit"
+            path="/edit/:transactionId"
             element={user ? <TransactionForm /> : <Navigate to="/" />}
           />
           <Route
-            path="/user/:userId/transaction/add"
+            path="/transaction/add"
             element={user ? <TransactionForm /> : <Navigate to="/" />}
           />
           <Route
-            path="/user/:userId/transaction/delete"
+            path="delete/:transactionId"
             element={user ? <DeleteTransaction /> : <Navigate to="/" />}
           />
 
           <Route
-            path="/user/:userId/budgets"
+            path="/budgets"
             element={user ? <GoalsList /> : <Navigate to="/" />}
           />
           <Route
-            path="/user/:userId/budgets/:goalId"
+            path="/budgets/:goalsId"
             element={user ? <GoalsAndTransactions /> : <Navigate to="/" />}
           />
           <Route
-            path="/user/:userId/budgets/add"
+            path="/budgets/add"
             element={user ? <GoalsForm /> : <Navigate to="/" />}
           />
           <Route
-            path="/user/:userId/budgets/delete"
+            path="edit/:budgetsId"
+            element={user ? <GoalsForm /> : <Navigate to="/" />}
+            />
+          <Route
+            path="delete/:budgetsId"
             element={user ? <DeleteGoal /> : <Navigate to="/" />}
           />
           {/* the budgets and savings are using the same table in the backend, do they just use the same forms in the Front end? */}
