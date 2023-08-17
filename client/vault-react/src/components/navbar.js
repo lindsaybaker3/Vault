@@ -10,8 +10,8 @@ const Navbar = () => {
     <nav className="nav-list">
       {/* always */}
       <Link to="/">Home</Link> <Link to="/questions/all">Questions</Link>{" "}
-      <Link to = "/budgets"> Budges</Link>
-      <Link to = "/savings">Savings</Link>
+      <Link to="/budgets"> Budges</Link>
+      <Link to="/savings">Savings</Link>
       {/* only logged in */}
       {user && (
         <>
