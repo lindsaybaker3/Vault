@@ -1,0 +1,118 @@
+/* :root {
+  --max-width: 1144px;
+}
+
+body > div {
+  max-width: 1144px;
+  margin: auto;
+}
+
+th,
+td,
+tr {
+  border: 0;
+  color: #7b5949;
+}
+
+th {
+  width: 1%;
+}
+
+tr {
+  border-radius: 5px;
+}
+
+td {
+  padding: 10px;
+  border: 0;
+  box-shadow: 0 0 10px gray;
+}
+
+tr td:first-child {
+  border-top-left-radius: 10px;
+}
+tr td:last-child {
+  border-top-right-radius: 10px;
+}
+
+tr td:first-child {
+  border-bottom-left-radius: 10px;
+}
+tr td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+tr td {
+  padding: 0 15px;
+}
+tr td:first-child {
+  border-left-style: solid;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+
+tr td:last-child {
+  border-right-style: solid;
+}
+
+tr td div {
+  margin: 0px 16px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+tr th div {
+  margin: 0px 16px;
+  font-size: 22px;
+}
+
+tr:nth-child(2n) td {
+  background: #e1ab78;
+  color: white;
+}
+
+tr:nth-child(2n + 1) td {
+  background: rgb(233, 229, 229, 0.1);
+  color: #7b5949;
+}
+
+th div {
+  color: #7b5949;
+}
+
+.link-question {
+  background-color: transparent;
+  border-radius: 5px;
+}
+
+.link-question:hover {
+  background-color: #7b5949dd !important;
+  color: white;
+}
+
+.btn-warning {
+  background-color: grey;
+  border-color: grey;
+  color: #7b5949dd;
+}
+
+.btn-warning:hover {
+  background-color: #7b5949dd;
+  border-color: #7b5949dd;
+  color: black;
+}
+
+.btn-primary {
+  background-color: #e1ab78;
+  border-color: #e1ab78;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #e1ab78;
+  border-color: #e1ab78;
+} */
