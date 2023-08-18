@@ -6,7 +6,7 @@
   left: 0;
   width: 250px;
   height: 100%;
-  background-color: #333;
+  background-color: #05391f;
   color: white;
   padding-top: 20px;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
@@ -23,24 +23,19 @@
 
 /* Hover effect for Sidebar Links */
 .sidebar a:hover {
-  background-color: #555;
+  background-color: #69b45e;
 }
 
 /* Active Sidebar Link */
 .sidebar a.active {
-  background-color: #444;
+  background-color: #dfffcf;
 }
 
-/* Main Content Area */
-.main-content {
-  margin-left: 250px; /* Adjust for sidebar width */
-  padding: 20px;
-}
 
 /* this is nav list*/
 
 .nav-list {
-  background: #e1ab789c;
+  background: #69b45e;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -50,7 +45,7 @@
 
 .nav-list a {
   text-decoration: none;
-  color: white;
+  color: #05391f;
   font-size: 28px;
   font-weight: bold;
 }
