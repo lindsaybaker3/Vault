@@ -13,7 +13,7 @@ const Navbar = () => {
       {user && (
         <>
           <Link to="/dashboard">Home</Link>
-          <Link to="/user/:userId/transactions">Transactions</Link>
+          <Link to="/transactions">Transactions</Link>
           <Link to= "/budgets">Budgets</Link>
           <Link to="/savings">Savings</Link>
           <Link to="/user/:userId/reports">Reports</Link>
