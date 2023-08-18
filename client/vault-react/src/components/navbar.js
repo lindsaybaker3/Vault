@@ -14,19 +14,22 @@ const Navbar = () => {
         <>
           <Link to="/dashboard">Home</Link>
           <Link to="/user/:userId/transactions">Transactions</Link>
-          <Link to="/user/:userId/budgets">Budgets</Link>
-          <Link to="/user/:userId/savings">Savings</Link>
+<Link to= "/budgets">Budgets</Link>
+          <Link to="/savings">Savings</Link>
           <Link to="/user/:userId/reports">Reports</Link>
-          <Link onClick={auth.logout}>Logout</Link>{" "}
-          <Link to="/transactions">Transactions_TEST</Link>{" "}
+          <Link onClick={auth.logout}>Logout</Link>
+ <Link to="/transactions">Transactions_TEST</Link>{" "}
           <Link to="/transaction/add">Transactions_TEST_ADD</Link>{" "}
+
+
         </>
       )}
       {/* only logged out */}
       {!user && (
         <>
-          <Link to="/">Home</Link> <Link to="/login">Log In</Link>{" "}
-          <Link to="/signup">Signup</Link>
+          <Link to="/">Home</Link> {" "}
+          <Link to="/login">Log In</Link> <Link to="/signup">Signup</Link>
+
         </>
       )}
     </nav>

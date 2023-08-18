@@ -64,6 +64,12 @@ public class GoalsController {
 
     @PutMapping("/goal/{goalId}")
     public ResponseEntity<Object> update(@PathVariable int goalId, @RequestBody Goals goal) throws DataAccessException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName(); // Assuming username is the identifier
+        AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
+        if(appUser.getAppUserId() != goal.getAppUserId()){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         if(goalId != goal.getGoalsId()){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }

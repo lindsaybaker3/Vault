@@ -44,14 +44,14 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJt
 
 PUT http://localhost:8080/api/vault/goal/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjgyNDU1fQ.MsnlPN49cXyGNw-d4hn_IN98MqkMIrJE-FybjTg7Tgg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMzEzNTk0fQ.CEF775fvMMMoCWTuye0nHsoLP4BfUe39eNOF598J950
 
 {
   "goalsId": 1,
   "appUserId": 1,
   "categoryId": 1,
   "type": "spending",
-  "amount": 100,
+  "amount": 50,
   "startDate": "2023-08-17",
   "endDate": "2023-08-30"
 }
