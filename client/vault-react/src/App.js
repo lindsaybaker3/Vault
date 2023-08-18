@@ -118,7 +118,7 @@ function App() {
           />
           <Route
             path="/budgets/edit/:goalsId"
-            element = {<GoalsForm />}
+            element = {<GoalsForm type = "spending"/>}
             // element={user ? <GoalsForm /> : <Navigate to="/" />}
           />
           <Route

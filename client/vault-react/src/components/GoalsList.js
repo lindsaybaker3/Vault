@@ -33,30 +33,15 @@ const GoalsList = ({ type }) => {
     
 
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    
-                </tr>
+        <div className = "card-container">
+                {filteredGoals.map((goal) => (
+                   <Link to = {`/budgets/${goal.goalsId}`} key = {goal.goalsId} className="card">
+                    <h2>{goal.categoryName}</h2>
+                   </Link>  
+                ))}
+                
 
-            </thead>
-            <tbody>
-                {filteredGoals.map(goal => <tr key = {goal.goalsId}>
-                    <td>{goal.categoryName}</td>
-                    
-                    <td>
-                        <Link to = {`/budgets/edit/${goal.goalsId}`}>Edit</Link>
-                        <Link to = {`/budgets/${goal.goalsId}`}>View Goal</Link>
-                    </td>
-
-
-                </tr>)}
-
-            </tbody>
-
-
-        </table>
+        </div>
     )
 }
 
