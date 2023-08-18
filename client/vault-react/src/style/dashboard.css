@@ -1,36 +1,56 @@
+
+/* Sidebar Container */
 .sidebar {
-    margin: 0;
-    padding: 0;
-    width: 200px;
-    background-color: #f1f1f1;
-    position: fixed;
-    height: 100%;
-    overflow: auto;
-  }
-  
-  /* Sidebar links */
-  .sidebar a {
-    display: block;
-    color: black;
-    padding: 16px;
-    text-decoration: none;
-  }
-  
-  /* Active/current link */
-  .sidebar a.active {
-    background-color: #04AA6D;
-    color: white;
-  }
-  
-  /* Links on mouse-over */
-  .sidebar a:hover:not(.active) {
-    background-color: #555;
-    color: white;
-  }
-  
-  /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
-  div.content {
-    margin-left: 200px;
-    padding: 1px 16px;
-    height: 1000px;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  color: white;
+  padding-top: 20px;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Sidebar Links */
+.sidebar a {
+  display: block;
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for Sidebar Links */
+.sidebar a:hover {
+  background-color: #555;
+}
+
+/* Active Sidebar Link */
+.sidebar a.active {
+  background-color: #444;
+}
+
+/* Main Content Area */
+.main-content {
+  margin-left: 250px; /* Adjust for sidebar width */
+  padding: 20px;
+}
+
+/* this is nav list*/
+
+.nav-list {
+  background: #e1ab789c;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 7px 40px;
+  border-radius: 10px;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+}
