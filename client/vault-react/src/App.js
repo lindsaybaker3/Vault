@@ -104,7 +104,7 @@ function App() {
 
           <Route
             path="/budgets"
-            element = {<GoalsList type = "spending" />}
+            element={<GoalsList type="spending" />}
             // element={user ? <GoalsList /> : <Navigate to="/" />}
           />
           <Route
@@ -117,7 +117,9 @@ function App() {
           />
           <Route
             path="/budgets/edit/:goalsId"
-            element = {<GoalsForm />}
+
+            element = {<GoalsForm type = "spending"/>}
+
             // element={user ? <GoalsForm /> : <Navigate to="/" />}
           />
           <Route
@@ -128,7 +130,7 @@ function App() {
 
           <Route
             path="/savings"
-            element = {<GoalsList type = "saving" />}
+            element={<GoalsList type="saving" />}
             // element={user ? <GoalsList /> : <Navigate to="/" />}
           />
           <Route

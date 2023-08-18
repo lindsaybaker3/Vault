@@ -21,7 +21,7 @@ function ConfirmDelete(props) {
   }, [props.transactions, params.id, navigate]);
 
   const handleDelete = () => {
-    fetch(`http://localhost:8080/api/vault/${params.id}`, {
+    fetch(`http://localhost:8080/api/vault/transaction/${params.id}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + auth.user.token,

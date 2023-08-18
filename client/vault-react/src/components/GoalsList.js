@@ -29,34 +29,18 @@ const GoalsList = ({ type }) => {
     useEffect(loadGoals, [])
 
     const filteredGoals = goals.filter(goal => goal.type === type);
-        
-    
-
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    
-                </tr>
 
-            </thead>
-            <tbody>
-                {filteredGoals.map(goal => <tr key = {goal.goalsId}>
-                    <td>{goal.categoryName}</td>
-                    
-                    <td>
-                        <Link to = {`/budgets/edit/${goal.goalsId}`}>Edit</Link>
-                        <Link to = {`/budgets/${goal.goalsId}`}>View Goal</Link>
-                    </td>
+        <div className = "card-container">
+                {filteredGoals.map((goal) => (
+                   <Link to = {`/budgets/${goal.goalsId}`} key = {goal.goalsId} className="card">
+                    <h2>{goal.categoryName}</h2>
+                   </Link>  
+                ))}
+                
 
+        </div>
 
-                </tr>)}
-
-            </tbody>
-
-
-        </table>
     )
 }
 
