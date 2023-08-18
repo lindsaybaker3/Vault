@@ -14,10 +14,13 @@ const Navbar = () => {
         <>
           <Link to="/dashboard">Home</Link>
           <Link to="/user/:userId/transactions">Transactions</Link>
-          <Link to= "/budgets">Budgets</Link>
+<Link to= "/budgets">Budgets</Link>
           <Link to="/savings">Savings</Link>
           <Link to="/user/:userId/reports">Reports</Link>
           <Link onClick={auth.logout}>Logout</Link>
+ <Link to="/transactions">Transactions_TEST</Link>{" "}
+          <Link to="/transaction/add">Transactions_TEST_ADD</Link>{" "}
+
 
         </>
       )}
@@ -26,6 +29,7 @@ const Navbar = () => {
         <>
           <Link to="/">Home</Link> {" "}
           <Link to="/login">Log In</Link> <Link to="/signup">Signup</Link>
+
         </>
       )}
     </nav>

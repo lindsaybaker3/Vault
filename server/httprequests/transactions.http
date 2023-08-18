@@ -25,25 +25,27 @@ Content-Type: application/json
 #####
 // Get transactions by user id
 GET http://localhost:8080/api/vault/transactions
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjg1NTYwfQ.6OKtJ5TpdMdszVFYU7x_mWvyhkbAV3e42CKperiBMWw
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMzA4NjcxfQ.zauDxj3_xX77XATadj7D3jWAyP6osMStFpNMuOPfAcw
+
 ###
 GET http://localhost:8080/api/vault/transaction/2
-Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjg1NTYwfQ.6OKtJ5TpdMdszVFYU7x_mWvyhkbAV3e42CKperiBMWw
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMzA4NjcxfQ.zauDxj3_xX77XATadj7D3jWAyP6osMStFpNMuOPfAcw
+
 
 ####
 GET http://localhost:8080/api/vault/transaction/goals/1
-Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjg1NTYwfQ.6OKtJ5TpdMdszVFYU7x_mWvyhkbAV3e42CKperiBMWw
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMzA4NjcxfQ.zauDxj3_xX77XATadj7D3jWAyP6osMStFpNMuOPfAcw
 
 ####
 // Create an transaction
 POST http://localhost:8080/api/vault/transaction/create HTTP/1.1
 Content-Type: application/json
-Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjg1NTYwfQ.6OKtJ5TpdMdszVFYU7x_mWvyhkbAV3e42CKperiBMWw
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMzA4NjcxfQ.zauDxj3_xX77XATadj7D3jWAyP6osMStFpNMuOPfAcw
 
 {
   "appUserId": 1,
-  "goalsId": 1,
-  "description": "Travel",
+  "goalsId": 2,
+  "description": "Travel to Iceland",
   "amount": 2000,
   "transactionDate": "2023-08-15"
 }
@@ -54,7 +56,7 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJt
 
 PUT http://localhost:8080/api/vault/transaction/2 HTTP/1.1
 Content-Type: application/json
-Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjg1NTYwfQ.6OKtJ5TpdMdszVFYU7x_mWvyhkbAV3e42CKperiBMWw
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMzA4NjcxfQ.zauDxj3_xX77XATadj7D3jWAyP6osMStFpNMuOPfAcw
 
 {
   "transactionId": 2,
@@ -69,5 +71,5 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJt
 ####
 //Delete a transaction
 
-DELETE http://localhost:8080/api/vault/transaction/8 HTTP/1.1
-Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjg1NTYwfQ.6OKtJ5TpdMdszVFYU7x_mWvyhkbAV3e42CKperiBMWw
+DELETE http://localhost:8080/api/vault/transaction/5 HTTP/1.1
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMzA4NjcxfQ.zauDxj3_xX77XATadj7D3jWAyP6osMStFpNMuOPfAcw

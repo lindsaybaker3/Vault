@@ -29,10 +29,8 @@ const GoalsList = ({ type }) => {
     useEffect(loadGoals, [])
 
     const filteredGoals = goals.filter(goal => goal.type === type);
-        
-    
-
     return (
+
         <div className = "card-container">
                 {filteredGoals.map((goal) => (
                    <Link to = {`/budgets/${goal.goalsId}`} key = {goal.goalsId} className="card">
@@ -42,6 +40,7 @@ const GoalsList = ({ type }) => {
                 
 
         </div>
+
     )
 }
 

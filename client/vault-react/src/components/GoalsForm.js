@@ -10,8 +10,10 @@ const GoalsForm = (props) => {
     const navigate = useNavigate();
 
     const [errors, setErrors] = useState([])
+
    const[appUserId, setAppUserId] = useState([])
     const [categoryId, setCategoryId] = useState("")
+
     const[amount, setAmount] = useState("")
     const[startDate, setStartDate] = useState("")
     const[endDate, setEndDate] = useState("")
@@ -36,6 +38,7 @@ const GoalsForm = (props) => {
             .then(response => {
                 if(response.ok){
                    return response.json()
+
                 } else {
                     console.log(`unexpected response status code: ${response.status}`)
                 }
@@ -60,6 +63,7 @@ const GoalsForm = (props) => {
     const handleSubmit = (evt) => {
         evt.preventDefault()
         const newGoal = {
+
             appUserId: auth.user.appUserId,
             categoryId: categoryId,
             type: props.type, //props.type
@@ -108,7 +112,6 @@ const GoalsForm = (props) => {
             }
         })
     }
-   
 
     return (
         <form onSubmit = {handleSubmit}>
@@ -127,6 +130,7 @@ const GoalsForm = (props) => {
                 </select>
             </fieldset>
             <fieldset>
+
                 <label htmlFor = "amount-input">Budget Goal: </label>
                 <input id = "amount-input" type = "number" value = {amount} onChange = {(evt) => setAmount(evt.target.value)}></input>
             </fieldset>
