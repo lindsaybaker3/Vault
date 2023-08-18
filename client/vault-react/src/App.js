@@ -62,7 +62,7 @@ function App() {
   return (
     <AuthContext.Provider value={auth}>
       <BrowserRouter>
-        <h1> Welcome to Vault! </h1>
+        {/* <h1> Welcome to Vault! </h1> */}
         <Navbar />
 
         <Routes>
@@ -99,8 +99,10 @@ function App() {
             }
           />
           <Route
-            path="delete/:transactionId"
-            element={user ? <DeleteTransaction /> : <Navigate to="/" />}
+            path="/delete/:transactionId"
+            element={
+              user ? <DeleteTransaction user={user} /> : <Navigate to="/" />
+            }
           />
 
           <Route
