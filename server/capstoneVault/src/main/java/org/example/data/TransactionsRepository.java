@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface TransactionsRepository {
 
-    boolean hasTransactions(int goalId);
-
     List<Transaction> findByUserId(int appUserId);
 
     Transaction findByTransactionId(int transactionId);
@@ -19,6 +17,8 @@ public interface TransactionsRepository {
     boolean update(Transaction transaction);
 
     boolean deleteById(int  transactionId);
+
+    boolean hasTransactions(int goalId);
 
 
 }

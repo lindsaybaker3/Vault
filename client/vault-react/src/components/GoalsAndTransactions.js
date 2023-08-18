@@ -59,8 +59,10 @@ return (
                         <td className = "goal-amount">{goal.amount}</td>
                         <td className = "goal-startDate">{goal.startDate}</td>
                         <td className = "goal-endDate">{goal.endDate}</td>
-                        <td className="goal-CurrentBalance">{goal.currentBalance}</td>
+                        <td className="goal-CurrentBalance">{goal.currentBalance}</td>        
+
                         <Link to = {`/budgets/edit/${goal.goalsId}`}>Edit</Link>
+
                     </tr>
                 </tbody>
             </table>

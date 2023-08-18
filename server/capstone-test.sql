@@ -145,7 +145,7 @@ insert into transaction (app_user_id, goals_id, amount, transaction_date, `descr
 	values
     (1, 1, 8000.00, '2023-08-05', 'paycheck'),
     (1, 2, 1000.00, '2023-08-10', 'dog sitting'),
-    (1, 4, 1100.00, '2023-08-20', 'rent'),
+    (1, 3, 1100.00, '2023-08-20', 'rent'),
     (2, 4, 280.00, '2023-08-07', 'groceries');
     
     end //
@@ -155,3 +155,5 @@ delimiter ;
 -- SET SQL_SAFE_UPDATES = 0;
 -- CALL set_known_good_state();
 -- select * from transaction;
+
+select * from goals;

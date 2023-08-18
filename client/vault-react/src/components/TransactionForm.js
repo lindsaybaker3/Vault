@@ -14,12 +14,16 @@ const TransactionForm = () => {
   const [goalsId, setGoalsId] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState("");
+  const [goal, setGoal] = useState("");
   const [transactionDate, setTransactionDate] = useState("");
 
   const resetState = () => {
     setGoalsId("");
     setDescription("");
     setAmount("");
+    setCategory("");
+    setGoal("");
     setTransactionDate("");
   };
 
@@ -38,6 +42,8 @@ const TransactionForm = () => {
           setGoalsId(targetTransaction.goalsId);
           setDescription(targetTransaction.description);
           setAmount(targetTransaction.amount);
+          setGoal(targetTransaction.goal);
+          setCategory(targetTransaction.category);
           setTransactionDate(targetTransaction.transactionDate);
         })
         .catch((error) => {
@@ -54,6 +60,8 @@ const TransactionForm = () => {
       goalsId: goalsId,
       description: description,
       amount: amount,
+      goals: goal,
+      category: category,
       transactionDate: transactionDate,
     };
 
@@ -95,19 +103,29 @@ const TransactionForm = () => {
   return (
     <form className="login-form" onSubmit={handleSubmit}>
       <ul>
-        {errors.map((error) => (
-          <li key={error}>{error}</li>
+        {errors.map((error, index) => (
+          <li key={index}>{error}</li>
         ))}
       </ul>
       <h2 className="title">Add your Transaction !</h2>
       <fieldset>
-        <label htmlFor="goal-input">Goal:</label>
+        <label htmlFor="goal-input">Goal Type:</label>
         <select
           id="goal-input"
           value={goalsId}
           onChange={(evt) => setGoalsId(evt.target.value)}
         >
-          <option value="1">Emergency Fund</option>
+          <option value="1">Savings</option>
+          <option value="2">Expenses</option>
+        </select>
+      </fieldset>
+      <fieldset>
+        <label htmlFor="category-input">Category: </label>
+        <select
+          id="category-input"
+          value={category}
+          onChange={(evt) => setCategory(evt.target.value)}
+        >
           <option value="2">Vacation Fund</option>
           <option value="3">Pay Off High-Interest Debt</option>
           <option value="4">Buy a Car</option>
