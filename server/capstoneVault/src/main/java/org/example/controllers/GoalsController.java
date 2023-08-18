@@ -54,7 +54,7 @@ public class GoalsController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName(); // Assuming username is the identifier
         AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
-
+        goal.setAppUserId(appUser.getAppUserId());
         Result result = service.addGoal(goal);
         if(!result.isSuccess()){
             return new ResponseEntity<>(result.getErrorMessages(), HttpStatus.BAD_REQUEST);

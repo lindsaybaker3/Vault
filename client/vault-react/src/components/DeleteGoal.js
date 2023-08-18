@@ -2,32 +2,38 @@ import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
-function ConfirmDeleteGoal(props) {
+function ConfirmDeleteGoal() {
     const params = useParams();
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
   
     const [goal, setGoal] = useState(null);
 
-    useEffect(() => {
-        const targetGoal = props.goaloals.find(goal => goal.id === parseInt(params.id))
-        if (targetGoal !== undefined) {
-          setGoal({...targetGoal})
-        } else {
-          navigate('/not-found')
-        }
-      }, [props.goals, params.id, navigate])
+   useEffect(()=> {
+    fetch(`http://localhost:8080/api/goals/${params.goalsId}`, {
+      headers: {
+          Authorization: "Bearer " + auth.user.token,
+      }
+    })
+    .then(response => {
+      if(response.ok){
+        response.json()
+        .then(setGoal)
+      } else {
+        navigate('/*')
+      }
+    })
+  }, [params.goalsId])
 
     const handleDelete = () => {
-        fetch(`http://localhost:8080//api/vault/goal/${params.id}`, {
+        fetch(`http://localhost:8080/api/vault/goal/${params.goalsId}`, {
           method: "DELETE",
           headers: {
             Authorization: "Bearer " + auth.user.token,
           },
         }).then((response) => {
           if (response.ok) {
-            navigate("/user/:userId/savings");
-            props.loadGoals();
+            navigate("/budgets");
           } else {
             console.log(`Unexpected response status code: ${response.status}`);
           }
@@ -46,7 +52,7 @@ function ConfirmDeleteGoal(props) {
             <li>Category: {goal.categoryName}</li>
           </ul>
           <button onClick={handleDelete}>Delete</button>
-          <Link to="/user/:userId/savings">Cancel</Link>
+          <Link to="/budgets">Cancel</Link>
         </>
       );
     }

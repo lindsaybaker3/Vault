@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react"
 import AuthContext from "../context/AuthContext"
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import '../style/goalslist.css'
 
 const GoalsList = ({ type }) => {
     const auth = useContext(AuthContext);
@@ -29,15 +30,22 @@ const GoalsList = ({ type }) => {
     useEffect(loadGoals, [])
 
     const filteredGoals = goals.filter(goal => goal.type === type);
+    console.log(filteredGoals)
+
+    const addLinkPath = type === "spending" ? "/budgets/add" : "/savings/add"
     return (
 
-        <div className = "card-container">
-                {filteredGoals.map((goal) => (
+        <div className = "card-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                {filteredGoals.map((goal, index) => (
+                    console.log(goal),
+                    console.log(index),
                    <Link to = {`/budgets/${goal.goalsId}`} key = {goal.goalsId} className="card">
                     <h2>{goal.categoryName}</h2>
                    </Link>  
                 ))}
-                
+                <Link to = {addLinkPath} className = "add=button">
+                    Add {type === 'spending' ? "budget" : "saving"}
+                </Link>
 
         </div>
 
