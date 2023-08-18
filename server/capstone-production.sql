@@ -181,3 +181,26 @@ drop table if exists transaction;
 
 
 select * from app_user;
+
+
+-- find categories by type
+SELECT c.category_name
+FROM goals g
+JOIN category c ON g.category_id = c.category_id
+WHERE g.goal_type = 'expense';
+
+
+-- get goal id by goal type and category_name
+SELECT goals_id
+FROM goals
+WHERE goal_type = 'saving'
+AND category_id = (
+    SELECT category_id
+    FROM category
+    WHERE category_name = 'Vacation Fund'
+);
+
+
+
+
+select * from transaction
