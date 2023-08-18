@@ -25,13 +25,22 @@ class TransactionServiceTest {
     @MockBean
     TransactionsJdbcTemplateRepository repository;
 
+// this.transactionId = transactionId;
+//        this.appUserId = appUserId;
+//        this.goalsId = goalsId;
+//        this.goal_type = goal_type;
+//        this.category = category;
+//        this.description = description;
+//        this.amount = amount;
+//        this.transactionDate
+
 
     @Test
     void ShouldFindListOfTransaction() {
         when(repository.findByUserId(1)).thenReturn(List.of(
-                new Transaction(1, 1, 1, "groceries", new BigDecimal("100"),
+                new Transaction(1, 1, 1,"saving", "travel",  "travel iceland", new BigDecimal("100"),
                         LocalDate.of(2023, 8, 15)),
-                new Transaction(2, 1, 1, "groceries", new BigDecimal("200"),
+                new Transaction(2, 1, 1, "saving", "grocery montly","groceries", new BigDecimal("200"),
                         LocalDate.of(2023, 8, 16))
         ));
 
@@ -43,7 +52,7 @@ class TransactionServiceTest {
     @Test
     void shouldFindByTransactionId() {
         when(repository.findByTransactionId(3)).thenReturn(
-                new Transaction(3, 1, 1, "rent", new BigDecimal("1000"),
+                new Transaction(3, 1, 1,"expense", "rent", "rent montly", new BigDecimal("1000"),
                         LocalDate.of(2023, 8, 15))
         );
         Transaction transaction = service.findByTransactionId(3);
@@ -53,10 +62,10 @@ class TransactionServiceTest {
     @Test
     void shouldFindListOfByGoalsId() {
         when(repository.findByGoalsId(1)).thenReturn(List.of(
-                new Transaction(1, 1, 1, "groceries", new BigDecimal("100"),
+                new Transaction(1, 1, 1,"saving", "groceries", "groceries", new BigDecimal("100"),
                         LocalDate.of(2023, 8, 15)),
-                new Transaction(2, 1, 1, "groceries", new BigDecimal("200"),
-                        LocalDate.of(2023, 8, 16))
+                new Transaction(1, 1, 1,"saving", "hospital", "hospital expenses", new BigDecimal("100"),
+                        LocalDate.of(2023, 8, 15))
         ));
 
         List<Transaction> transactions = service.findByGoalsId(1);

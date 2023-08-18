@@ -98,8 +98,10 @@ function App() {
             }
           />
           <Route
-            path="delete/:transactionId"
-            element={user ? <DeleteTransaction /> : <Navigate to="/" />}
+            path="/delete/:transactionId"
+            element={
+              user ? <DeleteTransaction user={user} /> : <Navigate to="/" />
+            }
           />
 
           <Route

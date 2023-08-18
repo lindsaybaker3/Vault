@@ -94,9 +94,9 @@ public class TransactionService {
             result.addErrorMessage("Transaction description is required.", ResultType.INVALID);
         }
 
-        if (transaction.getGoalsId() <= 0 ) {
-            result.addErrorMessage("Goal is required.", ResultType.INVALID);
-        }
+//        if (transaction.getGoalsId() <= 0 ) {
+//            result.addErrorMessage("Goal is required.", ResultType.INVALID);
+//        }
 
         return result;
     }

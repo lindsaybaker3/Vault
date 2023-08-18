@@ -9,6 +9,8 @@ const SignupForm = ({ addUser }) => {
   const [userData, setUserData] = useState({
     username: "",
     password: "",
+    firstName: "",
+    lastName: "",
     roles: ["USER"],
     enabled: true,
   });
@@ -30,6 +32,8 @@ const SignupForm = ({ addUser }) => {
           setUserData({
             username: "",
             password: "",
+            firstName: "",
+            lastName: "",
             roles: ["USER"],
             enabled: true,
           });
@@ -63,6 +67,26 @@ const SignupForm = ({ addUser }) => {
         {errors.map((error, i) => (
           <div key={i}>{error}</div>
         ))}
+        <fieldset>
+          <label htmlFor="firstname-input">First Name: </label>
+          <input
+            id="firstname-input"
+            type="text"
+            name="firstName"
+            value={userData.firstName}
+            onChange={handleInputChange}
+          />
+        </fieldset>
+        <fieldset>
+          <label htmlFor="lastname-input">Last Name: </label>
+          <input
+            id="lastname-input"
+            type="text"
+            name="lastName"
+            value={userData.lastName}
+            onChange={handleInputChange}
+          />
+        </fieldset>
         <fieldset>
           <label htmlFor="username-input">Username: </label>
           <input

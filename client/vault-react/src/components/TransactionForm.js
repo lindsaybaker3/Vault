@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import "../styles/transactionForm/style.css";
 
 const TransactionForm = () => {
   const params = useParams();
@@ -9,6 +10,46 @@ const TransactionForm = () => {
   const auth = useContext(AuthContext);
 
   const [errors, setErrors] = useState([]);
+
+  // mock response
+  const responseBack = [
+    {
+      id: 1,
+      name: "Usuário 1",
+    },
+    {
+      id: 2,
+      name: "Usuário 2",
+    },
+    {
+      id: 3,
+      name: "Usuário 1",
+    },
+    {
+      id: 4,
+      name: "Usuário 1",
+    },
+  ];
+
+  function renderSelect(element, key) {
+    // useEffect(
+    //   `http://localhost:8080/api/vault/budgetcategory/saving`,
+    //   {
+    //     headers: {
+    //       Authorization: "Bearer " + auth.user.token,
+    //     },
+    //   }
+    //     .then((response) => response.json())
+    //     .then((data) => setCategory(data))
+    //     .catch((error) => console.error("Error fetching data:", error));
+    // }, []);
+
+    return (
+      <Fragment key={key}>
+        <option value={element.name}>{element.name}</option>
+      </Fragment>
+    );
+  }
 
   // const [username, setUsername] = useState("");
   const [goalsId, setGoalsId] = useState("");
@@ -38,13 +79,13 @@ const TransactionForm = () => {
         }
       )
         .then((response) => response.json())
-        .then((targetTransaction) => {
-          setGoalsId(targetTransaction.goalsId);
-          setDescription(targetTransaction.description);
-          setAmount(targetTransaction.amount);
-          setGoal(targetTransaction.goal);
-          setCategory(targetTransaction.category);
-          setTransactionDate(targetTransaction.transactionDate);
+        .then((Transaction) => {
+          setGoalsId(Transaction.goalsId);
+          setDescription(Transaction.description);
+          setAmount(Transaction.amount);
+          // setGoal(Transaction.goal);
+          // setCategory(Transaction.category);
+          setTransactionDate(Transaction.transactionDate);
         })
         .catch((error) => {
           console.error("Error fetching transaction:", error);
@@ -108,7 +149,7 @@ const TransactionForm = () => {
         ))}
       </ul>
       <h2 className="title">Add your Transaction !</h2>
-      <fieldset>
+      {/* <fieldset>
         <label htmlFor="goal-input">Goal Type:</label>
         <select
           id="goal-input"
@@ -126,22 +167,10 @@ const TransactionForm = () => {
           value={category}
           onChange={(evt) => setCategory(evt.target.value)}
         >
-          <option value="2">Vacation Fund</option>
-          <option value="3">Pay Off High-Interest Debt</option>
-          <option value="4">Buy a Car</option>
-          <option value="5">Home Down Payment</option>
-          <option value="6">Higher Education</option>
-          <option value="7">Starting a Business</option>
-          <option value="8">Family Planning</option>
-          <option value="9">Retirement Savings</option>
-          <option value="10">Mortgage Payoff</option>
-          <option value="11">Financial Independence</option>
-          <option value="12">Education Fund for Children</option>
-          <option value="13">Estate Planning</option>
-          <option value="14">World Travel</option>
-          <option value="15">Investment Portfolio Growthl</option>
+          <option value="">Selecione uma Opção</option>
+          {responseBack.map(renderSelect)}
         </select>
-      </fieldset>
+      </fieldset> */}
       <fieldset>
         <label htmlFor="description-input">Description: </label>
         <input

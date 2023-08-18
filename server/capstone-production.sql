@@ -9,6 +9,8 @@ drop table if exists app_user;
 
 create table app_user (
     app_user_id int primary key auto_increment,
+    first_name text not null,
+    last_name text not null,
     username varchar(50) not null unique,
     password_hash varchar(2048) not null,
     enabled bit not null default(1)
@@ -45,10 +47,10 @@ create table goals (
     goal_amount decimal not null,
     start_date date not null,
     end_date date not null,
-     constraint fk_goals_app_user_app_user_id
+     constraint fk_goals_app_user_id
         foreign key (app_user_id)
         references app_user(app_user_id),
-    constraint fk_category_category_id
+    constraint fk_goals_category_id
         foreign key (category_id)
         references category(category_id)
 );
@@ -59,7 +61,7 @@ create table reports (
     start_date date not null,
     end_date date not null,
     report_url text not null,
-    constraint fk_reports_app_user_app_user_id
+    constraint fk_reports_app_user_id
         foreign key (app_user_id)
         references app_user(app_user_id)
 );
@@ -71,7 +73,7 @@ CREATE TABLE `transaction` (
     amount DECIMAL,
     `description` TEXT,
     transaction_date DATE NOT NULL,
-    CONSTRAINT fk_transaction_app_user_app_user_id
+    CONSTRAINT fk_transaction_app_user_id
         FOREIGN KEY (app_user_id)
         REFERENCES app_user(app_user_id),
     CONSTRAINT fk_goals_goals_id
@@ -85,10 +87,11 @@ insert into app_role (`name`) values
     ('ADMIN');
 
 -- passwords are set to "P@ssw0rd!"
-insert into app_user (username, password_hash, enabled)
+insert into app_user (first_name, last_name, username, password_hash, enabled)
     values
-    ('john@smith.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
-    ('sally@jones.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1);
+    ('Jonh', 'Smith','john@smith.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
+    ('Sally', 'Jones','sally@jones.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1);
+
 
 insert into app_user_role
     values
@@ -177,4 +180,27 @@ select * from goals;
 drop table if exists transaction;
 
 
-select * from transaction;
+select * from app_user;
+
+
+-- find categories by type
+SELECT c.category_name
+FROM goals g
+JOIN category c ON g.category_id = c.category_id
+WHERE g.goal_type = 'spending';
+
+
+-- get goal id by goal type and category_name
+SELECT goals_id
+FROM goals
+WHERE goal_type = 'saving'
+AND category_id = (
+    SELECT category_id
+    FROM category
+    WHERE category_name = 'Emergency Fund'
+);
+
+
+
+
+select * from transaction
