@@ -11,9 +11,9 @@ const GoalsForm = (props) => {
 
     const [errors, setErrors] = useState([])
 
-   const[appUserId, setAppUserId] = useState([])
+   const[appUserId, setAppUserId] = useState(auth.user?.appUserId || "")
     const [categoryId, setCategoryId] = useState("")
-
+    const [type, setType] = useState(props.type)
     const[amount, setAmount] = useState("")
     const[startDate, setStartDate] = useState("")
     const[endDate, setEndDate] = useState("")
@@ -49,6 +49,7 @@ const GoalsForm = (props) => {
                 setAmount(targetGoal.amount)
                 setStartDate(targetGoal.startDate)
                 setEndDate(targetGoal.endDate)
+
             })
             .catch(error => {
                 console.error(error)
@@ -99,7 +100,12 @@ const GoalsForm = (props) => {
             body: JSON.stringify(newGoal),
         }).then((response) => {
             if(response.ok){
-                navigate("/budgets")
+                if(props.type === "spending"){
+                    navigate("/budgets")
+                } else {
+                    navigate("/savings")
+                }
+                
                 //TODO: make this conditional so that it returns to saving or budget depending
             } else {
                 response.json().then((errors) => {
@@ -108,6 +114,7 @@ const GoalsForm = (props) => {
                     } else {
                         setErrors([errors]);
                     }
+                    console.log(errors);
                 })
             }
         })
@@ -120,13 +127,14 @@ const GoalsForm = (props) => {
                  <li key={error}>{error}</li>
              ))}
             </ul>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <fieldset>
                 <label htmlFor = "category-input">Category</label>
                 <select id = "category-input" value = {categoryId} onChange={(evt) => setCategoryId(evt.target.value)}>
                     <option value = "1">Groceries</option>
-                    <option value = "2">Vacation</option>
-                    <option value = "3">Rent</option>
-                    <option value = "4">Shopping</option>
+                    <option value = "8">Vacation</option>
+                    <option value = "6">Rent</option>
+                    <option value = "10">Shopping</option>
                 </select>
             </fieldset>
             <fieldset>
@@ -136,15 +144,22 @@ const GoalsForm = (props) => {
             </fieldset>
             <fieldset>
                 <label htmlFor = "start-date-input">Start Date:</label>
-                <input id = "start-date-input" type = "date" onChange = {(evt) => setStartDate(evt.target.value)}></input>
+                <input id = "start-date-input" type = "date" defaultValue = {startDate} onChange = {(evt) => setStartDate(evt.target.value)}></input>
             </fieldset>
             <fieldset>
                 <label htmlFor = "end-date-input">End Date:</label>
-                <input id = "end-date-input" type = "date" onChange = {(evt) => setEndDate(evt.target.value)}></input>
+                <input id = "end-date-input" type = "date" defaultValue = {endDate} onChange = {(evt) => setEndDate(evt.target.value)}></input>
             </fieldset>
-            <button type = "submit">Update Goal</button>
+            <button type = "submit">
+                {params.goalsId ? 
+                type === "spending" ? "Update Budget" : "Update Savings Goal"
+            : type === "spending" ? "Add Budget" : "Add Savings Goal"} </button>
             <Link to = "/budgets">Cancel</Link>
             
+
+
+
+            </div>
 
         </form>
     )
