@@ -187,7 +187,7 @@ select * from app_user;
 SELECT c.category_name
 FROM goals g
 JOIN category c ON g.category_id = c.category_id
-WHERE g.goal_type = 'expense';
+WHERE g.goal_type = 'spending';
 
 
 -- get goal id by goal type and category_name
@@ -197,7 +197,7 @@ WHERE goal_type = 'saving'
 AND category_id = (
     SELECT category_id
     FROM category
-    WHERE category_name = 'Vacation Fund'
+    WHERE category_name = 'Emergency Fund'
 );
 
 
