@@ -25,11 +25,13 @@ const TransactionsList = () => {
       <thead>
         <tr>
           <th>Transaction ID</th>
-          <th>Author ID</th>
+          <th>User ID</th>
           <th>Goal ID</th>
+          <th>Goal Type</th>
+          <th>Category</th>
           <th>Description</th>
           <th>Amount</th>
-          <th>Transaction Date</th>
+          <th>Date</th>
           <th>Edit?</th>
           <th>Delete?</th>
         </tr>
@@ -40,6 +42,8 @@ const TransactionsList = () => {
             <td>{transaction.transactionId}</td>
             <td>{transaction.appUserId}</td>
             <td>{transaction.goalsId}</td>
+            <td>{transaction.goal_type}</td>
+            <td>{transaction.category}</td>
             <td>{transaction.description}</td>
             <td>{transaction.amount}</td>
             <td>{transaction.transactionDate}</td>

@@ -42,6 +42,7 @@ useEffect(() => {
         fetchGoalWithTransactions()
     }
 }, [params.goalsId])
+console.log(goal)
 
 return (
     <div className = "Goals-details-container">
@@ -57,8 +58,8 @@ return (
                         <td className = "goal-amount">{goal.amount}</td>
                         <td className = "goal-startDate">{goal.startDate}</td>
                         <td className = "goal-endDate">{goal.endDate}</td>
-                        <td className="goal-CurrentBalance">{goal.getCurrentBalance}</td>
-                        {/* <td className = "transactions">{goal.transactionList}</td> */}
+                        <td className="goal-CurrentBalance">{goal.currentBalance}</td>
+                        
                     </tr>
                 </tbody>
             </table>
