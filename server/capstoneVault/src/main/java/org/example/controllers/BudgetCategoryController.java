@@ -36,4 +36,10 @@ public class BudgetCategoryController {
 
     }
 
+    @GetMapping("/budgetcategory/{type}")
+    public List<BudgetCategory> findbyGoalType(@PathVariable String type) {
+        return service.findByGoalType(type);
+    }
+
+
 }

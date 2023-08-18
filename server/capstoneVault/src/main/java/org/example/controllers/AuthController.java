@@ -67,10 +67,13 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<Object> createUser(@RequestBody AppUser appUserRequest) {
+
+        String firstName = appUserRequest.getFirstName();
+        String lastName = appUserRequest.getLastName();
         String username = appUserRequest.getUsername();
         String password = appUserRequest.getPassword();
 
-        Result<AppUser> result = appUserService.create(username, password);
+        Result<AppUser> result = appUserService.create(firstName, lastName,username, password);
 
         if (result.isSuccess()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(result);

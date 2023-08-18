@@ -23,6 +23,17 @@ public class BudgetCategoryJdbcTemplateRepository implements BudgetCategoryRepos
     }
 
     @Override
+    public List<BudgetCategory> findByGoalType(String type) {
+        final String sql = "SELECT c.category_name " +
+                "FROM goals g " +
+                "JOIN category c ON g.category_id = c.category_id " +
+                "WHERE g.goal_type = ?";
+
+        return jdbcTemplate.query(sql, new BudgetCategoryMapper(), type);
+    }
+
+
+    @Override
     public BudgetCategory findByCategoryId(int categoryId){
         final String sql= "select * from category " +
                 "where category_id = ?;";

@@ -14,17 +14,23 @@ public class AppUser implements UserDetails {
 
     private int appUserId;
     private String username;
+    private String firstName;
+    private String lastName;
     private String password;
     private final boolean enabled;
     private final Collection<GrantedAuthority> authorities;
 
-    public AppUser(int appUserId, String username, String password, boolean enabled, List<String> roles) {
+    public AppUser(int appUserId, String username,String firstName, String lastName, String password, boolean enabled, List<String> roles) {
         this.appUserId = appUserId;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.enabled = enabled;
         this.authorities = convertRolesToAuthorities(roles);
     }
+
+
 
     private static Collection<GrantedAuthority> convertRolesToAuthorities(List<String> roles) {
         return roles.stream()
@@ -45,6 +51,22 @@ public class AppUser implements UserDetails {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @Override
