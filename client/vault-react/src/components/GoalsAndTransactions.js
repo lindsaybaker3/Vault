@@ -46,7 +46,7 @@ useEffect(() => {
 console.log(goal)
 
 return (
-    <div className = "Goals-details-container">
+    <div className = "Goals-details-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <div className = "goal-section">
             <table>
                 <thead>
@@ -61,7 +61,8 @@ return (
                         <td className = "goal-endDate">{goal.endDate}</td>
                         <td className="goal-CurrentBalance">{goal.currentBalance}</td>        
 
-                        <Link to = {`/budgets/edit/${goal.goalsId}`}>Edit</Link>
+                        <Link to = { goal.type === "spending" ? `/budgets/edit/${goal.goalsId}` : `/savings/edit/${goal.goalsId}`}>Edit</Link>
+                        <Link to = {`/budgets/delete/${goal.goalsId}`}>Delete</Link>
 
                     </tr>
                 </tbody>
