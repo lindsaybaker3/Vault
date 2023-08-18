@@ -62,7 +62,6 @@ function App() {
   return (
     <AuthContext.Provider value={auth}>
       <BrowserRouter>
-        <h1> Welcome to Vault! </h1>
         <Navbar />
 
         <Routes>
