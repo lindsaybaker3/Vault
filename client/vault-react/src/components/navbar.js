@@ -18,13 +18,11 @@ const Navbar = () => {
       
       {user ? (
         <>
-
           <Link to="/dashboard">Dashboard</Link> {" "}
           <Link to="/transactions">Transactions</Link> {" "}
           <Link to="/budgets">Budgets</Link> {" "}
           <Link to="/savings">Savings</Link> {" "}
           <Link to="/user/:userId/reports">Reports</Link> {" "}
-
           <Link onClick={auth.logout}>Logout</Link>
            <Link to="/transactions">Transactions_TEST</Link>{" "}
           <Link to="/transaction/add">Transactions_TEST_ADD</Link>{" "}
