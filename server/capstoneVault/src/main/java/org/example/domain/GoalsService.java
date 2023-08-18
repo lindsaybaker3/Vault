@@ -42,6 +42,10 @@ public class GoalsService {
     public Result addGoal(Goals goal) throws DataAccessException {
         Result result = validate(goal);
 
+        if (goal.getStartDate() == null || goal.getStartDate().isBefore(LocalDate.now())) {
+            result.addErrorMessage("start date must be in the future", ResultType.INVALID);
+        }
+
         if(goal != null && goal.getGoalsId() > 0) {
             result.addErrorMessage("goal Id should not be set", ResultType.INVALID);
         }
@@ -54,6 +58,10 @@ public class GoalsService {
 
     public Result update(Goals goal) throws DataAccessException {
         Result result = validate(goal);
+
+        if (goal.getStartDate() == null) {
+            result.addErrorMessage("start date is required", ResultType.INVALID);
+        }
 
         if(goal.getGoalsId() <= 0){
             result.addErrorMessage("goal Id is required", ResultType.INVALID);
@@ -96,12 +104,10 @@ public class GoalsService {
         if (goal.getType() == null || goal.getType().isBlank()){
             result.addErrorMessage("must indicate if this is a spending or saving goal", ResultType.INVALID);
         }
-        if (goal.getAmount() == null || goal.getAmount().compareTo(BigDecimal.ZERO)<0) {
+        if (goal.getAmount() == null || goal.getAmount().compareTo(BigDecimal.ZERO)<=0) {
             result.addErrorMessage("Amount must be a positive number", ResultType.INVALID);
         }
-        if (goal.getStartDate() == null || goal.getStartDate().isBefore(LocalDate.now())) {
-            result.addErrorMessage("start date must be in the future", ResultType.INVALID);
-        }
+
         if(goal.getStartDate() != null && (goal.getEndDate() ==null || goal.getEndDate().isBefore(goal.getStartDate()))){
             result.addErrorMessage("end date cannot be before start date", ResultType.INVALID);
         }

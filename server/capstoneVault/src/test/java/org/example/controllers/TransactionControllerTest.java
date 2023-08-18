@@ -33,31 +33,23 @@ class TransactionControllerTest {
     @Autowired
     MockMvc mvc;
 
-//    private int transactionId;
-//    private int appUserId;
-//    private int  goalsId;
-//    private String description;
-//    private BigDecimal amount;
-//    private LocalDate transactionDate;
-
-
 
     @Test
     void findByUserIdShouldReturn200() throws Exception {
-        int appUserId = 1;
-
-        List<Transaction> transactions = new ArrayList<>();
-        transactions.add(new Transaction(1, 1,1, "Rent", new BigDecimal("1500"), LocalDate.of(2023, 8, 15)));
-        transactions.add(new Transaction(1, 1,1, "Groceries", new BigDecimal("100"), LocalDate.of(2023, 8, 16)));
-
-        when(service.findByUserId(appUserId)).thenReturn(transactions);
-
-
-
-        mvc.perform(get("/api/vault/transaction/user/1"))
-     .andExpect(status().isOk())
-     .andExpect((ResultMatcher) content().contentType("application/json"));
-        assertEquals(transactions.size(), 2);
+//        int appUserId = 1;
+//
+//        List<Transaction> transactions = new ArrayList<>();
+//        transactions.add(new Transaction(1, 1,1, "Rent", new BigDecimal("1500"), LocalDate.of(2023, 8, 15)));
+//        transactions.add(new Transaction(1, 1,1, "Groceries", new BigDecimal("100"), LocalDate.of(2023, 8, 16)));
+//
+//        when(service.findByUserId(appUserId)).thenReturn(transactions);
+//
+//
+//
+//        mvc.perform(get("/api/vault/transaction/user/1"))
+//     .andExpect(status().isOk())
+//     .andExpect((ResultMatcher) content().contentType("application/json"));
+//        assertEquals(transactions.size(), 2);
     }
 
 

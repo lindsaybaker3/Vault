@@ -24,4 +24,9 @@ public class BudgetCategoryService {
 
         return budgetCategory;
     }
+
+    public List<BudgetCategory> findByGoalType(String type) {
+        return budgetCategoryRepository.findByGoalType(type);
+    }
+
 }

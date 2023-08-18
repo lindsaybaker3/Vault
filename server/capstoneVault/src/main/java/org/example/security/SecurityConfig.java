@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .antMatchers("/authenticate").permitAll()
                 .antMatchers("/signup").permitAll()
 
+                .antMatchers(HttpMethod.GET, "/api/vault/budgetcategory/**").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/vault/transactions").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/vault/transaction/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/vault/transaction/goals/*").hasAnyAuthority("USER", "ADMIN")
