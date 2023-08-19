@@ -1,6 +1,6 @@
-
+/* 
 /* Sidebar Container */
-.sidebar {
+ .sidebar {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,42 +10,42 @@
   color: white;
   padding-top: 20px;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
-}
+} 
 
 /* Sidebar Links */
-.sidebar a {
+ .sidebar a {
   display: block;
   padding: 10px 20px;
   color: white;
   text-decoration: none;
   transition: background-color 0.3s ease;
-}
+} 
 
 /* Hover effect for Sidebar Links */
-.sidebar a:hover {
+ .sidebar a:hover {
   background-color: #69b45e;
-}
+} */
 
 /* Active Sidebar Link */
-.sidebar a.active {
+ .sidebar a.active {
   background-color: #dfffcf;
-}
+} 
 
 
 /* this is nav list*/
 
-.nav-list {
+ .nav-list {
   background: #69b45e;
   display: flex;
   justify-content: space-between;
   width: 100%;
   padding: 7px 40px;
   border-radius: 10px;
-}
+} 
 
-.nav-list a {
+ .nav-list a {
   text-decoration: none;
   color: #05391f;
   font-size: 28px;
   font-weight: bold;
-}
+} 
