@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import AuthContext from "./context/AuthContext";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar";
 import Landing from "./components/Landing";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
@@ -195,6 +195,7 @@ function App() {
               </Routes>
           </div>
         </div>
+
       </BrowserRouter>
     </AuthContext.Provider>
   );

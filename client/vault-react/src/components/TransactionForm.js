@@ -1,3 +1,4 @@
+import { type } from "@testing-library/user-event/dist/type";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -8,55 +9,18 @@ const TransactionForm = () => {
   const params = useParams();
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
-
+  const [goals, setGoals] = useState([]);
+  const [goalType, setGoalType] = useState("spending");
+  const typesList = getUniqueTypes(goals);
+  const filteredGoals = goals.filter((item) => item.type === goalType);
   const [errors, setErrors] = useState([]);
 
-  // mock response
-  const responseBack = [
-    {
-      id: 1,
-      name: "Usuário 1",
-    },
-    {
-      id: 2,
-      name: "Usuário 2",
-    },
-    {
-      id: 3,
-      name: "Usuário 1",
-    },
-    {
-      id: 4,
-      name: "Usuário 1",
-    },
-  ];
-
-  function renderSelect(element, key) {
-    // useEffect(
-    //   `http://localhost:8080/api/vault/budgetcategory/saving`,
-    //   {
-    //     headers: {
-    //       Authorization: "Bearer " + auth.user.token,
-    //     },
-    //   }
-    //     .then((response) => response.json())
-    //     .then((data) => setCategory(data))
-    //     .catch((error) => console.error("Error fetching data:", error));
-    // }, []);
-
-    return (
-      <Fragment key={key}>
-        <option value={element.name}>{element.name}</option>
-      </Fragment>
-    );
-  }
-
-  // const [username, setUsername] = useState("");
+  const [appUserId, setAppUserId] = useState(auth.user?.appUserId || "");
   const [goalsId, setGoalsId] = useState("");
+  console.log(goalsId, "goalsid");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
-  const [goal, setGoal] = useState("");
   const [transactionDate, setTransactionDate] = useState("");
 
   const resetState = () => {
@@ -64,11 +28,53 @@ const TransactionForm = () => {
     setDescription("");
     setAmount("");
     setCategory("");
-    setGoal("");
     setTransactionDate("");
   };
 
+  console.log(category, "category");
+  console.log(goals, "goals");
+  const loadGoals = () => {
+    if (!auth.user || !auth.user.token) {
+      navigate("/");
+      return;
+    }
+    fetch("http://localhost:8080/api/vault/goals", {
+      headers: {
+        Authorization: "Bearer " + auth.user.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((payload) => {
+        if (!params.transactionId) {
+          setCategory(payload?.[0]?.categoryName);
+          setGoalsId(payload?.[0]?.goalsId);
+        }
+        setGoals(payload);
+      })
+      .catch((error) => console.error("error Fetching questions:", error));
+  };
+
+  function getUniqueTypes(goalsList) {
+    const uniqueTypes = [...new Set(goalsList.map((goal) => goal.type))];
+    return uniqueTypes;
+  }
+
   useEffect(() => {
+    loadGoals();
+  }, []);
+
+  useEffect(() => {
+    if (!params.transactionId) {
+      console.log("passou aqui");
+      setCategory(filteredGoals[0]?.categoryName);
+      setGoalsId(filteredGoals[0]?.goalsId);
+    }
+  }, [filteredGoals, goalType, params.transactionId]);
+
+  useEffect(() => {
+    if (auth?.user?.appUserId) {
+      setAppUserId(auth.user.appUserId);
+    }
     if (params.transactionId !== undefined) {
       fetch(
         `http://localhost:8080/api/vault/transaction/${params.transactionId}`,
@@ -78,13 +84,20 @@ const TransactionForm = () => {
           },
         }
       )
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            console.log(`unexpected response status code: ${response.status}`);
+          }
+        })
         .then((Transaction) => {
+          setAppUserId(Transaction.appUserId);
           setGoalsId(Transaction.goalsId);
           setDescription(Transaction.description);
           setAmount(Transaction.amount);
-          // setGoal(Transaction.goal);
-          // setCategory(Transaction.category);
+          setGoalType(Transaction.goal_type);
+          setCategory(Transaction.category);
           setTransactionDate(Transaction.transactionDate);
         })
         .catch((error) => {
@@ -94,24 +107,25 @@ const TransactionForm = () => {
       resetState();
     }
   }, [auth.user.token, params.transactionId]);
-
+  console.log(params);
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const newTransaction = {
       goalsId: goalsId,
       description: description,
       amount: amount,
-      goals: goal,
-      category: category,
       transactionDate: transactionDate,
     };
 
+    if (appUserId) {
+      newTransaction.appUserId = appUserId;
+    }
+
     let url = null;
     let method = null;
-
-    if (params.id !== undefined) {
-      newTransaction.id = params.id;
-      url = `http://localhost:8080/api/vault/transaction/${params.id}`;
+    if (params.transactionId !== undefined) {
+      newTransaction.transactionId = params.transactionId;
+      url = `http://localhost:8080/api/vault/transaction/${params.transactionId}`;
       method = "PUT";
     } else {
       url = "http://localhost:8080/api/vault/transaction/create";
@@ -140,6 +154,8 @@ const TransactionForm = () => {
       }
     });
   };
+  console.log(goals);
+  console.log(goalsId);
 
   return (
     <form className="login-form" onSubmit={handleSubmit}>
@@ -148,39 +164,54 @@ const TransactionForm = () => {
           <li key={index}>{error}</li>
         ))}
       </ul>
-      <h2 className="title">Add your Transaction !</h2>
-      {/* <fieldset>
+      <h2 className="title">
+        {params.transactionId ? "Edit Transaction!" : "Add your Transaction!"}
+      </h2>
+      <fieldset>
         <label htmlFor="goal-input">Goal Type:</label>
         <select
           id="goal-input"
-          value={goalsId}
-          onChange={(evt) => setGoalsId(evt.target.value)}
+          value={goalType}
+          onChange={(evt) => setGoalType(evt.target.value)}
         >
-          <option value="1">Savings</option>
-          <option value="2">Expenses</option>
+          {typesList.map((type) => (
+            <option value={type}>{type}</option>
+          ))}
         </select>
       </fieldset>
+
       <fieldset>
-        <label htmlFor="category-input">Category: </label>
+        <label htmlFor="category-input">Category:</label>
         <select
           id="category-input"
           value={category}
-          onChange={(evt) => setCategory(evt.target.value)}
+          onChange={(evt) => {
+            setCategory(evt.target.value);
+            setGoalsId(
+              goals.find((item) => item.categoryName === evt.target.value)
+                ?.goalsId
+            );
+          }}
         >
-          <option value="">Selecione uma Opção</option>
-          {responseBack.map(renderSelect)}
+          {filteredGoals?.map((category) => (
+            <option key={category.id} value={category.categoryName}>
+              {category.categoryName}
+            </option>
+          ))}
         </select>
-      </fieldset> */}
+      </fieldset>
+
       <fieldset>
-        <label htmlFor="description-input">Description: </label>
+        <label htmlFor="description-input">Description:</label>
         <input
           id="description-input"
           value={description}
           onChange={(evt) => setDescription(evt.target.value)}
         />
       </fieldset>
+
       <fieldset>
-        <label htmlFor="amount-input">Amount: </label>
+        <label htmlFor="amount-input">Amount:</label>
         <input
           id="amount-input"
           type="number"
@@ -188,8 +219,9 @@ const TransactionForm = () => {
           onChange={(evt) => setAmount(evt.target.value)}
         />
       </fieldset>
+
       <fieldset>
-        <label htmlFor="date-input">Date: </label>
+        <label htmlFor="date-input">Date:</label>
         <input
           id="date-input"
           type="date"
@@ -197,6 +229,7 @@ const TransactionForm = () => {
           onChange={(evt) => setTransactionDate(evt.target.value)}
         />
       </fieldset>
+
       <div className="group-button">
         <Link className="btn btn-warning" to="/transactions">
           Cancel
@@ -208,5 +241,4 @@ const TransactionForm = () => {
     </form>
   );
 };
-
 export default TransactionForm;
