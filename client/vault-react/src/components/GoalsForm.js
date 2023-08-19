@@ -154,7 +154,7 @@ const GoalsForm = (props) => {
                 {params.goalsId ? 
                 type === "spending" ? "Update Budget" : "Update Savings Goal"
             : type === "spending" ? "Add Budget" : "Add Savings Goal"} </button>
-            <Link to = "/budgets">Cancel</Link>
+            <Link to = {type === "spending" ? "/budgets" : "/savings"}>Cancel</Link>
             
 
 

@@ -1,29 +1,46 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router"
 import AuthContext from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
-function ConfirmDeleteGoal() {
-    const params = useParams();
-    const navigate = useNavigate();
-    const auth = useContext(AuthContext);
-  
-    const [goal, setGoal] = useState(null);
+function DeleteGoal() {
+  const params = useParams();
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState([])
+  const auth = useContext(AuthContext);
+  const [goal, setGoal] = useState("");
+  //TODO: may need to add more pieces of state but this is what i have right now
 
-   useEffect(()=> {
-    fetch(`http://localhost:8080/api/goals/${params.goalsId}`, {
-      headers: {
-          Authorization: "Bearer " + auth.user.token,
-      }
-    })
-    .then(response => {
-      if(response.ok){
-        response.json()
-        .then(setGoal)
-      } else {
-        navigate('/*')
-      }
-    })
-  }, [params.goalsId])
+  const fetchGoal = () => {
+    fetch(`http://localhost:8080/api/vault/goals/${params.goalsId}`,
+    {headers: {
+        Authorization: "Bearer " + auth.user.token 
+    },
+})
+.then((response) => {
+    if(response.ok){
+        return response.json();
+    } else {
+        return Promise.reject("No Goal Exists");
+    }
+})
+.then((setGoal))
+.catch((error) => {
+    setErrors([error])
+})
+    
+}
+
+
+
+useEffect(() => {
+if(!auth?.user?.token){
+    return;
+}else {
+    fetchGoal()
+}
+}, [params.goalsId])
+ 
 
     const handleDelete = () => {
         fetch(`http://localhost:8080/api/vault/goal/${params.goalsId}`, {
@@ -43,19 +60,24 @@ function ConfirmDeleteGoal() {
       if (goal === null) {
         return null;
       }
+
+      console.log(goal);
     
       return (
-        <>
-          <h2>Confirm Delete</h2>
-          <p>Delete this Goal?</p>
-          <ul>
-            <li>Category: {goal.categoryName}</li>
-          </ul>
+        <div className="modal">
+        <div className="modal-content">
+          <h2>Delete Goal Confirmation</h2>
+          <p>Are you sure you want to delete this goal?</p>
+          <p>Category: {goal.categoryName}</p>
+          <p>Amount: {goal.amount}</p>
+          <p>Start Date: {goal.startDate}</p>
+          <p>End Date: {goal.endDate}</p>
           <button onClick={handleDelete}>Delete</button>
-          <Link to="/budgets">Cancel</Link>
-        </>
+          <Link to = {goal.type === "spending" ? "/budgets" : "/savings"}>Cancel</Link>
+        </div>
+      </div>
       );
     }
     
-export default ConfirmDeleteGoal;
+export default DeleteGoal;
 
