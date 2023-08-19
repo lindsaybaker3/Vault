@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import AuthContext from "./context/AuthContext";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar";
 import Landing from "./components/Landing";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
@@ -115,20 +115,11 @@ function App() {
           />
           <Route
             path="/budgets/add"
-            element={user ? <GoalsForm type = "spending" /> : <Navigate to="/" />}
+            element={user ? <GoalsForm type="spending" /> : <Navigate to="/" />}
           />
           <Route
             path="/budgets/edit/:goalsId"
-
-            element = {
-            user ? (
-            <GoalsForm type = "spending" />
-            ) : (
-              <Navigate to = "/" />
-            )
-            }
-
-            
+            element={user ? <GoalsForm type="spending" /> : <Navigate to="/" />}
           />
           <Route
             path="/budgets/delete/:budgetsId"
@@ -147,20 +138,11 @@ function App() {
           />
           <Route
             path="/savings/edit/:goalsId"
-
-            element = {
-            user ? (
-            <GoalsForm type = "saving" />
-            ) : (
-              <Navigate to = "/" />
-            )
-            }
-
-            
+            element={user ? <GoalsForm type="saving" /> : <Navigate to="/" />}
           />
           <Route
             path="/savings/add"
-            element={user ? <GoalsForm type = "saving" /> : <Navigate to="/" />}
+            element={user ? <GoalsForm type="saving" /> : <Navigate to="/" />}
           />
           <Route
             path="/user/:userId/savings/delete"

@@ -25,7 +25,12 @@ const TransactionsList = () => {
       },
     })
       .then((response) => response.json())
-      .then((payload) => setTransactions(payload));
+      .then((payload) => {
+        console.log(payload, "achei 2");
+        if (payload) {
+          setTransactions(payload);
+        }
+      });
   };
 
   useEffect(() => {
@@ -61,9 +66,10 @@ const TransactionsList = () => {
               <AmountDisplay amount={transaction.amount} />
             </td>
 
-            <td>
+            {/* <td>
               <FormattedDate date={transaction.transactionDate} />
-            </td>
+            </td> */}
+            <td>{transaction.transactionDate}</td>
             <td>
               {auth.user && (
                 <Link to={`/edit/${transaction.transactionId}`}>Edit</Link>
