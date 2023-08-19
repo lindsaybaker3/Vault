@@ -3,6 +3,8 @@ import AuthContext from "../context/AuthContext";
 import { useContext } from "react";
 import "../style/dashboard.css";
 
+import { Button, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+
 const Navbar = () => {
   const auth = useContext(AuthContext);
   const user = auth.user;
@@ -10,29 +12,37 @@ const Navbar = () => {
   const navClassName = user ? "sidebar" : "nav-list";
 
   return (
-    // <nav className={`${navClassName}`}>
     <nav>
-      {/* always */}
-      {/* only logged in */}
-
+      {/* Render the navigation links as buttons */}
       {user ? (
         <>
-          <Link to="/dashboard">Dashboard</Link>{" "}
-          <Link to="/transactions">Transactions</Link>{" "}
-          <Link to="/budgets">Budgets</Link> <Link to="/savings">Savings</Link>{" "}
-          <Link to="/user/:userId/reports">Reports</Link>{" "}
-          <Link onClick={auth.logout}>Logout</Link>
-          <Link to="/transactions">Transactions_TEST</Link>{" "}
-          <Link to="/transaction/add">Transactions_TEST_ADD</Link>{" "}
+          <ListItemButton component={Link} to="/dashboard">
+            Dashboard
+          </ListItemButton>
+          <ListItemButton component={Link} to="/transactions">
+            Transactions
+          </ListItemButton>
+          <ListItemButton component={Link} to="/budgets">
+            Budgets
+          </ListItemButton>
+          <ListItemButton component={Link} to="/savings">
+            Savings
+          </ListItemButton>
+          <ListItemButton component={Link} to="/reports">
+            Reports
+          </ListItemButton>
+          <ListItemButton onClick={auth.logout}> Logout </ListItemButton>
         </>
       ) : (
         <>
-          <Link to="/">Home</Link> <Link to="/login">Log In</Link>{" "}
+          <Link to="/">Home</Link>
+          <Link to="/login">Log In</Link>
           <Link to="/signup">Signup</Link>
         </>
       )}
     </nav>
-  );
+);
+    
 };
 
 export default Navbar;
