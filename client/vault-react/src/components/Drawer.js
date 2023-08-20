@@ -15,6 +15,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Navbar from './Navbar';
 import Dashboard from './Dashboard';
+import { Container } from '@mui/system';
 
 const drawerWidth = 240;
 
@@ -52,7 +53,7 @@ const DrawerComponent = () => {
           </List>
           <Divider />
         </Drawer>
-        <Box
+        {/* <Container
            component="main"
            sx={{
              flexGrow: 1,
@@ -66,7 +67,7 @@ const DrawerComponent = () => {
           <Toolbar />
            
      
-        </Box>
+        </Container> */}
       </Box>
     );
 }

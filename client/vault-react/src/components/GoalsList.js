@@ -3,8 +3,10 @@ import AuthContext from "../context/AuthContext"
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import '../style/goalslist.css'
-import { Box, Button, Card, CardContent, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CssBaseline, Grid, ThemeProvider, Typography, createTheme } from "@mui/material";
 import LinearProgress from '@mui/material/LinearProgress';
+import DrawerComponent from "./Drawer";
+import { Container } from "@mui/system";
 
 
 const GoalsList = ({ type }) => {
@@ -39,6 +41,24 @@ const GoalsList = ({ type }) => {
 
    
     return (
+      <ThemeProvider theme = {createTheme()}>
+      <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <DrawerComponent />
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light'
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: '100vh',
+          overflow: 'auto',
+        }}
+      >
+      <Container maxWidth = "lg" sx={{ mt: 4, mb: 4 }}>
+      
         <Box
         className="card-container"
         sx={{
@@ -47,6 +67,7 @@ const GoalsList = ({ type }) => {
           alignItems: 'center',
           gap: '16px', // Adjust the gap between cards
           flexWrap: 'wrap', // Allow cards to wrap when there's limited space
+          paddingTop: '64px',
         }}
       >
           {filteredGoals.map((goal) => (
@@ -88,6 +109,10 @@ const GoalsList = ({ type }) => {
         </Link>
       </Link>
     </Box>
+    </Container>
+    </Box>
+    </Box>
+    </ThemeProvider>
   );
 };
 
