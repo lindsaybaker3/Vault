@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,11 @@ public class GoalsController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName(); // Assuming username is the identifier
         AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
-        return service.findByUserId(appUser.getAppUserId());
+        List<Goals> goals = service.findByUserId(appUser.getAppUserId());
+        for (Goals goal : goals) {
+            goal.getCurrentBalance();
+        }
+        return goals;
     }
 
     @GetMapping("/goals/{goalId}")
