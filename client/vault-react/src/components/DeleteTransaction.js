@@ -13,7 +13,6 @@ function ConfirmDelete() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    debugger;
     const transactionId = isNaN(params.transactionId)
       ? null
       : parseInt(params.transactionId);

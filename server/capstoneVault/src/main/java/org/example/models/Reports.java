@@ -8,18 +8,27 @@ public class Reports {
     private int appUserId;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String goalType;
     private String reportUrl;
 
-    public Reports(int reportId, int appUserId, LocalDate startDate, LocalDate endDate, String reportUrl) {
+    public Reports(int reportId, int appUserId, LocalDate startDate, LocalDate endDate, String goalType, String reportUrl) {
         this.reportId = reportId;
         this.appUserId = appUserId;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.goalType = goalType;
         this.reportUrl = reportUrl;
+    }
+
+    public Reports() {
     }
 
     public int getReportId() {
         return reportId;
+    }
+
+    public void setReportId(int reportId) {
+        this.reportId = reportId;
     }
 
     public int getAppUserId() {
@@ -46,6 +55,14 @@ public class Reports {
         this.endDate = endDate;
     }
 
+    public String getGoalType() {
+        return goalType;
+    }
+
+    public void setGoalType(String goalType) {
+        this.goalType = goalType;
+    }
+
     public String getReportUrl() {
         return reportUrl;
     }
@@ -54,16 +71,16 @@ public class Reports {
         this.reportUrl = reportUrl;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Reports reports = (Reports) o;
-        return reportId == reports.reportId && appUserId == reports.appUserId && Objects.equals(startDate, reports.startDate) && Objects.equals(endDate, reports.endDate) && Objects.equals(reportUrl, reports.reportUrl);
+        if (!(o instanceof Reports reports)) return false;
+        return getReportId() == reports.getReportId() && getAppUserId() == reports.getAppUserId() && Objects.equals(getStartDate(), reports.getStartDate()) && Objects.equals(getEndDate(), reports.getEndDate()) && Objects.equals(getGoalType(), reports.getGoalType()) && Objects.equals(getReportUrl(), reports.getReportUrl());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reportId, appUserId, startDate, endDate, reportUrl);
+        return Objects.hash(getReportId(), getAppUserId(), getStartDate(), getEndDate(), getGoalType(), getReportUrl());
     }
 }

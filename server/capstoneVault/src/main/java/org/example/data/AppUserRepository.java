@@ -13,4 +13,6 @@ public interface AppUserRepository {
 
     @Transactional
     void update(AppUser user);
+
+    AppUser findById(int appUserId);
 }

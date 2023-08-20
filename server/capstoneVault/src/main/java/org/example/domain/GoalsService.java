@@ -3,17 +3,14 @@ package org.example.domain;
 import org.example.data.BudgetCategoryRepository;
 import org.example.data.GoalsJdbcTemplateRepository;
 import org.example.data.TransactionsJdbcTemplateRepository;
-import org.example.models.BudgetCategory;
 import org.example.models.Goals;
-import org.example.models.Transaction;
+import org.example.models.Transactions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class GoalsService {
@@ -34,7 +31,7 @@ public class GoalsService {
     }
     public Goals findById(int goalId){
         Goals goal = repository.findById(goalId);
-        List<Transaction> transactions = transactionRepository.findByGoalsId(goalId);
+        List<Transactions> transactions = transactionRepository.findByGoalsId(goalId);
         goal.setTransactionsList(transactions);
         return goal;
     }

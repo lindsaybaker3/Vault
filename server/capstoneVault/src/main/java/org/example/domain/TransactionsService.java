@@ -1,7 +1,7 @@
 package org.example.domain;
 
 import org.example.data.TransactionsJdbcTemplateRepository;
-import org.example.models.Transaction;
+import org.example.models.Transactions;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -9,55 +9,55 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class TransactionService {
+public class TransactionsService {
 
     private final TransactionsJdbcTemplateRepository repository;
 
-    public TransactionService(TransactionsJdbcTemplateRepository repository) {
+    public TransactionsService(TransactionsJdbcTemplateRepository repository) {
         this.repository = repository;
     }
 
-    public  List<Transaction> findByUserId(int appUserId){
+    public  List<Transactions> findByUserId(int appUserId){
         return repository.findByUserId(appUserId);
     }
 
-    public Transaction findByTransactionId(int transactionId){
+    public Transactions findByTransactionId(int transactionId){
         return repository.findByTransactionId(transactionId);
     }
 
-    public List<Transaction> findByGoalsId(int goalsId){
+    public List<Transactions> findByGoalsId(int goalsId){
         return repository.findByGoalsId(goalsId);
     }
 
 
-    public Result create(Transaction transaction) {
-        Result result = validate(transaction);
+    public Result create(Transactions transactions) {
+        Result result = validate(transactions);
 
 
-        if (transaction != null && transaction.getTransactionId() > 0) {
+        if (transactions != null && transactions.getTransactionId() > 0) {
             result.addErrorMessage("Transaction `id` should not be set.", ResultType.INVALID);
         }
 
         if (result.isSuccess()) {
-            transaction = repository.create(transaction);
-            result.setPayload(transaction);
+            transactions = repository.create(transactions);
+            result.setPayload(transactions);
         }
 
         return result;
     }
 
-    public Result update(Transaction transaction)  {
-        Result result = validate(transaction);
+    public Result update(Transactions transactions)  {
+        Result result = validate(transactions);
 
-        if (transaction.getTransactionId() <= 0) {
+        if (transactions.getTransactionId() <= 0) {
             result.addErrorMessage("Transaction `id` is required.", ResultType.INVALID);
         }
 
         if (result.isSuccess()) {
-            if (repository.update(transaction)) {
-                result.setPayload(transaction);
+            if (repository.update(transactions)) {
+                result.setPayload(transactions);
             } else {
-                result.addErrorMessage("Transaction id %s was not found.", ResultType.NOT_FOUND, transaction.getTransactionId());
+                result.addErrorMessage("Transaction id %s was not found.", ResultType.NOT_FOUND, transactions.getTransactionId());
             }
         }
         return result;
@@ -72,25 +72,25 @@ public class TransactionService {
         return result;
     }
 
-    private Result validate(Transaction transaction) {
+    private Result validate(Transactions transactions) {
         Result result = new Result();
 
-        if (transaction == null) {
+        if (transactions == null) {
             result.addErrorMessage("Transaction cannot be null.", ResultType.INVALID);
             return result;
         }
 
-        if (transaction.getTransactionDate() == null) {
+        if (transactions.getTransactionDate() == null) {
             result.addErrorMessage("Transaction date is required.", ResultType.INVALID);
-        } else if (transaction.getTransactionDate().isAfter(LocalDate.now())) {
+        } else if (transactions.getTransactionDate().isAfter(LocalDate.now())) {
             result.addErrorMessage("Transaction date needs to be a past date.", ResultType.INVALID);
         }
 
-        if (transaction.getAmount() == null || transaction.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+        if (transactions.getAmount() == null || transactions.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
             result.addErrorMessage("Transaction amount is required and needs to be bigger than zero", ResultType.INVALID);
         }
 
-        if (transaction.getDescription() == null || transaction.getDescription().isEmpty()) {
+        if (transactions.getDescription() == null || transactions.getDescription().isEmpty()) {
             result.addErrorMessage("Transaction description is required.", ResultType.INVALID);
         }
 

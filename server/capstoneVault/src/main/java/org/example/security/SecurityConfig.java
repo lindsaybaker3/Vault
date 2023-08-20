@@ -39,9 +39,14 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET, "/api/vault/transactions").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/vault/transaction/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/vault/transaction/goals/*").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/vault/transaction/create").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/vault/transaction").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/vault/transaction/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/vault/transaction/*").hasAnyAuthority("USER", "ADMIN")
+
+                .antMatchers(HttpMethod.GET, "/api/vault/report/*/download").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/vault/report").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/vault/report/*").hasAnyAuthority("USER", "ADMIN")
+
 
 
                 .antMatchers(HttpMethod.GET, "/api/vault/goals").hasAnyAuthority("USER", "ADMIN")

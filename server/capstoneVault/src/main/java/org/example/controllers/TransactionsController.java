@@ -3,8 +3,8 @@ package org.example.controllers;
 
 import org.example.domain.Result;
 import org.example.domain.ResultType;
-import org.example.domain.TransactionService;
-import org.example.models.Transaction;
+import org.example.domain.TransactionsService;
+import org.example.models.Transactions;
 import org.example.domain.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,45 +17,45 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/vault")
-public class TransactionController {
+public class TransactionsController {
 
-    private final TransactionService service;
+    private final TransactionsService service;
     private final AppUserService appUserService;
 
     @Autowired
-    public TransactionController(TransactionService service, AppUserService appUserService) {
+    public TransactionsController(TransactionsService service, AppUserService appUserService) {
         this.service = service;
         this.appUserService = appUserService;
     }
 
     @GetMapping("/transactions")
-    public List<Transaction> findByUserId() {
+    public List<Transactions> findByUserId() {
         String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
         return service.findByUserId(appUser.getAppUserId());
     }
 
     @GetMapping("/transaction/{transactionId}")
-    public ResponseEntity<Transaction> findByTransactionId(@PathVariable int transactionId) {
-        Transaction transaction = service.findByTransactionId(transactionId);
-        if (transaction == null) {
+    public ResponseEntity<Transactions> findByTransactionId(@PathVariable int transactionId) {
+        Transactions transactions = service.findByTransactionId(transactionId);
+        if (transactions == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(transaction, HttpStatus.OK);
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
     @GetMapping("/transaction/goals/{goalsId}")
-    public List<Transaction> findByGoalsId(@PathVariable int goalsId) {
+    public List<Transactions> findByGoalsId(@PathVariable int goalsId) {
         return service.findByGoalsId(goalsId);
     }
 
-    @PostMapping("/transaction/create")
-    public ResponseEntity<Object> create(@RequestBody Transaction transaction) {
+    @PostMapping("/transaction")
+    public ResponseEntity<Object> create(@RequestBody Transactions transactions) {
         String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
-        transaction.setAppUserId(appUser.getAppUserId());
+        transactions.setAppUserId(appUser.getAppUserId());
 
-        Result result = service.create(transaction);
+        Result result = service.create(transactions);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
@@ -63,8 +63,8 @@ public class TransactionController {
     }
 
     @PutMapping("/transaction/{transactionId}")
-    public ResponseEntity<?> update(@PathVariable int transactionId, @RequestBody Transaction transaction) {
-        Result<Void> result = service.update(transaction);
+    public ResponseEntity<?> update(@PathVariable int transactionId, @RequestBody Transactions transactions) {
+        Result<Void> result = service.update(transactions);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
