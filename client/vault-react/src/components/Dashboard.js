@@ -19,6 +19,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import TotalBalanceChart from './TotalBalanceChart';
 import Orders from './Orders';
+
 // import { mainListItems, secondaryListItems } from './listItems';
 // import Chart from './Chart';
 // import Deposits from './Deposits';
@@ -26,19 +27,23 @@ import Orders from './Orders';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
 export default function Dashboard() {
-   
     return(
         <ThemeProvider theme = {createTheme()}>
              <Box
@@ -90,9 +95,16 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
-        </Box>
-        </ThemeProvider>
-    )
+            {/* Recent Orders */}
+            <Grid item xs={12}>
+              <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                transactions
+              </Paper>
+            </Grid>
+          </Grid>
+          <Copyright sx={{ pt: 4 }} />
+        </Container>
+      </Box>
+    </ThemeProvider>
+  );
 }
