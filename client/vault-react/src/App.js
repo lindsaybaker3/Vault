@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import AuthContext from "./context/AuthContext";
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 import Landing from "./components/Landing";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
@@ -18,6 +18,8 @@ import GoalsAndTransactions from "./components/GoalsAndTransactions";
 import GoalsForm from "./components/GoalsForm";
 import DeleteGoal from "./components/DeleteGoal";
 import ReportList from "./components/ReportList";
+import DrawerComponent from "./components/Drawer";
+import { Container, CssBaseline, Grid } from "@mui/material";
 
 function App() {
   const [transactions, setTransactions] = useState([]);
@@ -60,7 +62,6 @@ function App() {
     return (
       <header>
         {/* Your header content for logged-out state */}
-        Hello hello
       </header>
     );
   };
@@ -74,10 +75,22 @@ function App() {
 
   return (
     <AuthContext.Provider value={auth}>
-      <BrowserRouter>
+      <BrowserRouter>c
+      <CssBaseline />
         <div className="app-container">
-          {user ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
-          <div>
+
+        <DrawerComponent />
+        <div style={{ flexGrow: 1, padding: "20px" }} className="content-container">
+            {/* Your header components */}
+            {user ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
+
+            <Container maxWidth="lg" sx={{ mt: 0, mb: 4 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={3}>
+                <DrawerComponent /> {/* Add the DrawerComponent here */}
+              </Grid>
+              <Grid item xs={9} md = {9} lg = {9}>
+
             <div className="main-content">
               test
               {/* {user && ()} */}
@@ -191,7 +204,13 @@ function App() {
               </Routes>
             </div>
           </div>
+          </Grid>
+          </Grid>
+          </Container>
         </div>
+
+      </div>
+
       </BrowserRouter>
     </AuthContext.Provider>
   );

@@ -3,6 +3,7 @@ import AuthContext from "../context/AuthContext"
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import '../style/goalslist.css'
+import { Box, Button } from "@mui/material";
 
 const GoalsList = ({ type }) => {
     const auth = useContext(AuthContext);
@@ -24,7 +25,7 @@ const GoalsList = ({ type }) => {
         })
         .then(response => response.json())
         .then(payload => setGoals(payload))
-        .catch((error) => console.error("error Fetching questions:", error))
+        .catch((error) => console.error("error Fetching goals:", error))
     }
 
     useEffect(loadGoals, [])
@@ -34,22 +35,54 @@ const GoalsList = ({ type }) => {
 
     const addLinkPath = type === "spending" ? "/budgets/add" : "/savings/add"
     return (
+        <Box
+        className="card-container"
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '16px', // Adjust the gap between cards
+          flexWrap: 'wrap', // Allow cards to wrap when there's limited space
+        }}
+      >
+          {filteredGoals.map((goal, index) => (
+        <Link key={goal.goalsId} to={`/budgets/${goal.goalsId}`} className="card">
+          <Box
+            sx={{
+              backgroundColor: '#f5f5f5', // Adjust the background color
+              padding: '16px',
+              borderRadius: '8px',
+              width: '200px', // Adjust the card width
+              textAlign: 'center',
+              textDecoration: 'none',
+            }}
+          >
+            <h2>{goal.categoryName}</h2>
+          </Box>
+        </Link>
+      ))}
+       <Link href={addLinkPath} className="add-button">
+        <Link to = {addLinkPath} className = "add=button">
+          Add {type === 'spending' ? 'budget' : 'saving'}
+        </Link>
+      </Link>
+    </Box>
+  );
+};
 
-        <div className = "card-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                {filteredGoals.map((goal, index) => (
-                    console.log(goal),
-                    console.log(index),
-                   <Link to = {`/budgets/${goal.goalsId}`} key = {goal.goalsId} className="card">
-                    <h2>{goal.categoryName}</h2>
-                   </Link>  
-                ))}
-                <Link to = {addLinkPath} className = "add=button">
-                    Add {type === 'spending' ? "budget" : "saving"}
-                </Link>
+        // <div className = "card-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        //         {filteredGoals.map((goal, index) => (
+        //            <Link to = {`/budgets/${goal.goalsId}`} key = {goal.goalsId} className="card">
+        //             <h2>{goal.categoryName}</h2>
+        //            </Link>  
+        //         ))}
+        //         <Link to = {addLinkPath} className = "add=button">
+        //             Add {type === 'spending' ? "budget" : "saving"}
+        //         </Link>
 
-        </div>
+        // </div>
 
-    )
-}
+//     )
+// }
 
 export default GoalsList;
