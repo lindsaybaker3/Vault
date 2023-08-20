@@ -82,7 +82,7 @@ function App() {
     <AuthContext.Provider value={auth}>
        <BrowserRouter>
     
-      <CssBaseline />
+        <CssBaseline />
   
           {user ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
 
