@@ -9,8 +9,6 @@ const Navbar = () => {
   const auth = useContext(AuthContext);
   const user = auth.user;
 
-  const navClassName = user ? "sidebar" : "nav-list";
-
   return (
     <nav>
       {/* Render the navigation links as buttons */}
@@ -35,9 +33,11 @@ const Navbar = () => {
         </>
       ) : (
         <>
+          <div className="nav-list">
           <Link to="/">Home</Link>
           <Link to="/login">Log In</Link>
           <Link to="/signup">Signup</Link>
+          </div>
         </>
       )}
     </nav>

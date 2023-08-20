@@ -61,7 +61,8 @@ function App() {
   const HeaderLoggedOut = () => {
     return (
       <header>
-        {/* Your header content for logged-out state */}
+      {/* Your header content for logged-in state */}
+        <Navbar/>
       </header>
     );
   };
@@ -75,21 +76,24 @@ function App() {
 
   return (
     <AuthContext.Provider value={auth}>
-      <BrowserRouter>c
+       <BrowserRouter>
       <CssBaseline />
-        <div className="app-container">
+      <div className="app-container">
 
-        <DrawerComponent />
         <div style={{ flexGrow: 1, padding: "20px" }} className="content-container">
-            {/* Your header components */}
-            {user ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
+          {user ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
 
-            <Container maxWidth="lg" sx={{ mt: 0, mb: 4 }}>
+
+
+          <Container maxWidth="lg" sx={{ mt: 0, mb: 4 }}>
             <Grid container spacing={3}>
-              <Grid item xs={3}>
-                <DrawerComponent /> {/* Add the DrawerComponent here */}
-              </Grid>
-              <Grid item xs={9} md = {9} lg = {9}>
+
+              {user && ( // Conditionally render the DrawerComponent only when user is logged in
+                <Grid item xs={3}>
+                  <DrawerComponent />
+                </Grid>
+              )}
+              <Grid item xs={9} md={9} lg={9}>
 
             <div className="main-content">
               test
@@ -97,6 +101,7 @@ function App() {
               <Navbar />
               <Routes>
                 {/* when logged out */}
+                
                 <Route path="/" element={<Landing />} />
                 <Route
                   path="/login"
