@@ -20,6 +20,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import TotalBalanceChart from './TotalBalanceChart';
 import Orders from './Orders';
 import DrawerComponent from './Drawer';
+
 // import { mainListItems, secondaryListItems } from './listItems';
 // import Chart from './Chart';
 // import Deposits from './Deposits';
@@ -27,19 +28,23 @@ import DrawerComponent from './Drawer';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
 export default function Dashboard() {
-   
     return(
         <ThemeProvider theme = {createTheme()}>
         <Box sx={{ display: 'flex' }}>
@@ -101,3 +106,4 @@ export default function Dashboard() {
         </ThemeProvider>
     )
 }
+

@@ -11,6 +11,7 @@ const TransactionForm = () => {
   const auth = useContext(AuthContext);
   const [goals, setGoals] = useState([]);
   const [goalType, setGoalType] = useState("spending");
+
   const typesList = getUniqueTypes(goals);
   const filteredGoals = goals.filter((item) => item.type === goalType);
   const [errors, setErrors] = useState([]);
@@ -18,7 +19,6 @@ const TransactionForm = () => {
 
   const [appUserId, setAppUserId] = useState(auth.user?.appUserId || "");
   const [goalsId, setGoalsId] = useState("");
-  console.log(goalsId, "goalsid");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
@@ -97,7 +97,7 @@ const TransactionForm = () => {
           setGoalsId(Transaction.goalsId);
           setDescription(Transaction.description);
           setAmount(Transaction.amount);
-          setGoalType(Transaction.goal_type);
+          setGoalType(Transaction.goalType);
           setCategory(Transaction.category);
           setTransactionDate(Transaction.transactionDate);
         })
@@ -108,6 +108,7 @@ const TransactionForm = () => {
       resetState();
     }
   }, [auth.user.token, params.transactionId]);
+
   console.log(params);
   const handleSubmit = (evt) => {
     evt.preventDefault();

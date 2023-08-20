@@ -61,12 +61,14 @@ function App() {
   };
 
   const HeaderLoggedOut = () => {
+
     return (
       <header>
       {/* Your header content for logged-in state */}
         <Navbar/>
       </header>
     );
+
   };
 
   useEffect(() => {
@@ -199,7 +201,7 @@ function App() {
                 {/* always */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
-          
+              
       </BrowserRouter>
     </AuthContext.Provider>
   );
