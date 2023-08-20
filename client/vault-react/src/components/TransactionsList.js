@@ -33,9 +33,9 @@ const TransactionsList = () => {
       <table className="table table-bordered table-striped">
         <thead>
           <tr>
-            <th>Transaction ID</th>
+            {/* <th>Transaction ID</th>
             <th>User ID</th>
-            <th>Goal ID</th>
+            <th>Goal ID</th> */}
             <th>Goal Type</th>
             <th>Category</th>
             <th>Description</th>
@@ -53,9 +53,9 @@ const TransactionsList = () => {
           ) : (
             transactions.map((transaction) => (
               <tr key={transaction.transactionId}>
-                <td>{transaction.transactionId}</td>
+                {/* <td>{transaction.transactionId}</td>
                 <td>{transaction.appUserId}</td>
-                <td>{transaction.goalsId}</td>
+                <td>{transaction.goalsId}</td> */}
                 <td>{transaction.goalType}</td>
                 <td>{transaction.category}</td>
                 <td>{transaction.description}</td>

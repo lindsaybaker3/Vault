@@ -59,14 +59,12 @@ function App() {
   };
 
   const HeaderLoggedOut = () => {
-
     return (
       <header>
-      {/* Your header content for logged-in state */}
-        <Navbar/>
+        {/* Your header content for logged-in state */}
+        <Navbar />
       </header>
     );
-
   };
 
   useEffect(() => {
@@ -78,43 +76,43 @@ function App() {
 
   return (
     <AuthContext.Provider value={auth}>
-       <BrowserRouter>
-      <CssBaseline />
-      <div className="app-container">
+      <BrowserRouter>
+        <CssBaseline />
+        <div className="app-container">
+          <div
+            style={{ flexGrow: 1, padding: "20px" }}
+            className="content-container"
+          >
+            {user ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
 
-        <div style={{ flexGrow: 1, padding: "20px" }} className="content-container">
-          {user ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
+            <Container maxWidth="lg" sx={{ mt: 0, mb: 4 }}>
+              <Grid container spacing={3}>
+                {user && ( // Conditionally render the DrawerComponent only when user is logged in
+                  <Grid item xs={3}>
+                    <DrawerComponent />
+                  </Grid>
+                )}
+                <Grid item xs={9} md={9} lg={9}>
+                  <div className="main-content">
+                    test
+                    {/* {user && ()} */}
+                    <Navbar />
+                    <Routes>
+                      {/* when logged out */}
 
+                      <Route path="/" element={<Landing />} />
+                      <Route
+                        path="/login"
+                        element={
+                          user ? <Navigate to="/dashboard" /> : <Login />
+                        }
+                      />
+                      <Route path="/signup" element={<Signup />} />
+                      {/* if we want to add a aboutUs page we can add this here */}
 
-
-          <Container maxWidth="lg" sx={{ mt: 0, mb: 4 }}>
-            <Grid container spacing={3}>
-
-              {user && ( // Conditionally render the DrawerComponent only when user is logged in
-                <Grid item xs={3}>
-                  <DrawerComponent />
-                </Grid>
-              )}
-              <Grid item xs={9} md={9} lg={9}>
-
-            <div className="main-content">
-              test
-              {/* {user && ()} */}
-              <Navbar />
-              <Routes>
-                {/* when logged out */}
-                
-                <Route path="/" element={<Landing />} />
-                <Route
-                  path="/login"
-                  element={user ? <Navigate to="/dashboard" /> : <Login />}
-                />
-                <Route path="/signup" element={<Signup />} />
-                {/* if we want to add a aboutUs page we can add this here */}
-
-                {/* loggin in only */}
-                <Route path="/dashboard" element={<Dashboard />} />
-                {/* <Route
+                      {/* loggin in only */}
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      {/* <Route
                   path="/transactions"
                   element={user ? <TransactionsList /> : <Navigate to="/" />}
                 /> */}
@@ -226,8 +224,14 @@ function App() {
                       />
 
                       <Route
-                        path="/user/:userId/reports"
-                        element={user ? <ReportList /> : <Navigate to="/" />}
+                        path="/reports"
+                        element={
+                          user ? (
+                            <ReportList user={user} />
+                          ) : (
+                            <Navigate to="/" />
+                          )
+                        }
                       />
 
                       {/* always */}

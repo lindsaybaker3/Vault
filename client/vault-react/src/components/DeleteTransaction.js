@@ -75,7 +75,7 @@ function ConfirmDelete() {
       {/* return `On ${formattedDate}, you spent $${transaction.amount} towards the
       category "${transaction.category}" for ${transaction.description}.`; */}
       <ul>
-        <li>Goal Type: {transaction.goal_type}</li>
+        <li>Goal Type: {transaction.goalType}</li>
         <li>Category: {transaction.category}</li>
         <li>Description: {transaction.description}</li>
         <li>
