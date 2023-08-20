@@ -1,10 +1,5 @@
 package org.example.models;
 
-import org.apache.tomcat.jni.Local;
-import org.example.data.GoalsJdbcTemplateRepository;
-import org.example.data.GoalsRepository;
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,7 +15,7 @@ public class Goals {
     private LocalDate startDate;
     private LocalDate endDate;
     private String categoryName;
-    List<Transaction> transactionsList = new ArrayList<>();
+    List<Transactions> transactionsList = new ArrayList<>();
 
 
     public String getCategoryName() {
@@ -31,7 +26,7 @@ public class Goals {
         this.categoryName = categoryName;
     }
 
-    public Goals(int goalsId, int appUserId, int categoryId, String type, BigDecimal amount, LocalDate startDate, LocalDate endDate, List<Transaction> transactionsList, String categoryName) {
+    public Goals(int goalsId, int appUserId, int categoryId, String type, BigDecimal amount, LocalDate startDate, LocalDate endDate, List<Transactions> transactionsList, String categoryName) {
         this.goalsId = goalsId;
         this.appUserId = appUserId;
         this.categoryId = categoryId;
@@ -43,7 +38,7 @@ public class Goals {
         this.categoryName = categoryName;
     }
 
-    public Goals(int goalsId, int appUserId, int categoryId, String type, BigDecimal amount, LocalDate startDate, LocalDate endDate, List<Transaction> transactionsList) {
+    public Goals(int goalsId, int appUserId, int categoryId, String type, BigDecimal amount, LocalDate startDate, LocalDate endDate, List<Transactions> transactionsList) {
         this.goalsId = goalsId;
         this.appUserId = appUserId;
         this.categoryId = categoryId;
@@ -120,11 +115,11 @@ public class Goals {
         this.endDate = endDate;
     }
 
-    public List<Transaction> getTransactionsList() {
+    public List<Transactions> getTransactionsList() {
         return transactionsList;
     }
 
-    public void setTransactionsList(List<Transaction> transactionsList) {
+    public void setTransactionsList(List<Transactions> transactionsList) {
         this.transactionsList = transactionsList;
     }
 
@@ -166,8 +161,8 @@ public class Goals {
 
     public BigDecimal getCurrentBalance(){
         BigDecimal total = BigDecimal.ZERO;
-        for(Transaction transaction: transactionsList){
-            total = total.add(transaction.getAmount());
+        for(Transactions transactions : transactionsList){
+            total = total.add(transactions.getAmount());
         }
         return total;
     }

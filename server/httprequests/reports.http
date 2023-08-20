@@ -1,0 +1,43 @@
+
+// Security Test - Generation of Token
+#####
+POST http://localhost:8080/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "john@smith.com",
+  "password": "P@ssw0rd!",
+  "first_name": "John",
+  "last_name": "Smith"
+}
+
+
+// Generate report
+####
+POST http://localhost:8080/api/vault/report HTTP/1.1
+Content-Type: application/json
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5MjQ5ODk3Mn0.WTyUH0Z9pWr-zpAFfl3uEGo5qnZXMLT78uMkeB6Lpuk
+
+{
+  "startDate": "2023-08-01T00:00:00",
+  "endDate": "2023-08-31T00:00:00",
+  "goalType": "saving"
+
+}
+
+
+// Download report
+####
+GET http://localhost:8080/api/vault/report/2/download
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5MjQ5OTI2N30.QGhqx9JhLwtHG0Z_CigbbfRX6M5nCBvGMqhjUvNKzXo
+
+
+
+
+//Delete a report
+####
+DELETE http://localhost:8080/api/vault/report/1 HTTP/1.1
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5MjQ5OTI2N30.QGhqx9JhLwtHG0Z_CigbbfRX6M5nCBvGMqhjUvNKzXo
+
+
+ 

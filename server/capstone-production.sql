@@ -60,11 +60,14 @@ create table reports (
     app_user_id int not null,
     start_date date not null,
     end_date date not null,
+    goal_type text not null,
     report_url text not null,
     constraint fk_reports_app_user_id
         foreign key (app_user_id)
         references app_user(app_user_id)
 );
+
+drop table reports;
 
 CREATE TABLE `transaction` (
     transaction_id INT PRIMARY KEY AUTO_INCREMENT, 
@@ -129,15 +132,16 @@ insert into goals (app_user_id, category_id, goal_type, goal_amount, start_date,
     (1, 12, 'saving', 300.00, '2023-08-01', '2023-11-30');
     
 
-insert into reports (app_user_id, start_date, end_date, report_url)
+insert into reports (app_user_id, start_date, end_date, goal_type, report_url)
 	values
-    (1, '2023-08-01', '2023-08-31', 'https://example.com/report/john_august.pdf'), 
-    (2, '2023-08-01', '2023-08-31', 'https://example.com/report/sally_august.pdf');
+    (1, '2023-08-01', '2023-08-31', 'spending', 'https://example.com/report/john_august.pdf'), 
+    (2, '2023-08-01', '2023-08-31', 'spending', 'https://example.com/report/sally_august.pdf');
     
 insert into transaction (app_user_id, goals_id, amount, transaction_date, `description`)
 	values
     (1, 1, 8000.00, '2023-08-05', 'spending'),
     (1, 2, 1000.00, '2023-08-10', 'saving'),
+     (1, 2, 1000.00, '2023-08-10', 'saving'),
     (1, 3, 1100.00, '2023-08-20', 'saving'),
     (2, 4, 280.00, '2023-08-07', 'spending');
     
@@ -175,7 +179,7 @@ select * from app_user;
 select * from category;
 select * from goals;
 
-select * from goals;
+select * from transaction;
 
 drop table if exists transaction;
 
@@ -200,7 +204,7 @@ AND category_id = (
     WHERE category_name = 'Emergency Fund'
 );
 
+drop table if exists transaction;
+select * from transaction;
 
-
-
-select * from transaction
+select * from reports

@@ -1,38 +1,37 @@
 /* App.css */
 
 .app-container {
-    display: flex;
-    flex-direction: column; /* Stack header and content vertically */
-    align-items: stretch; /* Stretch children horizontally */
-    min-height: 100vh; /* Make sure the container covers the full viewport height */
-  }
-  
-  .header {
-    /* Common styles for both headers */
-    padding: 10px;
-    background-color: #333;
-    color: white;
-  }
-  
-  .header-logged-in {
-    /* Additional styles for logged-in header */
-    /* ... */
-  }
-  
-  .header-logged-out {
-    /* Additional styles for logged-out header */
-    /* ... */
-  }
-  
-  
-  .content-container {
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-  }
-  
-  /* Main Content Area */
+  display: flex;
+  flex-direction: column; /* Stack header and content vertically */
+  align-items: stretch; /* Stretch children horizontally */
+  min-height: 100vh; /* Make sure the container covers the full viewport height */
+}
+
+.header {
+  /* Common styles for both headers */
+  padding: 10px;
+  background-color: #333;
+  color: white;
+}
+
+.header-logged-in {
+  /* Additional styles for logged-in header */
+  /* ... */
+}
+
+.header-logged-out {
+  /* Additional styles for logged-out header */
+  /* ... */
+}
+
+.content-container {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+}
+
+/* Main Content Area */
 .main-content {
-    margin-left: 250px; /* Adjust for sidebar width */
-    padding: 20px;
-  }
+  margin-left: 250px; /* Adjust for sidebar width */
+  padding: 20px;
+}

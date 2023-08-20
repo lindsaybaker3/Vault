@@ -55,11 +55,7 @@ function App() {
   const auth = { login, logout, user };
 
   const HeaderLoggedIn = () => {
-    return (
-      <header>
-        {/* Your header content for logged-in state */}
-      </header>
-    );
+    return <header>{/* Your header content for logged-in state */}</header>;
   };
 
   const HeaderLoggedOut = () => {
@@ -83,6 +79,7 @@ function App() {
        <BrowserRouter>
       <CssBaseline />
       <div className="app-container">
+
         <div style={{ flexGrow: 1, padding: "20px" }} className="content-container">
           {user ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
 
@@ -90,13 +87,18 @@ function App() {
 
           <Container maxWidth="lg" sx={{ mt: 0, mb: 4 }}>
             <Grid container spacing={3}>
+
               {user && ( // Conditionally render the DrawerComponent only when user is logged in
                 <Grid item xs={3}>
                   <DrawerComponent />
                 </Grid>
               )}
               <Grid item xs={9} md={9} lg={9}>
+
             <div className="main-content">
+              test
+              {/* {user && ()} */}
+              <Navbar />
               <Routes>
                 {/* when logged out */}
                 
@@ -117,7 +119,11 @@ function App() {
                 <Route
                   path="/transactions"
                   element={
-                    user ? <TransactionsList user={user} /> : <Navigate to="/" />
+                    user ? (
+                      <TransactionsList user={user} />
+                    ) : (
+                      <Navigate to="/" />
+                    )
                   }
                 />
 
@@ -143,24 +149,21 @@ function App() {
                 />
                 <Route
                   path="/budgets/:goalsId"
-                  element={user ? <GoalsAndTransactions /> : <Navigate to="/" />}
+                  element={
+                    user ? <GoalsAndTransactions /> : <Navigate to="/" />
+                  }
                 />
                 <Route
                   path="/budgets/add"
-                  element={user ? <GoalsForm type = "spending" /> : <Navigate to="/" />}
+                  element={
+                    user ? <GoalsForm type="spending" /> : <Navigate to="/" />
+                  }
                 />
                 <Route
                   path="/budgets/edit/:goalsId"
-
-                  element = {
-                  user ? (
-                  <GoalsForm type = "spending" />
-                  ) : (
-                    <Navigate to = "/" />
-                  )
+                  element={
+                    user ? <GoalsForm type="spending" /> : <Navigate to="/" />
                   }
-
-                  
                 />
                 <Route
                   path="/budgets/delete/:budgetsId"
@@ -175,24 +178,21 @@ function App() {
                 />
                 <Route
                   path="savings/:goalId"
-                  element={user ? <GoalsAndTransactions /> : <Navigate to="/" />}
+                  element={
+                    user ? <GoalsAndTransactions /> : <Navigate to="/" />
+                  }
                 />
                 <Route
                   path="/savings/edit/:goalsId"
-
-                  element = {
-                  user ? (
-                  <GoalsForm type = "saving" />
-                  ) : (
-                    <Navigate to = "/" />
-                  )
+                  element={
+                    user ? <GoalsForm type="saving" /> : <Navigate to="/" />
                   }
-
-                  
                 />
                 <Route
                   path="/savings/add"
-                  element={user ? <GoalsForm type = "saving" /> : <Navigate to="/" />}
+                  element={
+                    user ? <GoalsForm type="saving" /> : <Navigate to="/" />
+                  }
                 />
                 <Route
                   path="/user/:userId/savings/delete"
@@ -207,12 +207,15 @@ function App() {
                 {/* always */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
+            </div>
           </div>
           </Grid>
           </Grid>
           </Container>
         </div>
+
       </div>
+
       </BrowserRouter>
     </AuthContext.Provider>
   );
