@@ -15,6 +15,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Navbar from './Navbar';
 import Dashboard from './Dashboard';
+import { Container } from '@mui/system';
 
 const drawerWidth = 240;
 
@@ -25,7 +26,7 @@ const DrawerComponent = () => {
         <CssBaseline />
         <AppBar
           position="fixed"
-          sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+          sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px`,backgroundColor: '#05391F'}}
         >
           <Toolbar>
             <Typography variant="h6" noWrap component="div">
@@ -40,6 +41,7 @@ const DrawerComponent = () => {
             '& .MuiDrawer-paper': {
               width: drawerWidth,
               boxSizing: 'border-box',
+              backgroundColor: '#69B45E',
             },
           }}
           variant="permanent"
@@ -52,7 +54,7 @@ const DrawerComponent = () => {
           </List>
           <Divider />
         </Drawer>
-        <Box
+        {/* <Container
            component="main"
            sx={{
              flexGrow: 1,
@@ -66,7 +68,7 @@ const DrawerComponent = () => {
           <Toolbar />
            
      
-        </Box>
+        </Container> */}
       </Box>
     );
 }

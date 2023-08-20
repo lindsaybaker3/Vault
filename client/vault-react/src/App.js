@@ -20,6 +20,8 @@ import DeleteGoal from "./components/DeleteGoal";
 import ReportList from "./components/ReportList";
 import DrawerComponent from "./components/Drawer";
 import { Container, CssBaseline, Grid } from "@mui/material";
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { Box } from "@mui/system";
 
 function App() {
   const [transactions, setTransactions] = useState([]);
@@ -79,28 +81,18 @@ function App() {
   return (
     <AuthContext.Provider value={auth}>
        <BrowserRouter>
+    
       <CssBaseline />
-      <div className="app-container">
-
-        <div style={{ flexGrow: 1, padding: "20px" }} className="content-container">
+  
           {user ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
 
-
-
-          <Container maxWidth="lg" sx={{ mt: 0, mb: 4 }}>
-            <Grid container spacing={3}>
-
               {user && ( // Conditionally render the DrawerComponent only when user is logged in
-                <Grid item xs={3}>
+                
                   <DrawerComponent />
-                </Grid>
+                
               )}
-              <Grid item xs={9} md={9} lg={9}>
-
-            <div className="main-content">
-              test
-              {/* {user && ()} */}
-              <Navbar />
+              {/* <Grid item xs={9} md={9} lg={9}> */}
+         
               <Routes>
                 {/* when logged out */}
                 
@@ -118,127 +110,98 @@ function App() {
                   path="/transactions"
                   element={user ? <TransactionsList /> : <Navigate to="/" />}
                 /> */}
-                      <Route
-                        path="/transactions"
-                        element={
-                          user ? (
-                            <TransactionsList user={user} />
-                          ) : (
-                            <Navigate to="/" />
-                          )
-                        }
-                      />
+                <Route
+                  path="/transactions"
+                  element={
+                    user ? (
+                      <TransactionsList user={user} />
+                    ) : (
+                      <Navigate to="/" />
+                    )
+                  }
+                />
 
-                      <Route
-                        path="/edit/:transactionId"
-                        element={
-                          user ? <TransactionForm /> : <Navigate to="/" />
-                        }
-                      />
-                      <Route
-                        path="/transaction/add"
-                        element={
-                          user ? (
-                            <TransactionForm user={user} />
-                          ) : (
-                            <Navigate to="/" />
-                          )
-                        }
-                      />
-                      <Route
-                        path="delete/:transactionId"
-                        element={
-                          user ? <DeleteTransaction /> : <Navigate to="/" />
-                        }
-                      />
+                <Route
+                  path="/edit/:transactionId"
+                  element={user ? <TransactionForm /> : <Navigate to="/" />}
+                />
+                <Route
+                  path="/transaction/add"
+                  element={
+                    user ? <TransactionForm user={user} /> : <Navigate to="/" />
+                  }
+                />
+                <Route
+                  path="delete/:transactionId"
+                  element={user ? <DeleteTransaction /> : <Navigate to="/" />}
+                />
 
-                      <Route
-                        path="/budgets"
-                        element={<GoalsList type="spending" />}
-                        // element={user ? <GoalsList /> : <Navigate to="/" />}
-                      />
-                      <Route
-                        path="/budgets/:goalsId"
-                        element={
-                          user ? <GoalsAndTransactions /> : <Navigate to="/" />
-                        }
-                      />
-                      <Route
-                        path="/budgets/add"
-                        element={
-                          user ? (
-                            <GoalsForm type="spending" />
-                          ) : (
-                            <Navigate to="/" />
-                          )
-                        }
-                      />
-                      <Route
-                        path="/budgets/edit/:goalsId"
-                        element={
-                          user ? (
-                            <GoalsForm type="spending" />
-                          ) : (
-                            <Navigate to="/" />
-                          )
-                        }
-                      />
-                      <Route
-                        path="/budgets/delete/:budgetsId"
-                        element={user ? <DeleteGoal /> : <Navigate to="/" />}
-                      />
-                      {/* the budgets and savings are using the same table in the backend, do they just use the same forms in the Front end? */}
+                <Route
+                  path="/budgets"
+                  element={<GoalsList type="spending" />}
+                  // element={user ? <GoalsList /> : <Navigate to="/" />}
+                />
+                <Route
+                  path="/budgets/:goalsId"
+                  element={
+                    user ? <GoalsAndTransactions /> : <Navigate to="/" />
+                  }
+                />
+                <Route
+                  path="/budgets/add"
+                  element={
+                    user ? <GoalsForm type="spending" /> : <Navigate to="/" />
+                  }
+                />
+                <Route
+                  path="/budgets/edit/:goalsId"
+                  element={
+                    user ? <GoalsForm type="spending" /> : <Navigate to="/" />
+                  }
+                />
+                <Route
+                  path="/budgets/delete/:budgetsId"
+                  element={user ? <DeleteGoal /> : <Navigate to="/" />}
+                />
+                {/* the budgets and savings are using the same table in the backend, do they just use the same forms in the Front end? */}
 
-                      <Route
-                        path="/savings"
-                        element={<GoalsList type="saving" />}
-                        // element={user ? <GoalsList /> : <Navigate to="/" />}
-                      />
-                      <Route
-                        path="savings/:goalId"
-                        element={
-                          user ? <GoalsAndTransactions /> : <Navigate to="/" />
-                        }
-                      />
-                      <Route
-                        path="/savings/edit/:goalsId"
-                        element={
-                          user ? (
-                            <GoalsForm type="saving" />
-                          ) : (
-                            <Navigate to="/" />
-                          )
-                        }
-                      />
-                      <Route
-                        path="/savings/add"
-                        element={
-                          user ? (
-                            <GoalsForm type="saving" />
-                          ) : (
-                            <Navigate to="/" />
-                          )
-                        }
-                      />
-                      <Route
-                        path="/user/:userId/savings/delete"
-                        element={user ? <DeleteGoal /> : <Navigate to="/" />}
-                      />
+                <Route
+                  path="/savings"
+                  element={<GoalsList type="saving" />}
+                  // element={user ? <GoalsList /> : <Navigate to="/" />}
+                />
+                <Route
+                  path="savings/:goalId"
+                  element={
+                    user ? <GoalsAndTransactions /> : <Navigate to="/" />
+                  }
+                />
+                <Route
+                  path="/savings/edit/:goalsId"
+                  element={
+                    user ? <GoalsForm type="saving" /> : <Navigate to="/" />
+                  }
+                />
+                <Route
+                  path="/savings/add"
+                  element={
+                    user ? <GoalsForm type="saving" /> : <Navigate to="/" />
+                  }
+                />
+                <Route
+                  path="/user/:userId/savings/delete"
+                  element={user ? <DeleteGoal /> : <Navigate to="/" />}
+                />
 
-                      <Route
-                        path="/user/:userId/reports"
-                        element={user ? <ReportList /> : <Navigate to="/" />}
-                      />
+                <Route
+                  path="/user/:userId/reports"
+                  element={user ? <ReportList /> : <Navigate to="/" />}
+                />
 
-                      {/* always */}
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </div>
-                </Grid>
-              </Grid>
-            </Container>
-          </div>
-        </div>
+                {/* always */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              
       </BrowserRouter>
     </AuthContext.Provider>
   );
