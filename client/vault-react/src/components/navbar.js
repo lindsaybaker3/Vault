@@ -3,7 +3,12 @@ import AuthContext from "../context/AuthContext";
 import { useContext } from "react";
 import "../style/dashboard.css";
 
-import { Button, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  Button,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 
 const Navbar = () => {
   const auth = useContext(AuthContext);
@@ -34,15 +39,14 @@ const Navbar = () => {
       ) : (
         <>
           <div className="nav-list">
-          <Link to="/">Home</Link>
-          <Link to="/login">Log In</Link>
-          <Link to="/signup">Signup</Link>
+            <Link to="/">Home</Link>
+            <Link to="/login">Log In</Link>
+            <Link to="/signup">Signup</Link>
           </div>
         </>
       )}
     </nav>
-);
-    
+  );
 };
 
 export default Navbar;

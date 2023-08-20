@@ -61,14 +61,12 @@ function App() {
   };
 
   const HeaderLoggedOut = () => {
-
     return (
       <header>
-      {/* Your header content for logged-in state */}
-        <Navbar/>
+        {/* Your header content for logged-in state */}
+        <Navbar />
       </header>
     );
-
   };
 
   useEffect(() => {
@@ -193,15 +191,22 @@ function App() {
                   element={user ? <DeleteGoal /> : <Navigate to="/" />}
                 />
 
-                <Route
-                  path="/user/:userId/reports"
-                  element={user ? <ReportList /> : <Navigate to="/" />}
-                />
+                 <Route
+                        path="/transactions"
+                        element={
+                          user ? (
+                            <TransactionsList user={user} />
+                          ) : (
+                            <Navigate to="/" />
+                          )
+                        }
+                      />
 
                 {/* always */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
               
+
       </BrowserRouter>
     </AuthContext.Provider>
   );
