@@ -1,20 +1,22 @@
 package org.example.data;
 
-import org.example.models.Transaction;
+import org.example.models.Transactions;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface TransactionsRepository {
 
-    List<Transaction> findByUserId(int appUserId);
+    List<Transactions> findByUserId(int appUserId);
 
-    Transaction findByTransactionId(int transactionId);
+    List<Transactions> findByUserId(int appUserId , LocalDate startDate, LocalDate endDate, String goalType);
+    Transactions findByTransactionId(int transactionId);
 
-    List<Transaction> findByGoalsId(int goalsId);
+    List<Transactions> findByGoalsId(int goalsId);
 
-    Transaction create(Transaction transaction);
+    Transactions create(Transactions transactions);
 
-    boolean update(Transaction transaction);
+    boolean update(Transactions transactions);
 
     boolean deleteById(int  transactionId);
 

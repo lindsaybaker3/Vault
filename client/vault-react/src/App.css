@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+/* ariany */
+.main-content {
+  /* margin-left: 250px; /* Adjust for sidebar width */
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column; /* Stack header and content vertically */
+  min-height: 100vh; /* Make sure the container covers the full viewport height */
+  height: 100vh;
+}

@@ -1,7 +1,9 @@
 package org.example.data;
 
+import org.example.data.mappers.GoalsMapper;
 import org.example.models.AppUser;
 import org.example.data.mappers.AppUserMapper;
+import org.example.models.Goals;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -75,6 +78,16 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository{
                 user.getUsername(), user.isEnabled(), user.getAppUserId());
 
         updateRoles(user);
+    }
+
+    @Override
+    public AppUser findById(int appUserId) {
+        final String sql = "select * from app_user where app_user_id = ?;";
+
+        AppUser appUser = jdbcTemplate.query(sql, new AppUserMapper(Collections.EMPTY_LIST), appUserId).stream()
+                .findFirst().orElse(null);
+
+        return appUser;
     }
 
     private void updateRoles(AppUser user) {

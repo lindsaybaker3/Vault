@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import "../styles/transactionlist.css";
 
 // import tables mui ui
 import Table from "@mui/material/Table";
@@ -38,52 +39,57 @@ const TransactionsList = () => {
   }, []);
 
   return (
-    <table className="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>Transaction ID</th>
+    <div className="transaction-page">
+      <table className="table table-bordered table-striped">
+        <thead>
+          <tr>
+            {/* <th>Transaction ID</th>
           <th>User ID</th>
-          <th>Goal ID</th>
-          <th>Goal Type</th>
-          <th>Category</th>
-          <th>Description</th>
-          <th>Amount</th>
-          <th>Date</th>
-          <th>Edit?</th>
-          <th>Delete?</th>
-        </tr>
-      </thead>
-      <tbody>
-        {transactions.map((transaction) => (
-          <tr key={transaction.transactionId}>
-            <td>{transaction.transactionId}</td>
+        <th>Goal ID</th> */}
+            <th>Goal Type</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Edit?</th>
+            <th>Delete?</th>
+          </tr>
+        </thead>
+        <tbody>
+          {transactions.map((transaction) => (
+            <tr key={transaction.transactionId}>
+              {/* <td>{transaction.transactionId}</td>
             <td>{transaction.appUserId}</td>
-            <td>{transaction.goalsId}</td>
-            <td>{transaction.goal_type}</td>
-            <td>{transaction.category}</td>
-            <td>{transaction.description}</td>
-            <td>
-              <AmountDisplay amount={transaction.amount} />
-            </td>
+          <td>{transaction.goalsId}</td> */}
+              <td>{transaction.goal_type}</td>
+              <td>{transaction.category}</td>
+              <td>{transaction.description}</td>
+              <td>
+                <AmountDisplay amount={transaction.amount} />
+              </td>
 
-            {/* <td>
+              {/* <td>
               <FormattedDate date={transaction.transactionDate} />
             </td> */}
-            <td>{transaction.transactionDate}</td>
-            <td>
-              {auth.user && (
-                <Link to={`/edit/${transaction.transactionId}`}>Edit</Link>
-              )}
-            </td>
-            <td>
-              {auth.user && (
-                <Link to={`/delete/${transaction.transactionId}`}>Delete</Link>
-              )}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+              <td>{transaction.transactionDate}</td>
+              <td>
+                {auth.user && (
+                  <Link to={`/edit/${transaction.transactionId}`}>Edit</Link>
+                )}
+              </td>
+              <td>
+                {auth.user && (
+                  <Link to={`/delete/${transaction.transactionId}`}>
+                    Delete
+                  </Link>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button>Add Transaction</button>
+    </div>
   );
 };
 

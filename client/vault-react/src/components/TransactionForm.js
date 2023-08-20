@@ -1,5 +1,5 @@
 import { type } from "@testing-library/user-event/dist/type";
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
@@ -14,6 +14,7 @@ const TransactionForm = () => {
   const typesList = getUniqueTypes(goals);
   const filteredGoals = goals.filter((item) => item.type === goalType);
   const [errors, setErrors] = useState([]);
+  const [goalTypeChanged, setGoalTypeChanged] = useState(false);
 
   const [appUserId, setAppUserId] = useState(auth.user?.appUserId || "");
   const [goalsId, setGoalsId] = useState("");
@@ -64,12 +65,12 @@ const TransactionForm = () => {
   }, []);
 
   useEffect(() => {
-    if (!params.transactionId) {
+    if (!params.transactionId || goalTypeChanged) {
       console.log("passou aqui");
       setCategory(filteredGoals[0]?.categoryName);
       setGoalsId(filteredGoals[0]?.goalsId);
     }
-  }, [filteredGoals, goalType, params.transactionId]);
+  }, [filteredGoals, goalType, goalTypeChanged, params.transactionId]);
 
   useEffect(() => {
     if (auth?.user?.appUserId) {
@@ -128,7 +129,7 @@ const TransactionForm = () => {
       url = `http://localhost:8080/api/vault/transaction/${params.transactionId}`;
       method = "PUT";
     } else {
-      url = "http://localhost:8080/api/vault/transaction/create";
+      url = "http://localhost:8080/api/vault/transaction";
       method = "POST";
     }
 
@@ -172,7 +173,10 @@ const TransactionForm = () => {
         <select
           id="goal-input"
           value={goalType}
-          onChange={(evt) => setGoalType(evt.target.value)}
+          onChange={(evt) => {
+            setGoalType(evt.target.value);
+            setGoalTypeChanged(true);
+          }}
         >
           {typesList.map((type) => (
             <option value={type}>{type}</option>

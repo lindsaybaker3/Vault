@@ -27,7 +27,7 @@ public class BudgetCategoryJdbcTemplateRepository implements BudgetCategoryRepos
         final String sql = "SELECT c.category_id, c.category_name " +
                 "FROM goals g " +
                 "JOIN category c ON g.category_id = c.category_id " +
-                "WHERE g.goal_type = ?";
+                "WHERE g.goalType = ?";
 
         return jdbcTemplate.query(sql, new BudgetCategoryMapper(), type);
     }

@@ -1,7 +1,7 @@
 package org.example.data;
 
 import org.example.data.mappers.TransactionMapper;
-import org.example.models.Transaction;
+import org.example.models.Transactions;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -23,7 +24,7 @@ public class TransactionsJdbcTemplateRepository implements TransactionsRepositor
     }
 
     @Override
-    public List<Transaction> findByUserId(int appUserId) {
+    public List<Transactions> findByUserId(int appUserId) {
         final String sql = "SELECT t.transaction_id, t.app_user_id, t.goals_id, g.goal_type, c.category_name, " +
                 "t.description, t.amount, t.transaction_date " +
                 "FROM `transaction` t " +
@@ -34,23 +35,36 @@ public class TransactionsJdbcTemplateRepository implements TransactionsRepositor
         return jdbcTemplate.query(sql, new TransactionMapper(), appUserId);
     }
 
+    @Override
+    public List<Transactions> findByUserId(int appUserId , LocalDate startDate, LocalDate endDate, String goalType) {
 
-    public Transaction findByTransactionId(int transactionId) {
         final String sql = "SELECT t.transaction_id, t.app_user_id, t.goals_id, g.goal_type, c.category_name, " +
+                "t.description, t.amount, t.transaction_date " +
+                "FROM `transaction` t " +
+                "JOIN goals g ON t.goals_id = g.goals_id " +
+                "JOIN category c ON g.category_id = c.category_id " +
+                "WHERE t.app_user_id = ? AND t.transaction_date between ? AND ? AND goal_type = ?";
+
+        return jdbcTemplate.query(sql, new TransactionMapper(), appUserId, startDate, endDate, goalType);
+    }
+
+
+    public Transactions findByTransactionId(int transactionId) {
+        final String sql = "SELECT t.transaction_id, t.app_user_id, t.goals_id, g.goalType, c.category_name, " +
                 "t.description, t.amount, t.transaction_date " +
                 "FROM `transaction` t " +
                 "JOIN goals g ON t.goals_id = g.goals_id " +
                 "JOIN category c ON g.category_id = c.category_id " +
                 "WHERE t.transaction_id = ?";
 
-        List<Transaction> transactions = jdbcTemplate.query(sql, new TransactionMapper(), transactionId);
+        List<Transactions> transactions = jdbcTemplate.query(sql, new TransactionMapper(), transactionId);
         return transactions.stream().findFirst().orElse(null);
     }
 
 
     @Override
-    public List<Transaction> findByGoalsId(int goalsId) {
-        final String sql = "SELECT t.transaction_id, t.app_user_id, t.goals_id, g.goal_type, c.category_name, " +
+    public List<Transactions> findByGoalsId(int goalsId) {
+        final String sql = "SELECT t.transaction_id, t.app_user_id, t.goals_id, g.goalType, c.category_name, " +
                 "t.description, t.amount, t.transaction_date " +
                 "FROM `transaction` t " +
                 "JOIN goals g ON t.goals_id = g.goals_id " +
@@ -61,18 +75,18 @@ public class TransactionsJdbcTemplateRepository implements TransactionsRepositor
     }
 
     @Override
-    public Transaction create(Transaction transaction) {
+    public Transactions create(Transactions transactions) {
         final String sql = "INSERT INTO transaction (app_user_id, goals_id, amount, description, transaction_date) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, transaction.getAppUserId());
-            ps.setInt(2, transaction.getGoalsId());
-            ps.setBigDecimal(3, transaction.getAmount());
-            ps.setString(4, transaction.getDescription());
-            ps.setDate(5, Date.valueOf(transaction.getTransactionDate()));
+            ps.setInt(1, transactions.getAppUserId());
+            ps.setInt(2, transactions.getGoalsId());
+            ps.setBigDecimal(3, transactions.getAmount());
+            ps.setString(4, transactions.getDescription());
+            ps.setDate(5, Date.valueOf(transactions.getTransactionDate()));
             return ps;
         }, keyHolder);
 
@@ -80,12 +94,12 @@ public class TransactionsJdbcTemplateRepository implements TransactionsRepositor
             return null;
         }
 
-        transaction.setTransactionId(keyHolder.getKey().intValue());
-        return transaction;
+        transactions.setTransactionId(keyHolder.getKey().intValue());
+        return transactions;
     }
 
     @Override
-    public boolean update(Transaction transaction) {
+    public boolean update(Transactions transactions) {
         final String sql = "UPDATE transaction SET "
                 + "goals_id = ?, "
                 + "amount = ?, "
@@ -94,11 +108,11 @@ public class TransactionsJdbcTemplateRepository implements TransactionsRepositor
                 + "WHERE transaction_id = ?";
 
         return jdbcTemplate.update(sql,
-                transaction.getGoalsId(),
-                transaction.getAmount(),
-                transaction.getDescription(),
-                Date.valueOf(transaction.getTransactionDate()),
-                transaction.getTransactionId()) > 0;
+                transactions.getGoalsId(),
+                transactions.getAmount(),
+                transactions.getDescription(),
+                Date.valueOf(transactions.getTransactionDate()),
+                transactions.getTransactionId()) > 0;
     }
 
 
