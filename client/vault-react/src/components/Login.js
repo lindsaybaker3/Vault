@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import "../styles/login.css";
+import Dashboard from "./Dashboard";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -24,13 +25,14 @@ export default function Login() {
         username,
         password,
       }),
+    
     });
 
     if (response.status === 200) {
       const { jwt_token } = await response.json();
       console.log(jwt_token);
       auth.login(jwt_token);
-      navigate("/");
+      navigate("/dashboard");
     } else if (response.status === 403) {
       setErrors(["Login failed."]);
     } else {

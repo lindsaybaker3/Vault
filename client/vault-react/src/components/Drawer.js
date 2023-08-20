@@ -29,7 +29,7 @@ const DrawerComponent = () => {
         >
           <Toolbar>
             <Typography variant="h6" noWrap component="div">
-              Dashboard
+              place image here
             </Typography>
           </Toolbar>
         </AppBar>
