@@ -5,8 +5,11 @@ import { Link } from "react-router-dom";
 import ConfirmDeleteGoal from "./DeleteGoal";
 import DeleteGoal from "./DeleteGoal";
 import "../style/goalsandtransactions.css"
-import { Box } from "@mui/system";
-import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import DrawerComponent from "./Drawer";
+import { Box, Button, Card, CardContent, CssBaseline, Grid, ThemeProvider, Typography, createTheme } from "@mui/material";
+import LinearProgress from '@mui/material/LinearProgress';
+import { Container, Stack } from "@mui/system";
 
 
 
@@ -58,9 +61,27 @@ const [showDeleteModal, setShowDeleteModal] = useState(false);
   };
 
 return (
+    <ThemeProvider theme = {createTheme()}>
+    <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <DrawerComponent />
+    <Box
+      component="main"
+      sx={{
+        backgroundColor: (theme) =>
+          theme.palette.mode === 'light'
+            ? theme.palette.grey[100]
+            : theme.palette.grey[900],
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+      }}
+    >
+    <Container maxWidth = "lg" sx={{ mt: 3, mb: 4 }}>
     <Box
     className="Goals-details-container"
     sx={{
+      paddingTop: '60px',  
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -71,24 +92,25 @@ return (
     <Box 
       className="goal-section"
       sx={{
-        padding: '16px',
+        padding: '10px',
         width: '100%', // Adjust width as needed
       }}
     >
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
               {/* goal info */}
         <Grid item xs={8}>
-            <h2 className="goal-header">{goal.categoryName}</h2>
+             <h2 style={{ color: '#69B45E' }}>{goal.categoryName}</h2>
         </Grid>
         <Grid item xs={4}>
-          <h2 className="goal-currentbalance">Current Balance: {goal.currentBalance}</h2>
+          <h2 style={{ color: '#69B45E' }}>Current Balance: {goal.currentBalance}</h2>
         </Grid>
-        <Grid item xs={6}>
-          <h2 className="goal-amount">Budget: {goal.amount}</h2>
+        <Grid item xs = {12}>
+            <Box sx = {{ display: 'flex', flexDirection: 'column', alignItems: 'left' }}>
+
+                 <h2 className="goal-amount">Budget: {goal.amount}</h2>
+
+            </Box>
           
-        </Grid>
-        <Grid item xs={12}>
-          <h2 className="goal-dates">{goal.startDate} - {goal.endDate}</h2>
         </Grid>
         <Grid item xs>
           {/* Edit and Delete links */}
@@ -102,6 +124,11 @@ return (
               Delete
             </Link>
           </Box>
+        </Grid>
+        <Grid item xs={12}>
+        <Box sx = {{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <p className="goal-dates">{goal.startDate} - {goal.endDate}</p>
+        </Box>
         </Grid>
       </Grid>
     </Box>
@@ -148,6 +175,10 @@ return (
     
    
     </Box>
+    </Container>
+    </Box>
+    </Box>
+    </ThemeProvider>
 )
 
     //TODO: Do on success and create the actual return statement

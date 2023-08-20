@@ -3,10 +3,12 @@ import AuthContext from "../context/AuthContext"
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import '../style/goalslist.css'
-import { Box } from "@mui/system";
-import { TextField } from "@mui/material";
+import { Box, Container } from "@mui/system";
+import { CssBaseline, TextField } from "@mui/material";
 import { Button} from "@mui/base";
 import MenuItem from '@mui/material/MenuItem';
+import DrawerComponent from "./Drawer";
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 
 const GoalsForm = (props) => {
     const auth = useContext(AuthContext);
@@ -125,9 +127,27 @@ const GoalsForm = (props) => {
     }
 
     return (
+        <ThemeProvider theme = {createTheme()}>
+        <Box sx={{ display: 'flex' }}>
+            <CssBaseline />
+            <DrawerComponent />
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === 'light'
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: '100vh',
+            overflow: 'auto',
+          }}
+        >
+        <Container maxWidth = "lg" sx={{ mt: 4, mb: 4 }}>
         <Box component = "form"
         sx={{
             '& .MuiTextField-root': { m: 1, width: '25ch' },
+            paddingTop: '64px',
         }}
         noValidate
         autoComplete="off"
@@ -145,6 +165,9 @@ const GoalsForm = (props) => {
                 value = {categoryId}
                 onChange={(evt) => setCategoryId(evt.target.value)}
                 fullWidth
+                InputLabelProps={{
+                    shrink: true,
+                  }}
             >
             <MenuItem value="1">Groceries</MenuItem>
             <MenuItem value="8">Vacation</MenuItem>
@@ -157,25 +180,32 @@ const GoalsForm = (props) => {
                 type="number"
                 value={amount}
                 onChange={(evt) => setAmount(evt.target.value)}
-                
                 fullWidth
+                InputLabelProps={{
+                    shrink: true,
+                  }}
             />
             <TextField
                 id="start-date-input"
                 label="Start Date"
                 type="date"
-                defaultValue={startDate}
+                value={startDate}
                 onChange={(evt) => setStartDate(evt.target.value)}
-                
                 fullWidth
+                InputLabelProps={{
+                    shrink: true,
+                  }}
             />
             <TextField
                 id="end-date-input"
                 label="End Date"
                 type="date"
-                defaultValue={endDate}
+                value={endDate}
                 onChange={(evt) => setEndDate(evt.target.value)}
                 fullWidth
+                InputLabelProps={{
+                    shrink: true,
+                  }}
             />
             <Button
                 type="submit"
@@ -190,44 +220,11 @@ const GoalsForm = (props) => {
                 : 'Add Savings Goal'}
             </Button>
             <Link to={type === 'spending' ? '/budgets' : '/savings'}>Cancel</Link>
+            </Box>
+            </Container>
         </Box>
-        // <form onSubmit = {handleSubmit}>
-          
-        //     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        //     <fieldset>
-        //         <label htmlFor = "category-input">Category</label>
-        //         <select id = "category-input" value = {categoryId} onChange={(evt) => setCategoryId(evt.target.value)}>
-        //             <option value = "1">Groceries</option>
-        //             <option value = "8">Vacation</option>
-        //             <option value = "6">Rent</option>
-        //             <option value = "10">Shopping</option>
-        //         </select>
-        //     </fieldset>
-        //     <fieldset>
-
-        //         <label htmlFor = "amount-input">Budget Goal: </label>
-        //         <input id = "amount-input" type = "number" value = {amount} onChange = {(evt) => setAmount(evt.target.value)}></input>
-        //     </fieldset>
-        //     <fieldset>
-        //         <label htmlFor = "start-date-input">Start Date:</label>
-        //         <input id = "start-date-input" type = "date" defaultValue = {startDate} onChange = {(evt) => setStartDate(evt.target.value)}></input>
-        //     </fieldset>
-        //     <fieldset>
-        //         <label htmlFor = "end-date-input">End Date:</label>
-        //         <input id = "end-date-input" type = "date" defaultValue = {endDate} onChange = {(evt) => setEndDate(evt.target.value)}></input>
-        //     </fieldset>
-        //     <button type = "submit">
-        //         {params.goalsId ? 
-        //         type === "spending" ? "Update Budget" : "Update Savings Goal"
-        //     : type === "spending" ? "Add Budget" : "Add Savings Goal"} </button>
-        //     <Link to = {type === "spending" ? "/budgets" : "/savings"}>Cancel</Link>
-            
-
-
-
-        //     </div>
-
-        // </form>
+        </Box>
+        </ThemeProvider>
     )
 }
 

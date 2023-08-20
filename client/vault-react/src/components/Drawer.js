@@ -26,7 +26,7 @@ const DrawerComponent = () => {
         <CssBaseline />
         <AppBar
           position="fixed"
-          sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+          sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px`,backgroundColor: '#05391F'}}
         >
           <Toolbar>
             <Typography variant="h6" noWrap component="div">
@@ -41,6 +41,7 @@ const DrawerComponent = () => {
             '& .MuiDrawer-paper': {
               width: drawerWidth,
               boxSizing: 'border-box',
+              backgroundColor: '#69B45E',
             },
           }}
           variant="permanent"

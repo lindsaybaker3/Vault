@@ -6,7 +6,7 @@ import '../style/goalslist.css'
 import { Box, Button, Card, CardContent, CssBaseline, Grid, ThemeProvider, Typography, createTheme } from "@mui/material";
 import LinearProgress from '@mui/material/LinearProgress';
 import DrawerComponent from "./Drawer";
-import { Container } from "@mui/system";
+import { Container, Stack } from "@mui/system";
 
 
 const GoalsList = ({ type }) => {
@@ -58,28 +58,44 @@ const GoalsList = ({ type }) => {
         }}
       >
       <Container maxWidth = "lg" sx={{ mt: 4, mb: 4 }}>
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'left',
+          paddingTop: '64px',
+        }}>
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs={8}>
+            <h2>{type === 'spending' ? "Budgets:" : "Savings Goals:"}</h2>
+          </Grid>
+          <Grid item xs = {4}>
+          <Link href={addLinkPath} className="add-button">
+           <Link to = {addLinkPath} className = "add=button">
+           Add {type === 'spending' ? 'budget' : 'saving'}
+            </Link>
+          </Link>
+          </Grid>
+          </Grid>
+        </Box>
       
-        <Box
-        className="card-container"
+        <Stack
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'left',
           gap: '16px', // Adjust the gap between cards
-          flexWrap: 'wrap', // Allow cards to wrap when there's limited space
           paddingTop: '64px',
         }}
       >
           {filteredGoals.map((goal) => (
         <Link key={goal.goalsId} to={`/budgets/${goal.goalsId}`} className="card">
             
-            <Card  variant="outlined" sx={{ minWidth: 275, height: '200px'}}>
+           <Card  variant="outlined" sx={{ minWidth: 500}}>
           <CardContent
             sx={{
-              backgroundColor: '#f5f5f5', // Adjust the background color
+              // Adjust the background color
               padding: '16px',
               borderRadius: '8px',
-              textAlign: 'center',
+              textAlign: 'left',
               textDecoration: 'none',
             }}
           >
@@ -93,6 +109,12 @@ const GoalsList = ({ type }) => {
                       goal.currentBalance >= goal.amount
                           ? theme.palette.error.main // Use error color when balance exceeds goal
                           : undefined, // Use default background color when not exceeded
+                          '& .MuiLinearProgress-bar': {
+                            backgroundColor: (theme) => 
+                            goal.currentBalance >= goal.amount
+                            ? theme.palette.error.main
+                            : undefined,
+                          }
                     }}
                   />
                   <Typography variant="body2">
@@ -103,12 +125,7 @@ const GoalsList = ({ type }) => {
             </Card>
         </Link>
       ))}
-       <Link href={addLinkPath} className="add-button">
-        <Link to = {addLinkPath} className = "add=button">
-          Add {type === 'spending' ? 'budget' : 'saving'}
-        </Link>
-      </Link>
-    </Box>
+    </Stack>
     </Container>
     </Box>
     </Box>
