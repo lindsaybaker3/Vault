@@ -74,12 +74,12 @@ export default function TotalBalanceChart() {
   
     return (
       <React.Fragment>
-        {/* <Title>Today</Title> */}
+        <h4>Current Balance: ${cumulativeTotal}</h4>
         <ResponsiveContainer>
           <LineChart
             data={formattedData}
             margin={{
-              top: 16,
+              top: 10,
               right: 16,
               bottom: 0,
               left: 24,
@@ -103,7 +103,7 @@ export default function TotalBalanceChart() {
                   ...theme.typography.body1,
                 }}
               >
-                Sales ($)
+                Total Balance
               </Label>
             </YAxis>
             <Line

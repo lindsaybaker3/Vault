@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import AmountDisplay from "../helpers/AmountDisplay";
 import FormattedDate from "../helpers/FormattedDate";
-import "../styles/transactionlist.css";
+import {  Container } from "@mui/system";
+import DrawerComponent from "./Drawer";
+import { Box, Button, Card, CardContent, CssBaseline, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, ThemeProvider, Typography, createTheme } from "@mui/material";
+import { Tab } from "@mui/base";
+// ------
+
 
 const TransactionsList = () => {
   const auth = useContext(AuthContext);
@@ -29,64 +34,82 @@ const TransactionsList = () => {
   }, []);
 
   return (
-    <div>
-      <table className="table table-bordered table-striped">
-        <thead>
-          <tr>
-            {/* <th>Transaction ID</th>
-            <th>User ID</th>
-            <th>Goal ID</th> */}
-            <th>Goal Type</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Amount</th>
-            <th>Date</th>
-            <th>Edit?</th>
-            <th>Delete?</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.length === 0 ? (
-            <tr>
-              <td colSpan="10">No transactions available.</td>
-            </tr>
-          ) : (
-            transactions.map((transaction) => (
-              <tr key={transaction.transactionId}>
-                {/* <td>{transaction.transactionId}</td>
-                <td>{transaction.appUserId}</td>
-                <td>{transaction.goalsId}</td> */}
-                <td>{transaction.goalType}</td>
-                <td>{transaction.category}</td>
-                <td>{transaction.description}</td>
-                <td>
-                  <AmountDisplay amount={transaction.amount} />
-                </td>
-                <td>
-                  {/* Assuming FormattedDate is a custom component */}
-                  <FormattedDate date={transaction.transactionDate} />
-                </td>
-                <td>
-                  {auth.user && (
-                    <Link to={`/edit/${transaction.transactionId}`}>Edit</Link>
-                  )}
-                </td>
-                <td>
-                  {auth.user && (
-                    <Link to={`/delete/${transaction.transactionId}`}>
-                      Delete
-                    </Link>
-                  )}
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-      <button>
-        <Link to="/transaction/add">Add Transaction</Link>
-      </button>
-    </div>
+    <ThemeProvider theme = {createTheme()}>
+    <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <DrawerComponent />
+    <Box
+      component="main"
+      sx={{
+        backgroundColor: (theme) =>
+          theme.palette.mode === 'light'
+            ? theme.palette.grey[100]
+            : theme.palette.grey[900],
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+      }}
+    >
+    <Container maxWidth = "lg" sx={{ mt: 4, mb: 4 }}>
+    <Box 
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '16px', // Adjust the gap between cards
+        paddingTop: '64px',
+      }}>
+      <TableContainer component = {Paper}>
+        <Table sx = {{ minWidth: 650}} aria-label = "simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                Date
+              </TableCell>
+              <TableCell>
+                Goal
+              </TableCell>
+              <TableCell>
+                Description
+              </TableCell>
+              <TableCell>
+                Amount
+              </TableCell>
+              <TableCell>
+                Edit
+              </TableCell>
+              <TableCell>
+                Delete
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {transactions?.map((transaction) => (
+              <TableRow key = {transaction.transactionId}>
+                <TableCell>{transaction.transactionDate}</TableCell>
+                <TableCell>{transaction.category}</TableCell>
+                <TableCell>{transaction.description}</TableCell>
+                <TableCell><AmountDisplay amount={transaction.amount} /> </TableCell>
+                <TableCell>  {auth.user && (
+                  <Link to={`/edit/${transaction.transactionId}`}>Edit</Link>
+                )}</TableCell>
+                <TableCell>
+                {auth.user && (
+                  <Link to={`/delete/${transaction.transactionId}`}>
+                    Delete
+                  </Link>
+                )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        </TableContainer>
+      <button>Add Transaction</button>
+    </Box>
+    </Container>
+    </Box>
+    </Box>
+    </ThemeProvider>
   );
 };
 
