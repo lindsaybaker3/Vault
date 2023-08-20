@@ -12,14 +12,14 @@ Content-Type: application/json
 #####
 
 GET http://localhost:8080/api/vault/goals
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjg1NTIyfQ.UKdMplsTgRxPh7z5Vew4ZAY1EQ6tztnsUOkO4V2eoWM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyNDg4NzE3fQ.4YyDf7xzvDesPND16ynIkPtNMKlOPu39m7476VWiMnM
 
 
 // Get goal by goal id
 #####
 
 GET http://localhost:8080/api/vault/goals/3
-Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjk4MTYxfQ.LS6t76-Li_iZsv1KCAI3K4PucRhJXl3Llw_aywRopWM
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyNDg4MzkwfQ.XJEUawEZ4KU6C6G3kwIN0AaYduW-XnbW3OtDWfNoQqY
 
 
 #####

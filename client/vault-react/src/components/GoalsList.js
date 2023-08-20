@@ -3,7 +3,9 @@ import AuthContext from "../context/AuthContext"
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import '../style/goalslist.css'
-import { Box, Button } from "@mui/material";
+import { Box, Button, Card, CardContent, Typography } from "@mui/material";
+import LinearProgress from '@mui/material/LinearProgress';
+
 
 const GoalsList = ({ type }) => {
     const auth = useContext(AuthContext);
@@ -34,6 +36,8 @@ const GoalsList = ({ type }) => {
     console.log(filteredGoals)
 
     const addLinkPath = type === "spending" ? "/budgets/add" : "/savings/add"
+
+   
     return (
         <Box
         className="card-container"
@@ -45,20 +49,37 @@ const GoalsList = ({ type }) => {
           flexWrap: 'wrap', // Allow cards to wrap when there's limited space
         }}
       >
-          {filteredGoals.map((goal, index) => (
+          {filteredGoals.map((goal) => (
         <Link key={goal.goalsId} to={`/budgets/${goal.goalsId}`} className="card">
-          <Box
+            
+            <Card  variant="outlined" sx={{ minWidth: 275, height: '200px'}}>
+          <CardContent
             sx={{
               backgroundColor: '#f5f5f5', // Adjust the background color
               padding: '16px',
               borderRadius: '8px',
-              width: '200px', // Adjust the card width
               textAlign: 'center',
               textDecoration: 'none',
             }}
           >
-            <h2>{goal.categoryName}</h2>
-          </Box>
+            <Typography variant="h5" component="div">{goal.categoryName}</Typography>
+            <LinearProgress
+                    variant="determinate"
+                    value={Math.min((goal.currentBalance / goal.amount) * 100, 100)}
+                    sx={{
+                      marginTop: '16px',
+                      backgroundColor: (theme) =>
+                      goal.currentBalance >= goal.amount
+                          ? theme.palette.error.main // Use error color when balance exceeds goal
+                          : undefined, // Use default background color when not exceeded
+                    }}
+                  />
+                  <Typography variant="body2">
+                    Progress: {((goal.currentBalance / goal.amount) * 100).toFixed(2)}%
+                  </Typography>
+          </CardContent>
+
+            </Card>
         </Link>
       ))}
        <Link href={addLinkPath} className="add-button">
@@ -70,19 +91,6 @@ const GoalsList = ({ type }) => {
   );
 };
 
-        // <div className = "card-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        //         {filteredGoals.map((goal, index) => (
-        //            <Link to = {`/budgets/${goal.goalsId}`} key = {goal.goalsId} className="card">
-        //             <h2>{goal.categoryName}</h2>
-        //            </Link>  
-        //         ))}
-        //         <Link to = {addLinkPath} className = "add=button">
-        //             Add {type === 'spending' ? "budget" : "saving"}
-        //         </Link>
-
-        // </div>
-
-//     )
-// }
+      
 
 export default GoalsList;
