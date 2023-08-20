@@ -30,7 +30,12 @@ public class GoalsService {
     }
 
     public List<Goals> findByUserId(int appUserId){
-        return repository.findByUserId(appUserId);
+        List<Goals> goals = repository.findByUserId(appUserId);
+        for (Goals goal : goals) {
+            List<Transaction> transactions = transactionRepository.findByGoalsId(goal.getGoalsId());
+            goal.setTransactionsList(transactions);
+        }
+        return goals;
     }
     public Goals findById(int goalId){
         Goals goal = repository.findById(goalId);
