@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router"
 import AuthContext from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import { Box } from "@mui/system";
 
 function DeleteGoal() {
   const params = useParams();
@@ -9,6 +10,8 @@ function DeleteGoal() {
   const [errors, setErrors] = useState([])
   const auth = useContext(AuthContext);
   const [goal, setGoal] = useState("");
+ 
+  
   //TODO: may need to add more pieces of state but this is what i have right now
 
   const fetchGoal = () => {
@@ -62,9 +65,20 @@ if(!auth?.user?.token){
       }
 
       console.log(goal);
-    
+
+
       return (
-        <div className="modal">
+        <Box sx = {{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          bgcolor: 'background.paper',
+          border: '2px solid #000',
+          boxShadow: 24,
+          p: 4,
+        }}>
         <div className="modal-content">
           <h2>Delete Goal Confirmation</h2>
           <p>Are you sure you want to delete this goal?</p>
@@ -75,7 +89,8 @@ if(!auth?.user?.token){
           <button onClick={handleDelete}>Delete</button>
           <Link to = {goal.type === "spending" ? "/budgets" : "/savings"}>Cancel</Link>
         </div>
-      </div>
+      </Box>
+
       );
     }
     

@@ -10,6 +10,7 @@ import DrawerComponent from "./Drawer";
 import { Box, Button, Card, CardContent, CssBaseline, Grid, ThemeProvider, Typography, createTheme } from "@mui/material";
 import LinearProgress from '@mui/material/LinearProgress';
 import { Container, Stack } from "@mui/system";
+import { Modal} from "@mui/material";
 
 
 
@@ -19,6 +20,7 @@ const GoalsAndTransactions = () => {
     const [errors, setErrors] = useState([])
     const auth = useContext(AuthContext);
     const [goal, setGoal] = useState("");
+    
     //TODO: may need to add more pieces of state but this is what i have right now
 
     const fetchGoalWithTransactions = () => {
@@ -56,9 +58,13 @@ console.log(goal)
 
 const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const handleDeleteClick = () => {
-    setShowDeleteModal(true);
-  };
+const handleDeleteClick = () => {
+  setShowDeleteModal(true);
+};
+
+const handleClose = () => {
+  setShowDeleteModal(false);
+};
 
 return (
     <ThemeProvider theme = {createTheme()}>
@@ -166,14 +172,20 @@ return (
         </Table>
         </TableContainer>
       </Box>
-      {showDeleteModal && (
+      <Modal
+        open = {showDeleteModal}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+      
         <DeleteGoal
           goal={goal}
-          onClose={() => setShowDeleteModal(false)}
+          onClose={handleClose}
         />
-      )}
-    
-   
+      
+
+      </Modal>
     </Box>
     </Container>
     </Box>
