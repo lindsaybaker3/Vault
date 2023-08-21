@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import { useContext, useState, useEffect } from "react";
 import { useTheme } from '@mui/material/styles';
 import AuthContext from "../context/AuthContext";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -16,6 +17,11 @@ export default function TransactionsForDashboard() {
     const auth = useContext(AuthContext);
     const [transactions, setTransactions] = useState([]);
     const theme = useTheme();
+    const navigate = useNavigate();
+
+    const NavigateToTransactionsPage = () => {
+      navigate("/transactions");
+    };
 
     const loadTransactions = () => {
         fetch("http://localhost:8080/api/vault/transactions", {
@@ -72,7 +78,7 @@ export default function TransactionsForDashboard() {
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" sx={{ mt: 3 }}>
+      <Link color="primary" href="#" sx={{ mt: 3 }} onClick={NavigateToTransactionsPage}>
         See more transactions
       </Link>
     </React.Fragment>

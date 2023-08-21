@@ -16,6 +16,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import Navbar from "./Navbar";
 import Dashboard from "./Dashboard";
 import { Container } from "@mui/system";
+import Background from "../images/background.png";
 
 const drawerWidth = 240;
 
@@ -31,11 +32,15 @@ const DrawerComponent = () => {
           backgroundColor: "#05391F",
         }}
       >
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            place image here
-          </Typography>
-        </Toolbar>
+           <Box
+            component="img"
+            sx={{
+            height: 64,
+            }}
+            alt="Green header background"
+            src={Background}
+        />
+      
       </AppBar>
       <Drawer
         sx={{
@@ -44,7 +49,8 @@ const DrawerComponent = () => {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
-            backgroundColor: "#69B45E",
+            backgroundColor: "#05391F",
+            color: "#F5F5F5"
           },
         }}
         variant="permanent"
