@@ -29,6 +29,7 @@ function App() {
   const [transactions, setTransactions] = useState([]);
   const [goals, setGoals] = useState([]);
   const [user, setUser] = useState(null);
+  const [finishedLoginAttempt, setFinishedLoginAttempt] = useState(false);
 
   const login = (token) => {
     const { sub: username, authorities: authoritiesString } = jwtDecode(token);
@@ -76,7 +77,16 @@ function App() {
     if (token) {
       login(token);
     }
+    setFinishedLoginAttempt(true);
   }, []);
+
+  if(!finishedLoginAttempt) {
+    return (
+      <div>
+        Loading...
+      </div>
+    )
+  }
 
   return (
     <AuthContext.Provider value={auth}>
