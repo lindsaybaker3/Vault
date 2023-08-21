@@ -15,7 +15,7 @@ const TransactionForm = () => {
   const typesList = getUniqueTypes(goals);
   const filteredGoals = goals.filter((item) => item.type === goalType);
   const [errors, setErrors] = useState([]);
-  const [goalTypeChanged, setGoalTypeChanged] = useState(false);
+  const [formChanged, setFormChanged] = useState(false);
 
   const [appUserId, setAppUserId] = useState(auth.user?.appUserId || "");
   const [goalsId, setGoalsId] = useState("");
@@ -65,12 +65,12 @@ const TransactionForm = () => {
   }, []);
 
   useEffect(() => {
-    if (!params.transactionId || goalTypeChanged) {
+    if (!params.transactionId && !formChanged) {
       console.log("passou aqui");
       setCategory(filteredGoals[0]?.categoryName);
       setGoalsId(filteredGoals[0]?.goalsId);
     }
-  }, [filteredGoals, goalType, goalTypeChanged, params.transactionId]);
+  }, [filteredGoals, goalType, formChanged, params.transactionId]);
 
   useEffect(() => {
     if (auth?.user?.appUserId) {
@@ -176,7 +176,7 @@ const TransactionForm = () => {
           value={goalType}
           onChange={(evt) => {
             setGoalType(evt.target.value);
-            setGoalTypeChanged(true);
+            setFormChanged(true);
           }}
         >
           {typesList.map((type) => (
@@ -192,6 +192,7 @@ const TransactionForm = () => {
           value={category}
           onChange={(evt) => {
             setCategory(evt.target.value);
+            setFormChanged(true);
             setGoalsId(
               goals.find((item) => item.categoryName === evt.target.value)
                 ?.goalsId
