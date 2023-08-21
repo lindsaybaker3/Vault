@@ -3,6 +3,10 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import AmountDisplay from "../helpers/AmountDisplay";
 import FormattedDate from "../helpers/FormattedDate";
+import { ThemeProvider } from "@emotion/react";
+import { Box, Container, createTheme } from "@mui/system";
+import { CssBaseline } from "@mui/material";
+import DrawerComponent from "./Drawer";
 
 function ConfirmDelete() {
   const params = useParams();
@@ -65,7 +69,34 @@ function ConfirmDelete() {
   }
 
   return (
-    <>
+    <ThemeProvider theme = {createTheme()}>
+    <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <DrawerComponent />
+    <Box
+      component="main"
+      sx={{
+        backgroundColor: (theme) =>
+          theme.palette.mode === 'light'
+            ? theme.palette.grey[100]
+            : theme.palette.grey[900],
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+      }}
+    >
+    <Container maxWidth = "lg" sx={{ mt: 3, mb: 4 }}>
+    <Box sx = {{
+      position: 'absolute',
+      top: '50%',
+      left: '60%',
+      transform: 'translate(-50%, -50%)',
+      width: 400,
+      bgcolor: 'background.paper',
+      border: '2px solid #000',
+      boxShadow: 24,
+      p: 4,
+    }}>
       <div className="delete-report">
         <h2>Confirm Delete</h2>
         <p>Delete this Report?</p>
@@ -79,7 +110,12 @@ function ConfirmDelete() {
         <Link to="/reports">Cancel</Link>
       </div>{" "}
       {/* Closing tag for the wrapping div */}
-    </>
+      </Box>
+    </Container>
+    </Box>
+    </Box>
+    </ThemeProvider>
+
   );
 }
 

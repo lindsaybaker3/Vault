@@ -5,6 +5,7 @@ import AmountDisplay from "../helpers/AmountDisplay";
 import FormattedDate from "../helpers/FormattedDate";
 import { Container } from "@mui/system";
 import DrawerComponent from "./Drawer";
+import { Modal} from "@mui/material";
 import {
   Box,
   Button,
@@ -23,6 +24,7 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
+import DeleteTransaction from "./DeleteTransaction"
 import { Tab } from "@mui/base";
 // ------
 
@@ -48,6 +50,16 @@ const TransactionsList = () => {
   useEffect(() => {
     loadTransactions();
   }, []);
+
+//   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+// const handleDeleteClick = () => {
+//   setShowDeleteModal(true);
+// };
+
+// const handleClose = () => {
+//   setShowDeleteModal(false);
+// };
 
   return (
     <ThemeProvider theme={createTheme()}>
@@ -107,8 +119,8 @@ const TransactionsList = () => {
                         <TableCell>
                           {auth.user && (
                             <Link to={`/delete/${transaction.transactionId}`}>
-                              Delete
-                            </Link>
+                            Delete
+                          </Link>
                           )}
                         </TableCell>
                       </TableRow>
@@ -119,6 +131,20 @@ const TransactionsList = () => {
               <Link to="/transaction/add">
                 <button>Add Transaction</button>
               </Link>
+              {/* <Modal
+              open = {showDeleteModal}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+              >
+      
+              <DeleteTransaction
+                  transaction = {transactions.transactionId}
+                  onClose={handleClose}
+                 />
+      
+
+      </Modal> */}
             </Box>
           </Container>
         </Box>
