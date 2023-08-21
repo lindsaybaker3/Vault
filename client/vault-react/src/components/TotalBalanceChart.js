@@ -25,19 +25,14 @@ export default function TotalBalanceChart() {
     loadTransactions();
   }, []);
 
-
+  console.log(transactions);
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth(); // 0-indexed, so January is 0
   
-  const filteredTransactions = transactions.map(transaction => {
-    const transactionType = transactions.find(goal => goal.goal_type === transaction.goal_type)
-    if(transactionType) {
-      return { ...transaction, goalType: transactionType.goal_type }
-    }
-    return null;
-  })
-  .filter(transaction => {
+  const filteredByGoalType = transactions?.filter(transaction => transaction.goalType === "spending")
+ 
+  const filteredTransactions = filteredByGoalType.filter(transaction => {
     const transactionDate = new Date(transaction.transactionDate);
     const transactionYear = transactionDate.getFullYear();
     const transactionMonth = transactionDate.getMonth();
@@ -45,8 +40,7 @@ export default function TotalBalanceChart() {
     
     return (
       transactionYear === currentYear && 
-      transactionMonth === currentMonth &&
-      transaction.goal_type === "spending"
+      transactionMonth === currentMonth
     )
   });
   
@@ -68,7 +62,7 @@ export default function TotalBalanceChart() {
     amount: dateToTotalMap[date],
   }));
      
-
+  console.log(filteredTransactions)
 
   
   

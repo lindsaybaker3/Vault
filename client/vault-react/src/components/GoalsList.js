@@ -13,10 +13,11 @@ const GoalsList = ({ type }) => {
     const auth = useContext(AuthContext);
     const navigate = useNavigate();
     const [goals, setGoals] = useState([]);
-
+    const [dateFilter, setDateFilter] = useState('currentMonth');
 
    
     const loadGoals = () => {
+      
         if(!auth.user || !auth.user.token){
             navigate("/");
             return;
@@ -34,8 +35,43 @@ const GoalsList = ({ type }) => {
 
     useEffect(loadGoals, [])
 
-    const filteredGoals = goals.filter(goal => goal.type === type);
-    console.log(filteredGoals)
+   
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+
+    const parseDateString = (dateString) => {
+    const [year, month, day] = dateString.split('-').map(Number);
+        return new Date(year, month - 1, day); 
+        };
+
+    const filteredGoals = goals
+    .filter((goal) => goal.type === type)
+    .filter((goal) => {
+      const goalDate = parseDateString(goal.startDate);//this goal date needs to be formatted different
+      
+      if (dateFilter === 'currentMonth') {
+        return goalDate.getMonth() === currentDate.getMonth()
+  
+      } else if (dateFilter === 'lastMonth'){
+        const lastMonthStartDate = new Date(currentYear, currentMonth - 1, 1);
+        const lastMonthEndDate = new Date(currentYear, currentMonth, 0);
+         return goalDate >= lastMonthStartDate && goalDate <= lastMonthEndDate
+      } else if (dateFilter === 'pastThree') {
+        const lastThreeMonthsStartDate = new Date(currentYear, currentMonth -3, 1)
+        return goalDate >= lastThreeMonthsStartDate
+      } else if (dateFilter === 'thisYear') {
+        return goalDate.getFullYear() === currentDate.getFullYear()
+      } else if (dateFilter === 'lastYear') {
+        const lastYear = new Date(currentYear -1, currentMonth, 1)
+        return goalDate.getFullYear() === lastYear.getFullYear()
+      }
+    
+      return true; 
+  });
+   
+   
 
     const addLinkPath = type === "spending" ? "/budgets/add" : "/savings/add"
 
@@ -55,26 +91,51 @@ const GoalsList = ({ type }) => {
           flexGrow: 1,
           height: '100vh',
           overflow: 'auto',
+          paddingTop: '64px',
         }}
       >
       <Container maxWidth = "lg" sx={{ mt: 4, mb: 4 }}>
         <Box sx={{
           display: 'flex',
-          alignItems: 'left',
-          paddingTop: '64px',
+          paddingBottom: '35px',
+          borderBottom: '1px solid  #ccc',
         }}>
-          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={8}>
-            <h2>{type === 'spending' ? "Budgets:" : "Savings Goals:"}</h2>
+          <Grid container>
+          <Grid item xs={10}>
+            <h1>{type === 'spending' ? "Budgets:" : "Savings Goals:"}</h1>
           </Grid>
-          <Grid item xs = {4}>
-          <Link href={addLinkPath} className="add-button">
+          <Grid sx = {{paddingTop: '10px', paddingLeft: '25px'}} item xs = {2}>
            <Link to = {addLinkPath} className = "add=button">
-           Add {type === 'spending' ? 'budget' : 'saving'}
-            </Link>
+              <Button
+              variant="contained"
+              color="primary" 
+              sx={{
+                marginTop: '16px',
+                backgroundColor: '#05391F', 
+                color: '#FFFFFF',
+                '&:hover': {
+                  backgroundColor: '#69B45E', 
+                },
+              }}>
+              Add {type === 'spending' ? 'budget' : 'saving'}
+                </Button>
           </Link>
           </Grid>
+          <Grid item xs={12}>
+          <p>Filter By Date</p>
+            <select
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+            >
+              <option value="currentMonth">Current Month</option>
+              <option value="lastMonth">Last Month</option>
+              <option value="pastThree">Past Three Months</option>
+              <option value="thisYear">This Year</option>
+              <option value="lastYear">Last year</option>
+              <option value="All">All Goals</option>
+            </select>
           </Grid>
+       </Grid>
         </Box>
       
         <Stack
@@ -83,7 +144,7 @@ const GoalsList = ({ type }) => {
           justifyContent: 'center',
           alignItems: 'left',
           gap: '16px', // Adjust the gap between cards
-          paddingTop: '64px',
+          paddingTop: '35px',
         }}
       >
           {filteredGoals.map((goal) => (
@@ -107,12 +168,16 @@ const GoalsList = ({ type }) => {
                       marginTop: '16px',
                       backgroundColor: (theme) =>
                       goal.currentBalance >= goal.amount
-                          ? theme.palette.error.main // Use error color when balance exceeds goal
-                          : undefined, // Use default background color when not exceeded
+                        ? goal.type === 'spending'
+                        ? theme.palette.error.main
+                          : theme.palette.success.main 
+                          : undefined, 
                           '& .MuiLinearProgress-bar': {
                             backgroundColor: (theme) => 
                             goal.currentBalance >= goal.amount
-                            ? theme.palette.error.main
+                            ? goal.type === 'spending'
+                              ? theme.palette.error.main // Red for budgets
+                              : theme.palette.success.main // Green for savings
                             : undefined,
                           }
                     }}
