@@ -18,8 +18,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import TotalBalanceChart from './TotalBalanceChart';
-import Orders from './Orders';
+import Orders from './TransactionsForDashboard';
 import DrawerComponent from './Drawer';
+import TransactionsForDashboard from './TransactionsForDashboard';
 
 // import { mainListItems, secondaryListItems } from './listItems';
 // import Chart from './Chart';
@@ -94,8 +95,8 @@ export default function Dashboard() {
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  Transactions posted here
-                  <Orders />
+                  Recent Transactions
+                  <TransactionsForDashboard />
                 </Paper>
               </Grid>
             </Grid>
