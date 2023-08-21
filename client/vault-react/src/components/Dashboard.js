@@ -18,10 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import TotalBalanceChart from './TotalBalanceChart';
-import Orders from './TransactionsForDashboard';
-import DrawerComponent from './Drawer';
 import TransactionsForDashboard from './TransactionsForDashboard';
-
 // import { mainListItems, secondaryListItems } from './listItems';
 // import Chart from './Chart';
 // import Deposits from './Deposits';
@@ -29,29 +26,22 @@ import TransactionsForDashboard from './TransactionsForDashboard';
 
 function Copyright(props) {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-      {"."}
+      {'.'}
     </Typography>
   );
 }
 
 export default function Dashboard() {
+   
     return(
         <ThemeProvider theme = {createTheme()}>
-        <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
-            <DrawerComponent />
-        <Box
+             <Box
           component="main"
           sx={{
             backgroundColor: (theme) =>
@@ -64,7 +54,7 @@ export default function Dashboard() {
           }}
         >
           <Toolbar />
-            <Container maxWidth = "lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="lg" sx={{ mt: 3, mb: 4 }}>
             <Grid container spacing={3}>
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
@@ -95,16 +85,14 @@ export default function Dashboard() {
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  Recent Transactions
+                  Transactions
                   <TransactionsForDashboard />
                 </Paper>
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
-            </Container>
-          </Box>
-          </Box>
+          </Container>
+        </Box>
         </ThemeProvider>
     )
 }
-
