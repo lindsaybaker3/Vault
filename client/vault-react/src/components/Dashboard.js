@@ -19,6 +19,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import TotalBalanceChart from './TotalBalanceChart';
 import TransactionsForDashboard from './TransactionsForDashboard';
+import BudgetPieChart from './BudgetPieChart';
 // import { mainListItems, secondaryListItems } from './listItems';
 // import Chart from './Chart';
 // import Deposits from './Deposits';
@@ -80,11 +81,12 @@ export default function Dashboard() {
                   }}
                 >
                  Budgets
+                 <BudgetPieChart />
                 </Paper>
               </Grid>
-              {/* Recent Orders */}
+              {/* Recent Transactions */}
               <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', pl: 30}}>
                   Transactions
                   <TransactionsForDashboard />
                 </Paper>
