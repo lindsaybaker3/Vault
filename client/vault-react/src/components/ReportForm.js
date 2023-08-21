@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 const Form = () => {
-  const params = useParams();
   const navigate = useNavigate();
+  const auth = useContext(AuthContext);
 
   const [errors, setErrors] = useState([]);
 
@@ -13,70 +14,29 @@ const Form = () => {
 
   const resetState = () => {
     setStartDate("");
-    setRow("");
-    setColumn("");
+    setEndDate("");
+    setGoalType("");
   };
-
-  useEffect(() => {
-    if (params.id !== undefined) {
-      fetch(`http://localhost:8080/api/solarpanel/${params.id}`).then(
-        (response) => {
-          if (response.ok) {
-            response.json().then((panel) => {
-              setSection(panel.section);
-              setRow(panel.row);
-              setColumn(panel.column);
-              setYearInstalled(panel.yearInstalled);
-              setMaterial(panel.material);
-              setTracking(panel.tracking);
-            });
-          } else {
-            // is it a 404?
-            // is it a 500?
-            // is it something else?
-            console.log(`Unexpected response status code: ${response.status}`);
-          }
-        }
-      );
-    } else {
-      resetState();
-    }
-  }, [params.id]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
-    const newPanel = {
-      section: section,
-      row: row,
-      column: column,
-      yearInstalled: yearInstalled,
-      material: material,
-      tracking: tracking,
+    const newReport = {
+      startDate: startDate,
+      endDate: endDate,
+      goalType: goalType,
     };
 
-    let url = null;
-    let method = null;
-
-    if (params.id !== undefined) {
-      newPanel.id = params.id;
-      url = `http://localhost:8080/api/solarpanel/${params.id}`;
-      method = "PUT";
-    } else {
-      url = "http://localhost:8080/api/solarpanel";
-      method = "POST";
-    }
-
-    fetch(url, {
-      method,
+    fetch("http://localhost:8080/api/vault/report", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: "Bearer " + auth.user.token,
       },
-      body: JSON.stringify(newPanel),
+      body: JSON.stringify(newReport),
     }).then((response) => {
       if (response.ok) {
-        navigate("/list");
+        navigate("/reports");
         resetState();
       } else {
         response.json().then((errors) => {
@@ -91,78 +51,72 @@ const Form = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="login-form" onSubmit={handleSubmit}>
       <ul>
-        {errors.map((error) => (
-          <li key={error}>{error}</li>
+        {errors.map((error, index) => (
+          <li key={index}>{error}</li>
         ))}
       </ul>
-
       <fieldset>
-        <label htmlFor="section-input">Section: </label>
+        <label htmlFor="startdate-input">Start Date: </label>
         <input
-          id="section-input"
-          value={section}
-          onChange={(evt) => setSection(evt.target.value)}
+          id="startdate-input"
+          type="date"
+          value={startDate}
+          onChange={(evt) => setStartDate(evt.target.value)}
         />
       </fieldset>
-
       <fieldset>
-        <label htmlFor="row-input">Row: </label>
+        <label htmlFor="enddate-input">End Date: </label>
         <input
-          id="row-input"
-          type="number"
-          value={row}
-          onChange={(evt) => setRow(evt.target.value)}
+          id="enddate-input"
+          type="date"
+          value={endDate}
+          onChange={(evt) => setEndDate(evt.target.value)}
         />
       </fieldset>
-
       <fieldset>
-        <label htmlFor="column-input">Column: </label>
-        <input
-          id="column-input"
-          type="number"
-          value={column}
-          onChange={(evt) => setColumn(evt.target.value)}
-        />
-      </fieldset>
-
-      <fieldset>
-        <label htmlFor="material-input">Material:</label>
+        <label htmlFor="goal-input">Goal Type:</label>
         <select
-          id="material-input"
-          value={material}
-          onChange={(evt) => setMaterial(evt.target.value)}
+          id="goal-input"
+          value={goalType}
+          onChange={(evt) => setGoalType(evt.target.value)}
         >
-          <option value="POLY_SI">Multicrystalline Silicon</option>
-          <option value="CIGS">Cool Indigo Go-for-it Son</option>
+          <option disabled value="">
+            Select a Goal type
+          </option>
+          <option value="spending">Budgets</option>
+          <option value="saving">Saving</option>
         </select>
       </fieldset>
 
-      <fieldset>
-        <label htmlFor="yearInstalled-input">Year installed: </label>
-        <input
-          id="yearInstalled-input"
-          type="number"
-          value={yearInstalled}
-          onChange={(evt) => setYearInstalled(evt.target.value)}
-        />
-      </fieldset>
-
-      <fieldset>
-        <label htmlFor="tracking-input">Is tracking?</label>
-        <input
-          id="tracking-input"
-          type="checkbox"
-          checked={tracking}
-          onChange={(evt) => setTracking(evt.target.checked)}
-        />
-      </fieldset>
-
-      <button type="submit">Save!</button>
-      <Link to="/list">Cancel</Link>
+      <div className="group-button">
+        <Link className="btn btn-warning" to="/reports">
+          Cancel
+        </Link>
+        <button type="submit" className="btn btn-primary">
+          Create Report
+        </button>
+      </div>
     </form>
   );
 };
 
 export default Form;
+
+{
+  /* <fieldset>
+  <label htmlFor="goal-input">Goal Type:</label>
+  <select
+    id="goal-input"
+    value={goalType}
+    onChange={(evt) => setGoalType(evt.target.value)}
+  >
+    <option disabled value="">
+      Select a Goal type
+    </option>
+    <option value="spending">Budgets</option>
+    <option value="saving">Saving</option>
+  </select>
+</fieldset>; */
+}
