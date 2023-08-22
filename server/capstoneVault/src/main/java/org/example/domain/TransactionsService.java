@@ -1,6 +1,8 @@
 package org.example.domain;
 
+import org.example.data.GoalsJdbcTemplateRepository;
 import org.example.data.TransactionsJdbcTemplateRepository;
+import org.example.models.Goals;
 import org.example.models.Transactions;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,11 @@ import java.util.List;
 public class TransactionsService {
 
     private final TransactionsJdbcTemplateRepository repository;
+    private final GoalsJdbcTemplateRepository goalsJdbcTemplateRepository;
 
-    public TransactionsService(TransactionsJdbcTemplateRepository repository) {
+    public TransactionsService(TransactionsJdbcTemplateRepository repository, GoalsJdbcTemplateRepository goalsJdbcTemplateRepository) {
         this.repository = repository;
+        this.goalsJdbcTemplateRepository = goalsJdbcTemplateRepository;
     }
 
     public  List<Transactions> findByUserId(int appUserId){
@@ -84,6 +88,16 @@ public class TransactionsService {
             result.addErrorMessage("Transaction date is required.", ResultType.INVALID);
         } else if (transactions.getTransactionDate().isAfter(LocalDate.now())) {
             result.addErrorMessage("Transaction date needs to be a past date.", ResultType.INVALID);
+        } else {
+            Goals goal = goalsJdbcTemplateRepository.findById(transactions.getGoalsId());
+            LocalDate goalStartDate = goal.getStartDate();
+            LocalDate goalEndDate = goal.getEndDate();
+            LocalDate transactionDate = transactions.getTransactionDate();
+
+            if (!(transactionDate.isEqual(goalStartDate) || transactionDate.isEqual(goalEndDate) ||
+                    (transactionDate.isAfter(goalStartDate) && transactionDate.isBefore(goalEndDate)))) {
+                result.addErrorMessage("Transaction date is outside the goal range", ResultType.INVALID);
+            }
         }
 
         if (transactions.getAmount() == null || transactions.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
@@ -94,10 +108,7 @@ public class TransactionsService {
             result.addErrorMessage("Transaction description is required.", ResultType.INVALID);
         }
 
-//        if (transaction.getGoalsId() <= 0 ) {
-//            result.addErrorMessage("Goal is required.", ResultType.INVALID);
-//        }
-
         return result;
     }
+
 }

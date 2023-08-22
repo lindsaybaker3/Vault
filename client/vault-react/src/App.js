@@ -80,12 +80,8 @@ function App() {
     setFinishedLoginAttempt(true);
   }, []);
 
-  if(!finishedLoginAttempt) {
-    return (
-      <div>
-        Loading...
-      </div>
-    )
+  if (!finishedLoginAttempt) {
+    return <div>Loading...</div>;
   }
 
   return (

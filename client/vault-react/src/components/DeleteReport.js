@@ -38,11 +38,11 @@ function ConfirmDelete() {
       .catch(() => {
         navigate("/not-found");
       });
-  }, [params.reportId]);
+  }, [auth.user.token, navigate, params.reportId]);
 
   const handleDelete = () => {
     const reportId = isNaN(params.reportId) ? null : parseInt(params.reportId);
-    fetch(`http://localhost:8080/api/vault/transaction/${reportId}`, {
+    fetch(`http://localhost:8080/api/vault/report/${reportId}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + auth.user.token,
@@ -99,16 +99,19 @@ function ConfirmDelete() {
                 p: 4,
               }}
             >
-              <h2>Confirm Delete</h2>
-              <p>Delete this Report?</p>
-              <ul>
-                <li>Start Range Date: {report.startDate}</li>
-                <li>Start End Date: {report.endDate}</li>
-                <li>Goal Type: {report.goalType}</li>
-                <li>Report: {report.reportUrl}</li>
-              </ul>
-              <button onClick={handleDelete}>Delete Report</button>{" "}
-              <Link to="/reports">Cancel</Link>
+              <div className="delete-report">
+                <h2>Confirm Delete</h2>
+                <p>Delete this Report?</p>
+                <ul>
+                  <li>Start Range Date: {report.startDate}</li>
+                  <li>Start End Date: {report.endDate}</li>
+                  <li>Goal Type: {report.goalType}</li>
+                  <li>Report: {report.reportUrl}</li>
+                </ul>
+                <button onClick={handleDelete}>Delete Report</button>{" "}
+                <Link to="/reports">Cancel</Link>
+              </div>{" "}
+
             </Box>
           </Container>
         </Box>

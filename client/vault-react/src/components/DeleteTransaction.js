@@ -39,7 +39,7 @@ function ConfirmDelete() {
       .catch(() => {
         navigate("/not-found");
       });
-  }, [params.transactionId]);
+  }, [auth.user.token, navigate, params.transactionId]);
 
   const handleDelete = () => {
     const transactionId = isNaN(params.transactionId)
@@ -123,6 +123,7 @@ function ConfirmDelete() {
                 <li>
                   Date: <FormattedDate date={transaction.transactionDate} />
                 </li>
+
                 {/* {message} on{" "}
                 <FormattedDate date={transaction.transactionDate} />, you spent{" "}
                 <AmountDisplay amount={transaction.amount} /> towards the
