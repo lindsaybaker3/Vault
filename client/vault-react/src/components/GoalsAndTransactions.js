@@ -11,6 +11,8 @@ import { Box, Button, Card, CardContent, CssBaseline, Grid, ThemeProvider, Typog
 import LinearProgress from '@mui/material/LinearProgress';
 import { Container, Stack } from "@mui/system";
 import { Modal} from "@mui/material";
+import AmountDisplay from "../helpers/AmountDisplay";
+
 
 
 
@@ -66,6 +68,15 @@ const handleClose = () => {
   setShowDeleteModal(false);
 };
 
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
+  return new Date(dateString).toLocaleDateString(undefined, options)
+}
+
+
+const formattedStart = formatDate(goal.startDate)
+const formattedEnd = formatDate(goal.endDate)
+
 return (
     <ThemeProvider theme = {createTheme()}>
     <Box sx={{ display: 'flex' }}>
@@ -85,7 +96,6 @@ return (
     >
     <Container maxWidth = "lg" sx={{ mt: 3, mb: 4 }}>
     <Box
-    className="Goals-details-container"
     sx={{
       paddingTop: '60px',  
       display: 'flex',
@@ -98,51 +108,64 @@ return (
     <Box 
       className="goal-section"
       sx={{
-        padding: '10px',
+        // padding: '10px',
         width: '100%', // Adjust width as needed
+        border: '2px solid black'
       }}
     >
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Grid container sx= {{border: '2px solid black'}}>
               {/* goal info */}
-        <Grid item xs={8}>
-             <h2 style={{ color: '#69B45E' }}>{goal.categoryName}</h2>
+        <Grid item xs={10}>
+             <h1>{goal.categoryName}</h1>
+             <h4> Budget: <AmountDisplay amount = {goal.amount} /> </h4>
+             <h4>Current Balance: <AmountDisplay amount = {goal.currentBalance} /> </h4>
         </Grid>
-        <Grid item xs={4}>
-          <h2 style={{ color: '#69B45E' }}>Current Balance: {goal.currentBalance}</h2>
-        </Grid>
-        <Grid item xs = {12}>
-            <Box sx = {{ display: 'flex', flexDirection: 'column', alignItems: 'left' }}>
-
-                 <h2 className="goal-amount">Budget: {goal.amount}</h2>
-
-            </Box>
-          
-        </Grid>
-        <Grid item xs>
+        <Grid item xs = {2}>
           {/* Edit and Delete links */}
           <Box>
             <Link
               to={goal.type === 'spending' ? `/budgets/edit/${goal.goalsId}` : `/savings/edit/${goal.goalsId}`}
             >
-              Edit
+               <Button
+              variant="contained"
+              color="primary" 
+              sx={{
+                marginTop: '16px',
+                backgroundColor: '#05391F', 
+                color: '#FFFFFF',
+                '&:hover': {
+                  backgroundColor: '#69B45E', 
+                },
+              }}> Edit </Button>
             </Link>
             <Link to="#" onClick={handleDeleteClick}>
-              Delete
+            <Button
+              variant="contained"
+              color="primary" 
+              sx={{
+                marginTop: '16px',
+                backgroundColor: 'red', 
+                color: '#FFFFFF',
+                '&:hover': {
+                  backgroundColor: '#69B45E', 
+                },
+              }}>
+              Delete </Button>
             </Link>
           </Box>
         </Grid>
-        <Grid item xs={12}>
-        <Box sx = {{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <p className="goal-dates">{goal.startDate} - {goal.endDate}</p>
-        </Box>
-        </Grid>
       </Grid>
     </Box>
+    
+        <Box sx = {{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <p> Transactions from: {formattedStart} to {formattedEnd}</p>
+        </Box>
+    
 
     <Box
         className="transactions-section"
         sx={{
-          padding: '16px',
+          // padding: '16px',
           width: '100%', // Adjust width as needed
         }}
       >

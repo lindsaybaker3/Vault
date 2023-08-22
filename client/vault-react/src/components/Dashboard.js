@@ -19,7 +19,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import TotalBalanceChart from './TotalBalanceChart';
 import TransactionsForDashboard from './TransactionsForDashboard';
+import DrawerComponent from './Drawer';
 import BudgetPieChart from './BudgetPieChart';
+
 // import { mainListItems, secondaryListItems } from './listItems';
 // import Chart from './Chart';
 // import Deposits from './Deposits';
@@ -42,7 +44,10 @@ export default function Dashboard() {
    
     return(
         <ThemeProvider theme = {createTheme()}>
-             <Box
+          <Box sx={{ display: 'flex' }}>
+            <CssBaseline />
+            <DrawerComponent />
+        <Box
           component="main"
           sx={{
             backgroundColor: (theme) =>
@@ -94,6 +99,7 @@ export default function Dashboard() {
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
+        </Box>
         </Box>
         </ThemeProvider>
     )
