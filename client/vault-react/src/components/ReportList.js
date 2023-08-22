@@ -3,7 +3,6 @@ import { useParams } from "react-router";
 import AuthContext from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import { Container } from "@mui/system";
-
 import AWS from "aws-sdk";
 import DrawerComponent from "./Drawer";
 import {
@@ -72,25 +71,25 @@ const ReportList = () => {
     .charAt(0)
     .toUpperCase()}${getUsernameWithoutDomain(auth.user.username).slice(1)}, `;
 
-  const loadReportByUser = () => {
-    fetch(
-      `http://localhost:8080/api/vault/report/${params.reportId}/download`,
-      {
-        headers: {
-          Authorization: "Bearer " + auth.user.token,
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((payload) => {
-        if (payload) {
-          setReportsByUser(payload);
-        }
-      })
-      .catch((error) => {
-        console.error("Error loading report:", error);
-      });
-  };
+  // const loadReportByUser = () => {
+  //   fetch(
+  //     `http://localhost:8080/api/vault/report/${params.reportId}/download`,
+  //     {
+  //       headers: {
+  //         Authorization: "Bearer " + auth.user.token,
+  //       },
+  //     }
+  //   )
+  //     .then((response) => response.json())
+  //     .then((payload) => {
+  //       if (payload) {
+  //         setReportsByUser(payload);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error loading report:", error);
+  //     });
+  // };
 
   const handleDownload = async (reportUrl) => {
     try {

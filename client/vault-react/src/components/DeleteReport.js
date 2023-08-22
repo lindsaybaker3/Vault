@@ -69,53 +69,51 @@ function ConfirmDelete() {
   }
 
   return (
-    <ThemeProvider theme = {createTheme()}>
-    <Box sx={{ display: 'flex' }}>
+    <ThemeProvider theme={createTheme()}>
+      <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <DrawerComponent />
-    <Box
-      component="main"
-      sx={{
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'light'
-            ? theme.palette.grey[100]
-            : theme.palette.grey[900],
-        flexGrow: 1,
-        height: '100vh',
-        overflow: 'auto',
-      }}
-    >
-    <Container maxWidth = "lg" sx={{ mt: 3, mb: 4 }}>
-    <Box sx = {{
-      position: 'absolute',
-      top: '50%',
-      left: '60%',
-      transform: 'translate(-50%, -50%)',
-      width: 400,
-      bgcolor: 'background.paper',
-      border: '2px solid #000',
-      boxShadow: 24,
-      p: 4,
-    }}>
-      <div className="delete-report">
-        <h2>Confirm Delete</h2>
-        <p>Delete this Report?</p>
-        <ul>
-          <li>Start Range Date: {report.startDate}</li>
-          <li>Start End Date: {report.endDate}</li>
-          <li>Goal Type: {report.goalType}</li>
-          <li>Report: {report.reportUrl}</li>
-        </ul>
-        <button onClick={handleDelete}>Delete Report</button>{" "}
-        <Link to="/reports">Cancel</Link>
-      </div>{" "}
-      {/* Closing tag for the wrapping div */}
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto",
+          }}
+        >
+          <Container maxWidth="lg" sx={{ mt: 3, mb: 4 }}>
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "60%",
+                transform: "translate(-50%, -50%)",
+                width: 400,
+                bgcolor: "background.paper",
+                border: "2px solid #000",
+                boxShadow: 24,
+                p: 4,
+              }}
+            >
+              <h2>Confirm Delete</h2>
+              <p>Delete this Report?</p>
+              <ul>
+                <li>Start Range Date: {report.startDate}</li>
+                <li>Start End Date: {report.endDate}</li>
+                <li>Goal Type: {report.goalType}</li>
+                <li>Report: {report.reportUrl}</li>
+              </ul>
+              <button onClick={handleDelete}>Delete Report</button>{" "}
+              <Link to="/reports">Cancel</Link>
+            </Box>
+          </Container>
+        </Box>
       </Box>
-    </Container>
-    </Box>
-    </Box>
     </ThemeProvider>
-
   );
 }
 
