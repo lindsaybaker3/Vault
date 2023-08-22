@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router";
 import AuthContext from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import { Container } from "@mui/system";
 import LastReport from "../helpers/LastReport";
-
+import AWS from "aws-sdk";
 import DrawerComponent from "./Drawer";
 import {
   Box,
@@ -25,9 +26,24 @@ import {
 import { Tab } from "@mui/base";
 // ------
 
+const accessKeyId = process.env.REACT_APP_AWS_ACCESS_KEY_ID;
+const secretAccessKey = process.env.REACT_APP_AWS_SECRET_ACCESS_KEY;
+const region = process.env.REACT_APP_AWS_REGION;
+
+AWS.config.update({
+  accessKeyId,
+  secretAccessKey,
+  region,
+});
+
+const s3 = new AWS.S3();
+
 const ReportList = () => {
+  const params = useParams();
   const auth = useContext(AuthContext);
   const [reports, setReports] = useState([]);
+  const [downloadLink, setDownloadLink] = useState("");
+  const [reportsByUser, setReportsByUser] = useState([]);
 
   const loadReports = () => {
     fetch("http://localhost:8080/api/vault/reports", {
@@ -47,10 +63,6 @@ const ReportList = () => {
     loadReports();
   }, []);
 
-  const downloadFileUrl = (url) => {
-    const fileName = url;
-  };
-
   const getUsernameWithoutDomain = (username) => {
     const parts = username.split("@");
     return parts[0];
@@ -60,19 +72,55 @@ const ReportList = () => {
     .charAt(0)
     .toUpperCase()}${getUsernameWithoutDomain(auth.user.username).slice(1)}, `;
 
-  const getLastReportUrl = () => {
-    const reportContext = require.context("../reports", false, /\.pdf$/);
-    const reportFiles = reportContext.keys();
-
-    if (reportFiles.length > 0) {
-      const lastReportPath = reportFiles[reportFiles.length - 1];
-      return reportContext(lastReportPath);
-    }
-
-    return null;
+  const loadReportByUser = () => {
+    fetch(
+      `http://localhost:8080/api/vault/report/${params.reportId}/download`,
+      {
+        headers: {
+          Authorization: "Bearer " + auth.user.token,
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((payload) => {
+        if (payload) {
+          setReportsByUser(payload);
+        }
+      })
+      .catch((error) => {
+        console.error("Error loading report:", error);
+      });
   };
 
-  const lastReportUrl = getLastReportUrl();
+  const handleDownload = async (reportUrl) => {
+    try {
+      const response = await fetch(reportUrl, {
+        headers: {
+          Authorization: "Bearer " + auth.user.token,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao baixar o arquivo");
+      }
+      const url = window.URL.createObjectURL(new Blob([await response.blob()]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "report.pdf");
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (downloadLink) {
+        URL.revokeObjectURL(downloadLink);
+      }
+    };
+  }, [downloadLink]);
 
   return (
     <ThemeProvider theme={createTheme()}>
@@ -124,24 +172,26 @@ const ReportList = () => {
                           <td>{report.startDate}</td>
                           <td>{report.endDate}</td>
                           <td>{report.goalType}</td>
-                          {/* <td>
-                            <a
-                              href={lastReportUrl} // Use lastReportUrl here
-                              download="Example-PDF-document"
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              <button>Download.pdf file</button>
-                            </a>
-                        
-                          </td> */}
+
                           <td>
-                            <LastReport />{" "}
-                            {/* Place LastReport component here */}
+                            {auth.user.token && (
+                              <a
+                                href={report.reportUrl}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handleDownload(report.reportUrl);
+                                }}
+                              >
+                                Download
+                              </a>
+                            )}
                           </td>
                           <td>
                             {auth.user && (
-                              <Link to={`/delete/${report.reportId}`}>
+                              <Link
+                                to={`/delete/${report.reportId}`}
+                                style={{ color: "red" }}
+                              >
                                 Delete
                               </Link>
                             )}

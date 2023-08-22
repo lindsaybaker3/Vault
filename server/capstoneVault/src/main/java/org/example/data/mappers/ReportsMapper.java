@@ -14,7 +14,8 @@ public class ReportsMapper implements RowMapper {
         report.setReportId(resultSet.getInt("reports_id"));
         report.setAppUserId(resultSet.getInt("app_user_id"));
         report.setStartDate(resultSet.getDate("start_date").toLocalDate());
-        report.setStartDate(resultSet.getDate("end_date").toLocalDate());
+        report.setEndDate(resultSet.getDate("end_date").toLocalDate());
+        report.setGoalType(resultSet.getString("goal_type"));
         report.setReportUrl(resultSet.getString("report_url"));
         return report;
     }

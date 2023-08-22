@@ -12,7 +12,7 @@ Content-Type: application/json
 #####
 
 GET http://localhost:8080/api/vault/goals
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyNDg4NzE3fQ.4YyDf7xzvDesPND16ynIkPtNMKlOPu39m7476VWiMnM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5MjYyOTc1MX0.r5zuotD-qJWi5u9fGR3sUrgCBeb7asp4hrFlVZoNObk
 
 
 // Get goal by goal id
@@ -27,7 +27,7 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJt
 // Create a goal
 POST http://localhost:8080/api/vault/goal/create
 Content-Type: application/json
-Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjgyMjkzfQ.mcCeFJ3eY5ztleP-q9wDjRVglVNuVm3nT4TbpJrY-EU
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5MjYyOTc1MX0.r5zuotD-qJWi5u9fGR3sUrgCBeb7asp4hrFlVZoNObk
 
 
 {
@@ -44,7 +44,7 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJt
 
 PUT http://localhost:8080/api/vault/goal/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMzEzNTk0fQ.CEF775fvMMMoCWTuye0nHsoLP4BfUe39eNOF598J950
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5MjYyOTc1MX0.r5zuotD-qJWi5u9fGR3sUrgCBeb7asp4hrFlVZoNObk
 
 {
   "goalsId": 1,
@@ -60,4 +60,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtI
 //delete goal
 
 DELETE http://localhost:8080/api/vault/goal/7
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXJzb25hbC1zb2xhci1mYXJtIiwic3ViIjoiam9obkBzbWl0aC5jb20iLCJhdXRob3JpdGllcyI6IkFETUlOIiwiZXhwIjoxNjkyMjI5OTY0fQ.tl74sJN9T7-TEzqoNxTvoUlYcVCv7V3FUHQAYWFTz-0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5MjYyOTc1MX0.r5zuotD-qJWi5u9fGR3sUrgCBeb7asp4hrFlVZoNObk

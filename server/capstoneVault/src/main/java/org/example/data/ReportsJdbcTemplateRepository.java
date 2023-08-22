@@ -57,6 +57,23 @@ public class ReportsJdbcTemplateRepository implements ReportsRepository {
     }
 
     @Override
+    public List<Reports> findByUserId(int appUserId) {
+        final String sql = "SELECT * FROM reports r WHERE r.app_user_id = ?";
+        return jdbcTemplate.query(sql, new ReportsMapper(), appUserId);
+    }
+
+    @Override
+    public boolean update(Reports report) {
+        final String sql = "UPDATE reports SET "
+                + "report_url = ? "
+                + "WHERE reports_id = ?";
+
+        return jdbcTemplate.update(sql,
+                report.getReportUrl(),
+                report.getReportId()) > 0;
+    }
+
+    @Override
     public boolean deleteById(int reportId) {
         return jdbcTemplate.update(
                 "delete from reports where reports_id = ?", reportId) > 0;

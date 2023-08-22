@@ -8,7 +8,7 @@ public class Transactions {
     private int transactionId;
     private int appUserId;
     private int  goalsId;
-    private String goalType; // fix it .
+    private String goalType;
     private String category;
     private String description;
     private BigDecimal amount;
