@@ -3,17 +3,22 @@ import AuthContext from "../context/AuthContext"
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import '../style/goalslist.css'
-import { Box, Container } from "@mui/system";
+import { Box, Container} from "@mui/system";
 import { CssBaseline, TextField } from "@mui/material";
 import { Button} from "@mui/base";
 import MenuItem from '@mui/material/MenuItem';
 import DrawerComponent from "./Drawer";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { Typography } from "@mui/material";
 
 const GoalsForm = (props) => {
     const auth = useContext(AuthContext);
     const params = useParams();
     const navigate = useNavigate();
+
+    const handleCancelClick = () => {
+        navigate(-1);
+      };
 
     const [errors, setErrors] = useState([])
 
@@ -128,7 +133,7 @@ const GoalsForm = (props) => {
 
     return (
         <ThemeProvider theme = {createTheme()}>
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{display: 'flex', flexDirection: 'row' }}>
             <CssBaseline />
             <DrawerComponent />
         <Box
@@ -141,17 +146,44 @@ const GoalsForm = (props) => {
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            paddingTop: '80px',
+            paddingLeft: '270px'
           }}
         >
         <Container maxWidth = "lg" sx={{ mt: 4, mb: 4 }}>
         <Box component = "form"
         sx={{
-            '& .MuiTextField-root': { m: 1, width: '25ch' },
-            paddingTop: '64px',
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '16px', 
+            alignItems: 'center', 
+            width: '100%', 
+            maxWidth: '400px', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            padding: '20px',
+            border: "5px solid #05391f",
         }}
         noValidate
         autoComplete="off"
+        onSubmit={handleSubmit}
       >
+         <Typography variant="h5" sx={{ fontWeight: "bold", color: "#FAF9F6", textDecoration: 'underline',
+         backgroundColor: '#05391f',
+         padding: '8px',
+         borderRadius: '2px',
+         border: "2px solid #05391f"}}>
+            {params.goalsId
+                ? type === 'spending'
+                    ? 'Update Budget'
+                    : 'Update Savings Goal'
+                : type === 'spending'
+                ? 'Add A Budget'
+                : 'Add A Savings Goal'}
+        </Typography>
          <ul>
              {errors.map((error) => (
                  <li key={error}>{error}</li>
@@ -219,7 +251,10 @@ const GoalsForm = (props) => {
                 ? 'Add Budget'
                 : 'Add Savings Goal'}
             </Button>
-            <Link to={type === 'spending' ? '/budgets' : '/savings'}>Cancel</Link>
+            
+            <Button variant="contained" onClick={handleCancelClick}>
+                Cancel
+            </Button>
             </Box>
             </Container>
         </Box>

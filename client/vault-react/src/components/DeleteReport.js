@@ -111,6 +111,7 @@ function ConfirmDelete() {
                 <button onClick={handleDelete}>Delete Report</button>{" "}
                 <Link to="/reports">Cancel</Link>
               </div>{" "}
+
             </Box>
           </Container>
         </Box>

@@ -71,6 +71,15 @@ function ConfirmDelete() {
     return <p>Transaction not found.</p>;
   }
 
+  const getUsernameWithoutDomain = (username) => {
+    const parts = username.split("@");
+    return parts[0];
+  };
+
+  const message = `Hey ${getUsernameWithoutDomain(auth.user.username)
+    .charAt(0)
+    .toUpperCase()}${getUsernameWithoutDomain(auth.user.username).slice(1)}, `;
+
   return (
     <ThemeProvider theme={createTheme()}>
       <Box sx={{ display: "flex" }}>
@@ -104,8 +113,6 @@ function ConfirmDelete() {
             >
               <h2>Confirm Delete</h2>
               <p>Delete this Transaction?</p>
-              {/* return `On ${formattedDate}, you spent $${transaction.amount} towards the
-      category "${transaction.category}" for ${transaction.description}.`; */}
               <ul>
                 <li>Goal Type: {transaction.goalType}</li>
                 <li>Category: {transaction.category}</li>
@@ -116,11 +123,13 @@ function ConfirmDelete() {
                 <li>
                   Date: <FormattedDate date={transaction.transactionDate} />
                 </li>
-                {/* <li>
-          On <FormattedDate date={transaction.transactionDate} />, you spent{" "}
-          <AmountDisplay amount={transaction.amount} /> towards the category "
-          {transaction.category}" for {transaction.description}.
-        </li>  */}
+
+                {/* {message} on{" "}
+                <FormattedDate date={transaction.transactionDate} />, you spent{" "}
+                <AmountDisplay amount={transaction.amount} /> towards the
+                category "{transaction.category}" for {transaction.description}.
+                <br />
+                Are you sure you want to delete this transaction? */}
               </ul>
               <button onClick={handleDelete}>Delete Transaction</button>{" "}
               <Link to="/transactions">Cancel</Link>
