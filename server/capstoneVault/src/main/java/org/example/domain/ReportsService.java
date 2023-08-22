@@ -1,5 +1,10 @@
 package org.example.domain;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.util.IOUtils;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -13,10 +18,10 @@ import org.example.models.AppUser;
 import org.example.models.Reports;
 import org.example.models.Transactions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -29,6 +34,15 @@ import java.util.List;
 @Service
 public class ReportsService {
 
+    @Value("${download.path}")
+    private String downloadPath;
+
+    @Autowired
+    private AmazonS3 s3Client;
+
+    private static final String BUCKET_NAME = "vault-spring-amazon-storage";
+
+
     private final ReportsJdbcTemplateRepository repository;
     private final TransactionsJdbcTemplateRepository transactionsRepository;
     private final AppUserJdbcTemplateRepository appUserRepository;
@@ -39,6 +53,11 @@ public class ReportsService {
         this.transactionsRepository = transactionsRepository;
         this.appUserRepository = appUserRepository;
     }
+
+    public  List<Reports> findByUserId(int appUserId){
+        return repository.findByUserId(appUserId);
+    }
+
 
     public Result create(Reports report) {
         Result result = validate(report);
@@ -56,7 +75,10 @@ public class ReportsService {
 
 
         if (result.isSuccess()) {
+            report.setReportUrl("");
             report = repository.create(report);
+            report.setReportUrl(String.format(downloadPath,report.getReportId()));
+            repository.update(report);
             if(report != null) {
                 result.setPayload(report);
             }else{
@@ -72,31 +94,21 @@ public class ReportsService {
 
         AppUser appUser =  appUserRepository.findById(report.getAppUserId());
 
-        //first and last name  , start date e enddate e goaltype
-        //goal type , category,amount , description , date
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyyMMdd");
         SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyyMMddhhmmssa");
 
-        String fileName = appUser.getFirstName() + " " + appUser.getLastName() + "_" + dateFormat.format(report.getStartDate()) + "_" + dateFormat.format(report.getEndDate()) + "_" + dateTimeFormat.format(new Date());
+        String fileName = appUser.getFirstName() + " " + appUser.getLastName()
+                + "_" + dateFormat.format(report.getStartDate())
+                + "_" + dateFormat.format(report.getEndDate())
+                + ".pdf";
 
-//        URL url = this.getClass().getClassLoader().getResource("reports/");
-
-
-
-        //Initialize PDF writer
-        String filePath = System.getProperty("user.dir") + "/reports/" +  fileName + ".pdf";
-        report.setReportUrl(filePath);
-        PdfWriter writer = new PdfWriter(filePath);
-
-        //Initialize PDF document
+        ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
+        PdfWriter writer = new PdfWriter(pdfOutputStream);
         PdfDocument pdf = new PdfDocument(writer);
-
-        // Initialize document
         Document document = new Document(pdf);
 
+
         //Add paragraph to the document
-
-
         Paragraph paragraph = new Paragraph();
         paragraph.add("Name: " + appUser.getFirstName() + " " + appUser.getLastName() + "\n");
         paragraph.add("Goal type: " + report.getGoalType() + "\n");
@@ -110,6 +122,18 @@ public class ReportsService {
         document.close();
 
 
+        byte[] pdfBytes = pdfOutputStream.toByteArray();
+
+        try (InputStream inputStream = new ByteArrayInputStream(pdfBytes)) {
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(pdfBytes.length);
+
+            s3Client.putObject(BUCKET_NAME, fileName, inputStream, metadata);
+
+
+        } catch (IOException e) {
+            // Handle exceptions
+        }
     }
 
 
@@ -161,15 +185,54 @@ public class ReportsService {
         table.addCell(cellDate);
     }
 
-    public Result download(int reportId){
+//    public Result download(int reportId){
+//        Result result = new Result();
+//
+//        Reports report = repository.findById(reportId);
+//        File file = new File(report.getReportUrl());
+//
+//       result.setPayload(file);
+//        return result;
+//    }
+
+
+
+    public Result download(int reportId, String fileName) {
         Result result = new Result();
 
         Reports report = repository.findById(reportId);
-        File file = new File(report.getReportUrl());
+        AppUser appUser =  appUserRepository.findById(report.getAppUserId());
 
-       result.setPayload(file);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyyMMdd");
+        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyyMMddhhmmssa");
+
+         fileName = appUser.getFirstName() + " " + appUser.getLastName()
+                + "_" + dateFormat.format(report.getStartDate())
+                + "_" + dateFormat.format(report.getEndDate())
+                + ".pdf";
+
+
+        try {
+            S3Object s3Object = s3Client.getObject(BUCKET_NAME, fileName);
+            // You can now process the S3Object, for example, by reading its content
+            // and sending it as a response. Here's a simplified version:
+
+            InputStream objectInputStream = s3Object.getObjectContent();
+            byte[] objectBytes = IOUtils.toByteArray(objectInputStream);
+
+            result.setPayload(objectBytes);
+
+            // Close the input stream
+            objectInputStream.close();
+
+        } catch (Exception e) {
+            result.addErrorMessage("Error downloading file from S3: " + e.getMessage(),ResultType.INVALID);
+        }
+
         return result;
     }
+
+
 
 
     public Result deleteById(int reportId) {
@@ -194,6 +257,10 @@ public class ReportsService {
             result.addErrorMessage("Start date and End date cannot be null.", ResultType.INVALID);
         } else if (report.getStartDate().isAfter(report.getEndDate())) {
             result.addErrorMessage("End date cannot be before start date.", ResultType.INVALID);
+        }
+
+        if (report.getEndDate().isAfter(LocalDate.now())) {
+            result.addErrorMessage("Report End date cannot be in the future.", ResultType.INVALID);
         }
 
         if (report.getGoalType() == null || report.getGoalType().isEmpty()) {

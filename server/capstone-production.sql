@@ -3,9 +3,16 @@ create database budget;
 use budget;
 
 
+drop table if exists transaction;
+drop table if exists reports;
+drop table if exists goals;
 drop table if exists app_user_role;
 drop table if exists app_role;
 drop table if exists app_user;
+drop table if exists category;
+
+
+
 
 create table app_user (
     app_user_id int primary key auto_increment,
@@ -67,7 +74,7 @@ create table reports (
         references app_user(app_user_id)
 );
 
-drop table reports;
+
 
 CREATE TABLE `transaction` (
     transaction_id INT PRIMARY KEY AUTO_INCREMENT, 
@@ -92,8 +99,9 @@ insert into app_role (`name`) values
 -- passwords are set to "P@ssw0rd!"
 insert into app_user (first_name, last_name, username, password_hash, enabled)
     values
-    ('Jonh', 'Smith','john@smith.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
-    ('Sally', 'Jones','sally@jones.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1);
+  ('Jonh', 'Smith', 'john@smith.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
+  ('Sally', 'Jones', 'sally@jones.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1);
+ 
 
 
 insert into app_user_role
@@ -120,34 +128,63 @@ VALUES
     ('Investment Portfolio Growth');
 
     
-insert into goals (app_user_id, category_id, goal_type, goal_amount, start_date, end_date)
-	values
-    (1, 1, 'spending', 120.00, '2023-08-01', '2023-08-31'),
-    (1, 2, 'saving', 1200.00, '2023-08-01', '2023-08-31'),
-    (1, 3, 'saving', 1500.00, '2023-08-01', '2023-08-31'),
-    (2, 4, 'spending', 65.00, '2023-08-01', '2023-08-31'),
-    (1, 5, 'saving', 5000.00, '2023-08-01', '2023-12-31'),
-    (2, 7, 'spending', 150.00, '2023-08-01', '2023-09-30'),
-    (1, 9, 'saving', 800.00, '2023-08-01', '2023-12-31'),
-    (1, 12, 'saving', 300.00, '2023-08-01', '2023-11-30');
+INSERT INTO goals (app_user_id, category_id, goal_type, goal_amount, start_date, end_date)
+VALUES
+  -- User 1 Goals
+  (1, 1, 'spending', 120.00, '2023-08-01', '2023-08-31'),
+  (1, 15, 'spending', 1200.00, '2023-08-01', '2023-08-31'),
+  (2, 1, 'spending', 120.00, '2023-08-01', '2023-08-31'),
+  (2, 15, 'spending', 1200.00, '2023-08-01', '2023-08-31'),
+  (1, 2, 'saving', 1200.00, '2023-08-01', '2023-08-31'),
+  (1, 3, 'saving', 1500.00, '2023-08-01', '2023-08-31'),
+  (1, 5, 'saving', 5000.00, '2023-08-01', '2023-12-31'),
+  (1, 9, 'saving', 800.00, '2023-08-01', '2023-12-31'),
+  (1, 12, 'saving', 300.00, '2023-08-01', '2023-11-30'),
+  -- User 2 Goals
+  (2, 1, 'spending', 80.00, '2023-08-01', '2023-08-31'),
+  (2, 3, 'saving', 1800.00, '2023-08-01', '2023-08-31'),
+  (2, 6, 'saving', 2500.00, '2023-08-01', '2023-12-31'),
+  (2, 7, 'spending', 120.00, '2023-08-01', '2023-09-30');
+
+
     
 
 insert into reports (app_user_id, start_date, end_date, goal_type, report_url)
 	values
     (1, '2023-08-01', '2023-08-31', 'spending', 'https://example.com/report/john_august.pdf'), 
+	(1, '2023-08-01', '2023-08-31', 'spending', 'https://example.com/report/john_august.pdf'), 
     (2, '2023-08-01', '2023-08-31', 'spending', 'https://example.com/report/sally_august.pdf');
     
-insert into transaction (app_user_id, goals_id, amount, transaction_date, `description`)
-	values
-    (1, 1, 8000.00, '2023-08-05', 'spending'),
-    (1, 2, 1000.00, '2023-08-10', 'saving'),
-     (1, 2, 1000.00, '2023-08-10', 'saving'),
-    (1, 3, 1100.00, '2023-08-20', 'saving'),
-    (2, 4, 280.00, '2023-08-07', 'spending');
-    
-     select * from goals where app_user_id = 1 ;
-     
-     
+
+
+    -- Insert data into transaction table
+INSERT INTO transaction (app_user_id, goals_id, amount, transaction_date, `description`)
+VALUES
+    (1, 1, 8000.00, '2023-08-05', 'spending on vacation'),
+    (1, 2, 1000.00, '2023-08-10', 'saving to kids college'),
+    (1, 3, 1100.00, '2023-08-20', 'saving to buy a new house'),
+    (1, 4, 120.00, '2023-08-07', 'spending on entertainment'),
+    (1, 5, 500.00, '2023-08-10', 'saving for a special occasion'),
+    (1, 6, 3000.00, '2023-08-15', 'saving for a dream vacation'),
+    (2, 7, 100.00, '2023-08-07', 'spending on hobbies'),
+    (2, 8, 600.00, '2023-08-10', 'saving for electronics'),
+    (2, 9, 1200.00, '2023-08-15', 'saving for future plans'),
+    (2, 10, 350.00, '2023-08-20', 'spending on leisure activities');
+
+
+
+drop table if exists transaction;
+select * from transaction;
+select * from reports;
+select * from goals;
+select * from app_user;
+select * from app_user_role;
+select * from app_role;
+select * from category;
+select * from `transaction`;
+
+
+
 SELECT
     t.transaction_id,
     t.app_user_id,
@@ -155,7 +192,8 @@ SELECT
     t.amount,
     t.description,
     t.transaction_date,
-    c.category_name
+    c.category_name,
+    g.goal_type
 FROM
     `transaction` t
 JOIN
@@ -164,47 +202,29 @@ JOIN
     category c ON g.category_id = c.category_id;
 
 
-    
-    -- Insert data into transaction table
-INSERT INTO `transaction` (app_user_id, goals_id, amount, transaction_date, `description`)
-VALUES
-    (1, 1, 8000.00, '2023-08-05', 'spending'),   
-    (1, 2, 1000.00, '2023-08-10', 'saving'),      
-    (1, 3, 1100.00, '2023-08-20', 'saving'),      
-    (2, 4, 280.00, '2023-08-07', 'spending');     
+-- -- find categories by type
+-- SELECT c.category_name
+-- FROM goals g
+-- JOIN category c ON g.category_id = c.category_id
+-- WHERE g.goal_type = 'spending';
 
 
-select * from app_role;
-select * from app_user;
-select * from category;
-select * from goals;
-
-select * from transaction;
-
-drop table if exists transaction;
-
-
-select * from app_user;
+-- -- get goal id by goal type and category_name
+-- SELECT goals_id
+-- FROM goals
+-- WHERE goal_type = 'saving'
+-- AND category_id = (
+--     SELECT category_id
+--     FROM category
+--     WHERE category_name = 'Emergency Fund'
+-- );
 
 
--- find categories by type
-SELECT c.category_name
-FROM goals g
-JOIN category c ON g.category_id = c.category_id
-WHERE g.goal_type = 'spending';
+select * from transaction where app_user_id = 1 AND goal_type = "saving";
+
+select * from reports;
+
+DELETE FROM reports
+WHERE reports_id between 13 and 26;
 
 
--- get goal id by goal type and category_name
-SELECT goals_id
-FROM goals
-WHERE goal_type = 'saving'
-AND category_id = (
-    SELECT category_id
-    FROM category
-    WHERE category_name = 'Emergency Fund'
-);
-
-drop table if exists transaction;
-select * from transaction;
-
-select * from reports
