@@ -67,8 +67,10 @@ export default function TotalBalanceChart() {
   const monthStartDate = new Date(currentYear, currentMonth, 1);
   const formattedStart = monthStartDate.toISOString().substring(0,10)
   dateToTotalMap[formattedStart] = 0
+
+  const sortedDates = Object.keys(dateToTotalMap).sort();
   
-  const formattedData = Object.keys(dateToTotalMap).map(date => ({
+  const formattedData = sortedDates.map(date => ({
     date,
     amount: dateToTotalMap[date],
   }));
