@@ -93,11 +93,11 @@ function App() {
       <BrowserRouter>
         <CssBaseline />
 
-        {user ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
+        {user ? <DrawerComponent /> : <HeaderLoggedOut />}
 
-        {user && ( // Conditionally render the DrawerComponent only when user is logged in
+        {/* {user && ( // Conditionally render the DrawerComponent only when user is logged in
           <DrawerComponent />
-        )}
+        )} */}
         {/* <Grid item xs={9} md={9} lg={9}> */}
 
         <Routes>
@@ -113,10 +113,7 @@ function App() {
 
           {/* loggin in only */}
           <Route path="/dashboard" element={<Dashboard />} />
-          {/* <Route
-                  path="/transactions"
-                  element={user ? <TransactionsList /> : <Navigate to="/" />}
-                /> */}
+          
           <Route
             path="/transactions"
             element={
@@ -140,8 +137,8 @@ function App() {
 
           <Route
             path="/budgets"
-            element={<GoalsList type="spending" />}
-            // element={user ? <GoalsList /> : <Navigate to="/" />}
+            element={user ? <GoalsList type="spending" /> : <Navigate to = "/"  />}
+            
           />
           <Route
             path="/budgets/:goalsId"
@@ -155,16 +152,11 @@ function App() {
             path="/budgets/edit/:goalsId"
             element={user ? <GoalsForm type="spending" /> : <Navigate to="/" />}
           />
-          <Route
-            path="/budgets/delete/:budgetsId"
-            element={user ? <DeleteGoal /> : <Navigate to="/" />}
-          />
-          {/* the budgets and savings are using the same table in the backend, do they just use the same forms in the Front end? */}
-
+          
           <Route
             path="/savings"
-            element={<GoalsList type="saving" />}
-            // element={user ? <GoalsList /> : <Navigate to="/" />}
+            element={user ? <GoalsList type="saving" /> : <Navigate to = "/" />}
+            
           />
           <Route
             path="savings/:goalId"
@@ -178,10 +170,7 @@ function App() {
             path="/savings/add"
             element={user ? <GoalsForm type="saving" /> : <Navigate to="/" />}
           />
-          <Route
-            path="/user/:userId/savings/delete"
-            element={user ? <DeleteGoal /> : <Navigate to="/" />}
-          />
+         
 
           <Route
             path="/reports"
