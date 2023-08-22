@@ -50,7 +50,7 @@ public class TransactionsJdbcTemplateRepository implements TransactionsRepositor
 
 
     public Transactions findByTransactionId(int transactionId) {
-        final String sql = "SELECT t.transaction_id, t.app_user_id, t.goals_id, g.goalType, c.category_name, " +
+        final String sql = "SELECT t.transaction_id, t.app_user_id, t.goals_id, g.goal_type, c.category_name, " +
                 "t.description, t.amount, t.transaction_date " +
                 "FROM `transaction` t " +
                 "JOIN goals g ON t.goals_id = g.goals_id " +

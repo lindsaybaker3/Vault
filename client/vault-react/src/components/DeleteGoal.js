@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router"
 import AuthContext from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/system";
+import { Button } from "@mui/base";
+import AmountDisplay from "../helpers/AmountDisplay";
 
 function DeleteGoal() {
   const params = useParams();
@@ -80,14 +82,26 @@ if(!auth?.user?.token){
           p: 4,
         }}>
         <div className="modal-content">
-          <h2>Delete Goal Confirmation</h2>
+          <h2>You are about to delete {goal.categoryName}</h2>
           <p>Are you sure you want to delete this goal?</p>
-          <p>Category: {goal.categoryName}</p>
-          <p>Amount: {goal.amount}</p>
+          <p>Amount: <AmountDisplay amount = {goal.amount} ></AmountDisplay></p>
           <p>Start Date: {goal.startDate}</p>
           <p>End Date: {goal.endDate}</p>
-          <button onClick={handleDelete}>Delete</button>
-          <Link to = {goal.type === "spending" ? "/budgets" : "/savings"}>Cancel</Link>
+          <Button
+            variant="contained"
+            style={{ backgroundColor: 'red', color: 'white', marginLeft: '100px' }}
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
+          <Link to={goal.type === "spending" ? "/budgets" : "/savings"}>
+            <Button
+              variant="contained"
+              style={{ backgroundColor: '#05391F', color: 'white', marginLeft: '10px'}}
+            >
+              Cancel
+            </Button>
+          </Link>
         </div>
       </Box>
 

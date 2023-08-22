@@ -73,6 +73,7 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options)
 }
 
+const hasTransactions = goal.transactionsList && goal.transactionsList.length > 0;
 
 const formattedStart = formatDate(goal.startDate)
 const formattedEnd = formatDate(goal.endDate)
@@ -159,20 +160,23 @@ return (
                 },
               }}> Edit </Button>
             </Link>
-            <Link to="#" onClick={handleDeleteClick}>
-            <Button
-              variant="contained"
-              color="primary" 
-              sx={{
-                marginTop: '16px',
-                backgroundColor: 'red', 
-                color: '#FFFFFF',
-                '&:hover': {
-                  backgroundColor: '#69B45E', 
-                },
-              }}>
-              Delete </Button>
-            </Link>
+            {!hasTransactions && (
+                <Link to="#" onClick={handleDeleteClick}>
+                <Button
+                  variant="contained"
+                  color="primary" 
+                  sx={{
+                    marginTop: '16px',
+                    backgroundColor: 'red', 
+                    color: '#FFFFFF',
+                    '&:hover': {
+                      backgroundColor: '#69B45E', 
+                    },
+                  }}>
+                  Delete </Button>
+                </Link>
+            )}
+            
           </Box>
         </Grid>
       </Grid>
