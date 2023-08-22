@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import ConfirmDeleteGoal from "./DeleteGoal";
 import DeleteGoal from "./DeleteGoal";
 import "../style/goalsandtransactions.css"
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled, tableCellClasses } from "@mui/material";
 import DrawerComponent from "./Drawer";
 import { Box, Button, Card, CardContent, CssBaseline, Grid, ThemeProvider, Typography, createTheme } from "@mui/material";
 import LinearProgress from '@mui/material/LinearProgress';
-import { Container, Stack } from "@mui/system";
+import { Container, Stack, style } from "@mui/system";
 import { Modal} from "@mui/material";
 import AmountDisplay from "../helpers/AmountDisplay";
 
@@ -77,6 +77,26 @@ const formatDate = (dateString) => {
 const formattedStart = formatDate(goal.startDate)
 const formattedEnd = formatDate(goal.endDate)
 
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: '#05391F',
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+// const StyledTableRow = styled(TableRow)(({ theme }) => ({
+//   '&:nth-of-type(odd)': {
+//     backgroundColor: theme.palette.action.hover,
+//   },
+//   // hide last border
+//   '&:last-child td, &:last-child th': {
+//     border: 0,
+//   },
+// }));
+
 return (
     <ThemeProvider theme = {createTheme()}>
     <Box sx={{ display: 'flex' }}>
@@ -110,15 +130,16 @@ return (
       sx={{
         // padding: '10px',
         width: '100%', // Adjust width as needed
-        border: '2px solid black'
+        borderBottom: '1px solid  #ccc'
       }}
     >
-      <Grid container sx= {{border: '2px solid black'}}>
+      <Grid container>
               {/* goal info */}
         <Grid item xs={10}>
              <h1>{goal.categoryName}</h1>
              <h4> Budget: <AmountDisplay amount = {goal.amount} /> </h4>
              <h4>Current Balance: <AmountDisplay amount = {goal.currentBalance} /> </h4>
+            
         </Grid>
         <Grid item xs = {2}>
           {/* Edit and Delete links */}
@@ -174,22 +195,22 @@ return (
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Amount</TableCell>
+              <StyledTableCell>Date</StyledTableCell>
+              <StyledTableCell align = "center">Description</StyledTableCell>
+              <StyledTableCell align="center">Amount</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {goal?.transactionsList?.map((transaction) => (
               <TableRow key={transaction.transactionId} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell>{transaction.transactionDate}</TableCell>
-                <TableCell>{transaction.description}</TableCell>
-                <TableCell>{transaction.amount}</TableCell>
+                <StyledTableCell>{transaction.transactionDate}</StyledTableCell>
+                <StyledTableCell align = "center">{transaction.description}</StyledTableCell>
+                <StyledTableCell align="center"> <AmountDisplay amount = {transaction.amount} /></StyledTableCell>
               </TableRow>
             ))}
-             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell colSpan={2} align="left">Total Balance:</TableCell>
-                <TableCell>{goal.currentBalance}</TableCell>
+             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: '#eeeeee'}}>
+                <StyledTableCell sx = {{fontWeight: 'bold'}} colSpan={2} align="left">Total Balance:</StyledTableCell>
+                <StyledTableCell sx = {{fontWeight: 'bold'}} align="center"> <AmountDisplay amount = {goal.currentBalance} /> </StyledTableCell>
              </TableRow>
           </TableBody>
         </Table>

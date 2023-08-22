@@ -61,6 +61,10 @@ export default function TotalBalanceChart() {
     date,
     amount: dateToTotalMap[date],
   }));
+
+  const formatCurrency = (amount) => {
+    return `$${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+  };
      
   console.log(filteredTransactions)
 
@@ -68,7 +72,7 @@ export default function TotalBalanceChart() {
   
     return (
       <React.Fragment>
-        <h4>Current Balance: ${cumulativeTotal}</h4>
+        <h4>Current Balance: {formatCurrency(cumulativeTotal)}</h4>
         <ResponsiveContainer>
           <LineChart
             data={formattedData}
@@ -87,6 +91,7 @@ export default function TotalBalanceChart() {
             <YAxis
               stroke={theme.palette.text.secondary}
               style={theme.typography.body2}
+              dataKey="amount"
             >
               <Label
                 angle={270}

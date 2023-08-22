@@ -53,7 +53,9 @@ export default function TransactionsForDashboard() {
 
   // Limit the sorted transactions to the first five
   const limitedTransactions = sortedTransactions.slice(0, 5);
-
+  const formatCurrency = (amount) => {
+    return `$${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+  };
 
 
   return (
@@ -73,7 +75,7 @@ export default function TransactionsForDashboard() {
               <TableCell>{transaction.transactionDate}</TableCell>
               <TableCell>{transaction.category}</TableCell>
               <TableCell>{transaction.description}</TableCell>
-              <TableCell align="right">{`$${transaction.amount}`}</TableCell>
+              <TableCell align="right">{formatCurrency(transaction.amount)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
