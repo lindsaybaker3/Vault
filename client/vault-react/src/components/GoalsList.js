@@ -28,7 +28,12 @@ const GoalsList = ({ type }) => {
             },
 
         })
-        .then(response => response.json())
+        .then((response) => {
+          if(response.status === 403) {
+            auth.logout()
+          }
+          return response.json()
+        })
         .then(payload => setGoals(payload))
         .catch((error) => console.error("error Fetching goals:", error))
     }

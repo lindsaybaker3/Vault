@@ -50,8 +50,7 @@ console.log(transactions);
       transactionMonth === currentMonth
     )
   });
-  console.log(filteredTransactions)
-
+  
   const groupedTransaction = filteredTransactions.reduce((groups, transaction) =>
     {const { category, amount} = transaction;
     if (!groups[category]) {
@@ -61,7 +60,6 @@ console.log(transactions);
     return groups;
   }, {})
 
-  console.log(groupedTransaction)
   
 
 
@@ -76,6 +74,7 @@ console.log(transactions);
 
   return (
     <React.Fragment>
+      <h4>Current Budgets:</h4>
     <ResponsiveContainer>
       <PieChart>
       <Pie
@@ -86,13 +85,15 @@ console.log(transactions);
         outerRadius={80}
         fill="#8884d8"
         dataKey="value"
+        
       >
         {budgetData.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
       <Tooltip formatter={(value) => formatCurrency(value)}/>
-      {/* <Legend /> */}
+      <Legend
+    />
     </PieChart>
     </ResponsiveContainer>
     

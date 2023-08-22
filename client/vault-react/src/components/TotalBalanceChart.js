@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { useTheme } from '@mui/material/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import AuthContext from "../context/AuthContext";
+import FormattedDate from "../helpers/FormattedDate";
+import AmountDisplay from "../helpers/AmountDisplay";
 
 
 export default function TotalBalanceChart() {
@@ -16,7 +18,12 @@ export default function TotalBalanceChart() {
         Authorization: "Bearer " + auth.user.token,
       },
     })
-    .then(response => response.json())
+    .then((response) => {
+      if (response.status === 403){
+        auth.logout()
+      }
+      return response.json()
+    })
     .then(payload => setTransactions(payload))
     .catch((error) => console.error("error Fetching goals:", error))
   };
@@ -56,19 +63,26 @@ export default function TotalBalanceChart() {
       dateToTotalMap[formattedDate] = cumulativeTotal;
     }
   });
+
+  const monthStartDate = new Date(currentYear, currentMonth, 1);
+  const formattedStart = monthStartDate.toISOString().substring(0,10)
+  dateToTotalMap[formattedStart] = 0
   
   const formattedData = Object.keys(dateToTotalMap).map(date => ({
     date,
     amount: dateToTotalMap[date],
   }));
+    
+ 
 
   const formatCurrency = (amount) => {
     return `$${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
   };
      
-  console.log(filteredTransactions)
+  // console.log(filteredTransactions)
+  // console.log(sortedDates)
 
-  const monthStartDate = new Date(currentYear, currentMonth, 1);
+  
   
     return (
       <React.Fragment>
@@ -82,18 +96,21 @@ export default function TotalBalanceChart() {
               bottom: 0,
               left: 24,
             }}
+            
           >
             <XAxis
               dataKey="date"
               stroke={theme.palette.text.secondary}
               style={theme.typography.body2}
-              domain={[monthStartDate, currentDate]}
+              // domain={[monthStartDate, currentDate]}
+              // ticks={formattedData.map((entry) => entry.date)}
             />
             <YAxis
               stroke={theme.palette.text.secondary}
               style={theme.typography.body2}
               dataKey="amount"
-              domain={[0, 'dataMax']} 
+              // domain={[0, 'dataMax']} 
+              // ticks = {[0]}
             >
               <Label
                 angle={270}
