@@ -12,6 +12,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { Container, Stack, style } from "@mui/system";
 import { Modal} from "@mui/material";
 import AmountDisplay from "../helpers/AmountDisplay";
+import FormattedDate from "../helpers/FormattedDate";
 
 
 
@@ -34,8 +35,8 @@ const GoalsAndTransactions = () => {
     .then((response) => {
         if(response.ok){
             return response.json();
-        } else {
-            return Promise.reject("No Goal Exists");
+        } else if (response.status === 403){
+            auth.logout();
         }
     })
     .then((setGoal))
@@ -199,7 +200,7 @@ return (
           <TableBody>
             {goal?.transactionsList?.map((transaction) => (
               <TableRow key={transaction.transactionId} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <StyledTableCell>{transaction.transactionDate}</StyledTableCell>
+                <StyledTableCell> <FormattedDate date = {transaction.transactionDate} /></StyledTableCell>
                 <StyledTableCell align = "center">{transaction.description}</StyledTableCell>
                 <StyledTableCell align="center"> <AmountDisplay amount = {transaction.amount} /></StyledTableCell>
               </TableRow>

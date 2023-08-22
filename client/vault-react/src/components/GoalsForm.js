@@ -146,25 +146,26 @@ const GoalsForm = (props) => {
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            // display: 'flex',
+            // flexDirection: 'column',
+            // alignItems: 'center',
             paddingTop: '80px',
-            paddingLeft: '270px'
+            // paddingLeft: '270px'
           }}
         >
-        <Container maxWidth = "lg" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth = "sm" sx={{ mt: 6, mb: 4}}>
         <Box component = "form"
         sx={{
-            display: 'flex', 
-            flexDirection: 'column', 
-            gap: '16px', 
-            alignItems: 'center', 
-            width: '100%', 
-            maxWidth: '400px', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            padding: '20px',
+            paddingTop: '60px',  
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            gap: '16px',  
+            // maxWidth: '400px', 
+            paddingBottom: '20px',
+            paddingLeft: '20px',
+            paddingRight: '20px',
             border: "5px solid #05391f",
         }}
         noValidate

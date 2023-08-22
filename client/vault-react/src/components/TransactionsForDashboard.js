@@ -9,6 +9,7 @@ import { useContext, useState, useEffect } from "react";
 import { useTheme } from '@mui/material/styles';
 import AuthContext from "../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
+import FormattedDate from '../helpers/FormattedDate';
 
 
 
@@ -72,7 +73,8 @@ export default function TransactionsForDashboard() {
         <TableBody>
           {limitedTransactions.map((transaction) => (
             <TableRow key={transaction.transactionId}>
-              <TableCell>{transaction.transactionDate}</TableCell>
+              <TableCell>
+                <FormattedDate date = {transaction.transactionDate} /></TableCell>
               <TableCell>{transaction.category}</TableCell>
               <TableCell>{transaction.description}</TableCell>
               <TableCell align="right">{formatCurrency(transaction.amount)}</TableCell>

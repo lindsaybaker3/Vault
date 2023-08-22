@@ -31,8 +31,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit">
+        The Vault
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -69,7 +69,7 @@ export default function Dashboard() {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 240,
+                    height: 300,
                   }}
                 >
                   <TotalBalanceChart />
@@ -79,14 +79,14 @@ export default function Dashboard() {
               <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
-                    p: 2,
+                    p: 1,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 240,
+                    height: 300,
                   }}
                 >
-                 Budgets
-                 <BudgetPieChart />
+
+                  <BudgetPieChart />
                 </Paper>
               </Grid>
               {/* Recent Transactions */}
