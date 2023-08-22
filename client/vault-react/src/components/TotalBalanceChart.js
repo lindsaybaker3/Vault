@@ -68,7 +68,7 @@ export default function TotalBalanceChart() {
      
   console.log(filteredTransactions)
 
-  
+  const monthStartDate = new Date(currentYear, currentMonth, 1);
   
     return (
       <React.Fragment>
@@ -87,11 +87,13 @@ export default function TotalBalanceChart() {
               dataKey="date"
               stroke={theme.palette.text.secondary}
               style={theme.typography.body2}
+              domain={[monthStartDate, currentDate]}
             />
             <YAxis
               stroke={theme.palette.text.secondary}
               style={theme.typography.body2}
               dataKey="amount"
+              domain={[0, 'dataMax']} 
             >
               <Label
                 angle={270}
