@@ -39,7 +39,7 @@ function ConfirmDelete() {
       .catch(() => {
         navigate("/not-found");
       });
-  }, [params.transactionId]);
+  }, [auth.user.token, navigate, params.transactionId]);
 
   const handleDelete = () => {
     const transactionId = isNaN(params.transactionId)
@@ -72,60 +72,62 @@ function ConfirmDelete() {
   }
 
   return (
-    <ThemeProvider theme = {createTheme()}>
-    <Box sx={{ display: 'flex' }}>
+    <ThemeProvider theme={createTheme()}>
+      <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <DrawerComponent />
-    <Box
-      component="main"
-      sx={{
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'light'
-            ? theme.palette.grey[100]
-            : theme.palette.grey[900],
-        flexGrow: 1,
-        height: '100vh',
-        overflow: 'auto',
-      }}
-    >
-    <Container maxWidth = "lg" sx={{ mt: 3, mb: 4 }}>
-    <Box sx = {{
-      position: 'absolute',
-      top: '50%',
-      left: '60%',
-      transform: 'translate(-50%, -50%)',
-      width: 400,
-      bgcolor: 'background.paper',
-      border: '2px solid #000',
-      boxShadow: 24,
-      p: 4,
-    }}>
-      <h2>Confirm Delete</h2>
-      <p>Delete this Transaction?</p>
-      {/* return `On ${formattedDate}, you spent $${transaction.amount} towards the
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto",
+          }}
+        >
+          <Container maxWidth="lg" sx={{ mt: 3, mb: 4 }}>
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "60%",
+                transform: "translate(-50%, -50%)",
+                width: 400,
+                bgcolor: "background.paper",
+                border: "2px solid #000",
+                boxShadow: 24,
+                p: 4,
+              }}
+            >
+              <h2>Confirm Delete</h2>
+              <p>Delete this Transaction?</p>
+              {/* return `On ${formattedDate}, you spent $${transaction.amount} towards the
       category "${transaction.category}" for ${transaction.description}.`; */}
-      <ul>
-        <li>Goal Type: {transaction.goalType}</li>
-        <li>Category: {transaction.category}</li>
-        <li>Description: {transaction.description}</li>
-        <li>
-          Amount: <AmountDisplay amount={transaction.amount} />
-        </li>
-        <li>
-          Date: <FormattedDate date={transaction.transactionDate} />
-        </li>
-        {/* <li>
+              <ul>
+                <li>Goal Type: {transaction.goalType}</li>
+                <li>Category: {transaction.category}</li>
+                <li>Description: {transaction.description}</li>
+                <li>
+                  Amount: <AmountDisplay amount={transaction.amount} />
+                </li>
+                <li>
+                  Date: <FormattedDate date={transaction.transactionDate} />
+                </li>
+                {/* <li>
           On <FormattedDate date={transaction.transactionDate} />, you spent{" "}
           <AmountDisplay amount={transaction.amount} /> towards the category "
           {transaction.category}" for {transaction.description}.
         </li>  */}
-      </ul>
-      <button onClick={handleDelete}>Delete Transaction</button>{" "}
-      <Link to="/transactions">Cancel</Link>
-    </Box>
-    </Container>
-    </Box>
-    </Box>
+              </ul>
+              <button onClick={handleDelete}>Delete Transaction</button>{" "}
+              <Link to="/transactions">Cancel</Link>
+            </Box>
+          </Container>
+        </Box>
+      </Box>
     </ThemeProvider>
   );
 }
