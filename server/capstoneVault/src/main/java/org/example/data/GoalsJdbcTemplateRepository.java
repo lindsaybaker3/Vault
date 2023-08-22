@@ -47,7 +47,7 @@ public class GoalsJdbcTemplateRepository implements GoalsRepository {
 
     @Override
     public Goals addGoal(Goals goal) {
-        final String sql = "insert into goals (app_user_id, category_id, goalType, goal_amount, start_date, end_date)" +
+        final String sql = "insert into goals (app_user_id, category_id, goal_type, goal_amount, start_date, end_date)" +
                 " values (?,?,?,?,?,?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -72,7 +72,7 @@ public class GoalsJdbcTemplateRepository implements GoalsRepository {
         final String sql = "update goals set " +
                 "app_user_id = ?, " +
                 "category_id = ?, " +
-                "goalType = ?, " +
+                "goal_type = ?, " +
                 "goal_amount = ?, " +
                 "start_date = ?, " +
                 "end_date = ? " +

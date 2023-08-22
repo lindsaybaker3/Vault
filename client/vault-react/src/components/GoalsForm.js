@@ -151,6 +151,7 @@ const GoalsForm = (props) => {
         }}
         noValidate
         autoComplete="off"
+        onSubmit={handleSubmit}
       >
          <ul>
              {errors.map((error) => (
