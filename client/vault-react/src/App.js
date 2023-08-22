@@ -181,7 +181,7 @@ function App() {
             element={user ? <ReportForm user={user} /> : <Navigate to="/" />}
           />
           <Route
-            path="delete/:reportId"
+            path="/delete/:reportId"
             element={user ? <DeleteReport /> : <Navigate to="/" />}
           />
 

@@ -8,7 +8,7 @@ const AmountDisplay = ({ amount }) => {
     maximumFractionDigits: 2,
   }).format(amount);
 
-  return <span>{formattedAmount} dollars</span>;
+  return <span>{formattedAmount}</span>;
 };
 
 export default AmountDisplay;

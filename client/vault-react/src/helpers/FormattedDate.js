@@ -4,7 +4,7 @@ const FormattedDate = ({ date }) => {
   const formatDate = (dateString) => {
     const options = {
       year: "numeric",
-      month: "long",
+      month: "numeric",
       day: "numeric",
       timeZone: "UTC", // Set to UTC to avoid time zone discrepancies
     };
