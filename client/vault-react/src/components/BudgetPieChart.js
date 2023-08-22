@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieChart, Pie, Sector, Cell, Legend, Tooltip } from 'recharts';
+import { PieChart, Pie, Sector, Cell, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 import { useContext, useState, useEffect } from "react";
 import { useTheme } from '@mui/material/styles';
 import AuthContext from "../context/AuthContext";
@@ -32,21 +32,57 @@ useEffect(() => {
     loadTransactions();
 }, []);
 
-const budgetData = [
-    { name: 'Food', value: transactions},
-    { name: 'Rent', value: 1000 },
-    { name: 'Entertainment', value: 300 },
-    { name: 'Transportation', value: 200 },
-    { name: 'Other', value: 100 },
-  ];
+console.log(transactions);
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth(); // 0-indexed, so January is 0
+  
+  const filteredByGoalType = transactions?.filter(transaction => transaction.goalType === "spending")
+  console.log(filteredByGoalType)
+  const filteredTransactions = filteredByGoalType.filter(transaction => {
+    const transactionDate = new Date(transaction.transactionDate);
+    const transactionYear = transactionDate.getFullYear();
+    const transactionMonth = transactionDate.getMonth();
+    
+    
+    return (
+      transactionYear === currentYear && 
+      transactionMonth === currentMonth
+    )
+  });
+  console.log(filteredTransactions)
+
+  const groupedTransaction = filteredTransactions.reduce((groups, transaction) =>
+    {const { category, amount} = transaction;
+    if (!groups[category]) {
+      groups[category] = { category, balance: 0}
+    }
+    groups[category].balance += amount;
+    return groups;
+  }, {})
+
+  console.log(groupedTransaction)
+  
+
+
+  const budgetData = Object.values(groupedTransaction).map(group => ({
+    name: group.category,
+    value: group.balance,
+  }))
+
+  const formatCurrency = (amount) => {
+    return `$${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+  };
 
   return (
-    <PieChart width={400} height={300}>
+    <React.Fragment>
+    <ResponsiveContainer>
+      <PieChart>
       <Pie
         data={budgetData}
-        cx={200}
-        cy={150}
-        innerRadius={60}
+        // cx={200}
+        // cy={150}
+        // innerRadius={60}
         outerRadius={80}
         fill="#8884d8"
         dataKey="value"
@@ -55,9 +91,12 @@ const budgetData = [
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
-      <Tooltip />
-      <Legend />
+      <Tooltip formatter={(value) => formatCurrency(value)}/>
+      {/* <Legend /> */}
     </PieChart>
+    </ResponsiveContainer>
+    
+    </React.Fragment>
   );
 };
 
