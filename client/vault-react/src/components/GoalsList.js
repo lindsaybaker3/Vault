@@ -60,7 +60,7 @@ const GoalsList = ({ type }) => {
       const goalDate = parseDateString(goal.startDate);//this goal date needs to be formatted different
       
       if (dateFilter === 'currentMonth') {
-        return goalDate.getMonth() === currentDate.getMonth()
+        return goalDate.getFullYear() === currentDate.getFullYear() && goalDate.getMonth() === currentDate.getMonth()
   
       } else if (dateFilter === 'lastMonth'){
         const lastMonthStartDate = new Date(currentYear, currentMonth - 1, 1);
