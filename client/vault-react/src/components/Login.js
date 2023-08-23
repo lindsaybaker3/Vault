@@ -4,9 +4,8 @@ import AuthContext from "../context/AuthContext";
 import Dashboard from "./Dashboard";
 import { Box, Container} from "@mui/system";
 import { CssBaseline, TextField } from "@mui/material";
-import { Button} from "@mui/base";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import { Typography } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import DrawerComponent from "./Drawer";
 import Logo from "../images/piggybank.png";
 
@@ -20,6 +19,10 @@ export default function Login() {
   const auth = useContext(AuthContext);
 
   const navigate = useNavigate();
+
+  const handleCancelClick = () => {
+    navigate('/');
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -49,23 +52,50 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={createTheme()}>
-        <CssBaseline />
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
-            paddingTop: '80px',
-          }}
-        >
-          <Container maxWidth="sm" sx={{ mt: 6, mb: 4 }}>
+      <CssBaseline />
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light'
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: '100vh',
+          overflow: 'auto',
+          paddingTop: '80px',
+        }}
+      >
+        <Container maxWidth="sm" sx={{ mt: 6, mb: 4 }}>
+          <Box
+            component="form"
+            sx={{
+              paddingTop: '20px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              gap: '16px',
+              paddingBottom: '20px',
+              paddingLeft: '20px',
+              paddingRight: '20px',
+              border: '8px solid #05391f',
+              backgroundColor: "#ffffff"
+            }}
+          >
+            {/* Logo image */}
+            <img
+              src={Logo}
+              alt="Logo"
+              style={{ width: '100px', marginBottom: '10px' }}
+            />
+  
+            <Typography variant="h4" sx={{ fontWeight: "bold", color: "#05391f", padding: '6px' }}>
+              Login
+            </Typography>
+  
             <Box
-              className="login-form"
+              component="form"
               sx={{
                 paddingTop: '20px',
                 display: 'flex',
@@ -74,52 +104,80 @@ export default function Login() {
                 flexDirection: 'column',
                 gap: '16px',
                 paddingBottom: '20px',
-                paddingLeft: '20px',
-                paddingRight: '20px',
-                border: '8px solid #05391f',
-                backgroundColor: "#ffffff"
+                paddingLeft: '60px',
+                paddingRight: '60px',
               }}
+              noValidate
+              autoComplete="off"
+              onSubmit={handleSubmit}
             >
-              {/* Logo image */}
-              <img src={Logo} alt="Logo" style={{ width: '100px', marginBottom: '10px' }} />
-
-              <Typography variant="h4" sx={{ fontWeight: "bold", color: "#05391f",
-                padding: '6px'}}>
+              <ul>
+                {errors.map((error, i) => (
+                  <div key={i}> {error} </div>
+                ))}
+              </ul>
+              <TextField
+                id="username"
+                label="Username:"
+                type="text"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+                fullWidth
+                sx={{
+                  width: '160%', // Adjust the width value as needed
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <TextField
+                id="password"
+                label="Password:"
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                fullWidth
+                sx={{
+                  width: '160%', // Adjust the width value as needed
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                onClick={handleSubmit}
+                sx={{
+                  marginTop: '16px',
+                  backgroundColor: "#05391F",
+                  color: "#FFFFFF",
+                  "&:hover": {
+                    backgroundColor: "#69B45E",
+                  },
+                }}
+              >
                 Login
-              </Typography>
-
-              {errors.map((error, i) => (
-                <div key={i}> {error} </div>
-              ))}
-              <form onSubmit={handleSubmit}>
-                <fieldset>
-                  <label htmlFor="username">Username:</label>
-                  <input
-                    type="text"
-                    onChange={(event) => setUsername(event.target.value)}
-                    value={username}
-                    id="username"
-                  />
-                </fieldset>
-                <fieldset>
-                  <label htmlFor="password">Password:</label>
-                  <input
-                    type="password"
-                    onChange={(event) => setPassword(event.target.value)}
-                    value={password}
-                    id="password"
-                  />
-                </fieldset>
-                <div className="group-button">
-                  <Button type="submit" variant="contained" alignItems="center">
-                    Login
-                  </Button>
-                </div>
-              </form>
+              </Button>
+              <Button
+                variant="contained"
+                onClick={handleCancelClick}
+                color="primary"
+                sx={{
+                  marginTop: '8px',
+                  color: '#ffffff',
+                  backgroundColor: '#05391f',
+                  '&:hover': {
+                    backgroundColor: 'red',
+                  },
+                }}
+              >
+                Cancel
+              </Button>
             </Box>
-          </Container>
-        </Box>
+          </Box>
+        </Container>
+      </Box>
     </ThemeProvider>
   );
 }
-    
