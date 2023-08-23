@@ -3,8 +3,9 @@ import { useNavigate, useParams } from "react-router"
 import AuthContext from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/system";
-import { Button } from "@mui/base";
+import { Button } from "@mui/material";
 import AmountDisplay from "../helpers/AmountDisplay";
+import FormattedDate from "../helpers/FormattedDate";
 
 function DeleteGoal() {
   const params = useParams();
@@ -66,38 +67,65 @@ if(!auth?.user?.token){
         return null;
       }
 
-      console.log(goal);
+      const getUsernameWithoutDomain = (username) => {
+        const parts = username.split("@");
+        return parts[0];
+      };
+    
+      const message = `Hey ${getUsernameWithoutDomain(auth.user.username)
+        .charAt(0)
+        .toUpperCase()}${getUsernameWithoutDomain(auth.user.username).slice(1)}, `;
 
 
       return (
-        <Box sx = {{
+        <Box 
+        sx = {{
           position: 'absolute',
           top: '50%',
-          left: '50%',
+          left: '55%',
           transform: 'translate(-50%, -50%)',
           width: 400,
           bgcolor: 'background.paper',
           border: '2px solid #000',
           boxShadow: 24,
           p: 4,
+          
         }}>
         <div className="modal-content">
-          <h2>You are about to delete {goal.categoryName}</h2>
+          <h2 style={{ marginBottom: "20px" }}>Delete this Goal?</h2>
+          <p>
+              <strong> {message}</strong>
+           </p>
           <p>Are you sure you want to delete this goal?</p>
-          <p>Amount: <AmountDisplay amount = {goal.amount} ></AmountDisplay></p>
-          <p>Start Date: {goal.startDate}</p>
-          <p>End Date: {goal.endDate}</p>
+          <p><strong>Amount:</strong> <AmountDisplay amount = {goal.amount} ></AmountDisplay></p>
+          <p><strong>Start Date: </strong> <FormattedDate date = {goal.startDate} ></FormattedDate></p>
+          <p><strong>End Date: </strong> <FormattedDate date = {goal.endDate} ></FormattedDate></p>
           <Button
-            variant="contained"
-            style={{ backgroundColor: 'red', color: 'white', marginLeft: '100px' }}
-            onClick={handleDelete}
-          >
-            Delete
-          </Button>
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    backgroundColor: "red",
+                    color: "#FFFFFF",
+                    "&:hover": {
+                      backgroundColor: "#69b45E",
+                    },
+                    marginLeft: "65px",
+                    marginRight: '10px'
+                  }}
+                  onClick={handleDelete}
+                >
+                  Delete
+            </Button>
           <Link to={goal.type === "spending" ? "/budgets" : "/savings"}>
             <Button
               variant="contained"
-              style={{ backgroundColor: '#05391F', color: 'white', marginLeft: '10px'}}
+              sx={{
+                backgroundColor: "#05391F",
+                color: "#FFFFFF",
+                "&:hover": {
+                  backgroundColor: "#69B45E",
+                },
+              }}
             >
               Cancel
             </Button>
