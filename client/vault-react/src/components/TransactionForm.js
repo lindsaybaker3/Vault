@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import "../styles/transactionForm/style.css";
 
+
 const TransactionForm = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -13,7 +14,14 @@ const TransactionForm = () => {
   const [goalType, setGoalType] = useState("spending");
 
   const typesList = getUniqueTypes(goals);
-  const filteredGoals = goals.filter((item) => item.type === goalType);
+  let filteredGoals = goals.filter((item) => item.type === goalType);
+
+  filteredGoals = filteredGoals.filter((goal) => {
+    //check if today is between goal start and end date
+    //retrun statement
+  })
+
+
   const [errors, setErrors] = useState([]);
   const [formChanged, setFormChanged] = useState(false);
 
