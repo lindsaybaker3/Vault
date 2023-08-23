@@ -7,6 +7,7 @@ import { Box, Button, Card, CardContent, CssBaseline, Grid, ThemeProvider, Typog
 import LinearProgress from '@mui/material/LinearProgress';
 import DrawerComponent from "./Drawer";
 import { Container, Stack } from "@mui/system";
+import FormattedDate from "../helpers/FormattedDate";
 
 
 const GoalsList = ({ type }) => {
@@ -155,17 +156,33 @@ const GoalsList = ({ type }) => {
           {filteredGoals.map((goal) => (
         <Link key={goal.goalsId} to={`/budgets/${goal.goalsId}`} className="card">
             
-           <Card  variant="outlined" sx={{ minWidth: 500}}>
+           <Card  variant="outlined" sx={{ minWidth: 500, border: '1px solid #000',}}>
           <CardContent
             sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
               // Adjust the background color
               padding: '16px',
               borderRadius: '8px',
-              textAlign: 'left',
+              // textAlign: 'left',
               textDecoration: 'none',
+              border: '1px solid #000',
             }}
           >
+            <Grid container spacing={2}>
+            <Grid item xs={10}>
             <Typography variant="h5" component="div">{goal.categoryName}</Typography>
+            </Grid>
+            <Grid item sx ={{paddingLeft: '20px'}} xs = {2}>
+              <Typography variant="caption">
+                <FormattedDate date={goal.startDate}></FormattedDate> to{' '}
+                <FormattedDate date={goal.endDate}></FormattedDate>
+              </Typography>
+            </Grid>
+
+            </Grid>
+            
             <LinearProgress
                     variant="determinate"
                     value={Math.min((goal.currentBalance / goal.amount) * 100, 100)}
@@ -188,7 +205,7 @@ const GoalsList = ({ type }) => {
                     }}
                   />
                   <Typography variant="body2">
-                    Progress: {((goal.currentBalance / goal.amount) * 100).toFixed(2)}%
+                    {((goal.currentBalance / goal.amount) * 100).toFixed(2)}% to your goal
                   </Typography>
           </CardContent>
 
