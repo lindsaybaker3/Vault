@@ -92,7 +92,6 @@ export default function Dashboard() {
               {/* Recent Transactions */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column'}}>
-                  Transactions
                   <TransactionsForDashboard />
                 </Paper>
               </Grid>

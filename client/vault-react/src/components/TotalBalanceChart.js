@@ -53,32 +53,51 @@ export default function TotalBalanceChart() {
   
   const dateToTotalMap = {};
   let cumulativeTotal = 0;
-  
-  filteredTransactions.forEach(transaction => {
-    const transactionDate = new Date(transaction.transactionDate);
-    const formattedDate = transactionDate.toISOString().substr(0, 10); // Get YYYY-MM-DD
-    cumulativeTotal += transaction.amount;
-  
-    if (!dateToTotalMap[formattedDate]) {
-      dateToTotalMap[formattedDate] = cumulativeTotal;
-    }
-  });
 
   const monthStartDate = new Date(currentYear, currentMonth, 1);
   const formattedStart = monthStartDate.toISOString().substring(0,10)
   dateToTotalMap[formattedStart] = 0
+  
+  filteredTransactions.forEach(transaction => {
+    const transactionDate = new Date(transaction.transactionDate);
+    const formattedDate = transactionDate.toISOString().substr(0, 10); // Get YYYY-MM-DD
+  
+    if (dateToTotalMap[formattedDate]) {
+      // If the formatted date already exists in the map, update the amount
+      dateToTotalMap[formattedDate] += transaction.amount;
+    } else {
+      // If the formatted date doesn't exist, add a new entry to the map
+      dateToTotalMap[formattedDate] = transaction.amount;
+    }
+  });
+
+  
 
   const sortedDates = Object.keys(dateToTotalMap).sort();
   
-  const formattedData = sortedDates.map(date => ({
-    date,
-    amount: dateToTotalMap[date],
-  }));
+  const formattedData = sortedDates.map(date => {
+    cumulativeTotal += dateToTotalMap[date]
+    return {
+      date,
+      amount: cumulativeTotal,
+    }
+   
+  });
     
  
 
   const formatCurrency = (amount) => {
     return `$${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+  };
+
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      timeZone: "UTC", // Set to UTC to avoid time zone discrepancies
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
   };
      
   // console.log(filteredTransactions)
@@ -96,7 +115,7 @@ export default function TotalBalanceChart() {
               top: 10,
               right: 16,
               bottom: 0,
-              left: 24,
+              left: 32,
             }}
             
           >
@@ -104,15 +123,15 @@ export default function TotalBalanceChart() {
               dataKey="date"
               stroke={theme.palette.text.secondary}
               style={theme.typography.body2}
-              // domain={[monthStartDate, currentDate]}
-              // ticks={formattedData.map((entry) => entry.date)}
+              tickFormatter={formatDate}
             />
             <YAxis
               stroke={theme.palette.text.secondary}
               style={theme.typography.body2}
               dataKey="amount"
-              // domain={[0, 'dataMax']} 
-              // ticks = {[0]}
+              domain={[0, cumulativeTotal]}
+              tickCount={Math.ceil(cumulativeTotal / 100)} 
+              tickFormatter={formatCurrency} 
             >
               <Label
                 angle={270}
@@ -122,6 +141,8 @@ export default function TotalBalanceChart() {
                   fill: theme.palette.text.primary,
                   ...theme.typography.body1,
                 }}
+                offset={26}
+                
               >
                 Total Balance
               </Label>

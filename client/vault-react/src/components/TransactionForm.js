@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import "../styles/transactionForm/style.css";
 
+
 const TransactionForm = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const TransactionForm = () => {
   const [goalType, setGoalType] = useState("spending");
   const [filteredGoals, setFilteredGoals] = useState([]);
   const typesList = getUniqueTypes(goals);
+
   //  const filteredGoals = goals.filter((item) => item.type === goalType);
 
   function isDateBetweenLimits(dateToCheck, startDate, endDate) {

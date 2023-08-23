@@ -53,12 +53,18 @@ const ReportList = () => {
         Authorization: "Bearer " + auth.user.token,
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if(response.status === 403){
+          auth.logout()
+        }
+        return response.json()
+      })
       .then((payload) => {
         if (payload) {
           setReports(payload);
         }
-      });
+      })
+      .catch((error) => console.error("error Fetching Reports", error))
   };
 
   useEffect(() => {

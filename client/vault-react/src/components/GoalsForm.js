@@ -4,8 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import '../style/goalslist.css'
 import { Box, Container} from "@mui/system";
-import { CssBaseline, TextField } from "@mui/material";
-import { Button} from "@mui/base";
+import { CssBaseline, TextField, Button } from "@mui/material";
 import MenuItem from '@mui/material/MenuItem';
 import DrawerComponent from "./Drawer";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
@@ -172,7 +171,7 @@ const GoalsForm = (props) => {
         autoComplete="off"
         onSubmit={handleSubmit}
       >
-         <Typography variant="h5" sx={{ fontWeight: "bold", color: "#FAF9F6", textDecoration: 'underline',
+         <Typography variant="h5" sx={{ fontWeight: "bold", color: "#FAF9F6",
          backgroundColor: '#05391f',
          padding: '8px',
          borderRadius: '2px',
@@ -202,10 +201,34 @@ const GoalsForm = (props) => {
                     shrink: true,
                   }}
             >
-            <MenuItem value="1">Groceries</MenuItem>
-            <MenuItem value="8">Vacation</MenuItem>
-            <MenuItem value="6">Rent</MenuItem>
-            <MenuItem value="10">Shopping</MenuItem>
+            <MenuItem value="1">Emergency Fund</MenuItem>
+            <MenuItem value="2">Vacation Fund</MenuItem>
+            <MenuItem value="3">Pay Off High-Interest Debt</MenuItem>
+            <MenuItem value="4">Spending Money</MenuItem>
+            <MenuItem value="5">Home Down Payment</MenuItem>
+            <MenuItem value="6">Education</MenuItem>
+            <MenuItem value="7">Retirement Fund</MenuItem>
+            <MenuItem value="8">Childcare</MenuItem>
+            <MenuItem value="9">Home Improvement</MenuItem>
+            <MenuItem value="10">Mortgage/Rent</MenuItem>
+            <MenuItem value="11">Food</MenuItem>
+            <MenuItem value="12">Shopping</MenuItem>
+            <MenuItem value="13">Entertainment</MenuItem>
+            <MenuItem value="14">Car Payment</MenuItem>
+            <MenuItem value="15">Investment Portfolio Growth</MenuItem>
+            <MenuItem value="16">Gas</MenuItem>
+            <MenuItem value="17">Repairs/Maintenance</MenuItem>
+            <MenuItem value="18">Bills/Utilities</MenuItem>
+            <MenuItem value="19">Fees</MenuItem>
+            <MenuItem value="20">Supplies</MenuItem>
+            <MenuItem value="21">Health/Fitness</MenuItem>
+            <MenuItem value="22">Personal Care</MenuItem>
+            <MenuItem value="23">Pets</MenuItem>
+            <MenuItem value="24">Business Spending</MenuItem>
+            <MenuItem value="25">Insurance</MenuItem>
+            <MenuItem value="26">Income</MenuItem>
+            <MenuItem value="27">Misc. Expenses</MenuItem>
+            
             </TextField>
             <TextField
                 id="amount-input"
@@ -243,6 +266,14 @@ const GoalsForm = (props) => {
             <Button
                 type="submit"
                 variant="contained"
+                sx={{
+                    marginTop: '16px',
+                    backgroundColor: '#69B45E', 
+                    color: '#FFFFFF',
+                    '&:hover': {
+                      backgroundColor: '#05391F', 
+                    },
+                  }}
             >
                 {params.goalsId
                 ? type === 'spending'
@@ -253,7 +284,17 @@ const GoalsForm = (props) => {
                 : 'Add Savings Goal'}
             </Button>
             
-            <Button variant="contained" onClick={handleCancelClick}>
+            <Button
+             variant="contained" 
+             onClick={handleCancelClick}
+            sx={{
+                // marginTop: '16px',
+                backgroundColor: '#05391F', 
+                color: '#FFFFFF',
+                '&:hover': {
+                  backgroundColor: 'red', 
+                },
+              }}>
                 Cancel
             </Button>
             </Box>
