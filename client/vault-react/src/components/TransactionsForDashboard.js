@@ -65,10 +65,10 @@ export default function TransactionsForDashboard() {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell align="right">Amount</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Date</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Category</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Description</TableCell>
+            <TableCell align="right" sx={{ fontWeight: 'bold' }}>Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
