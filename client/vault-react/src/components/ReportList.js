@@ -54,17 +54,17 @@ const ReportList = () => {
       },
     })
       .then((response) => {
-        if(response.status === 403){
-          auth.logout()
+        if (response.status === 403) {
+          auth.logout();
         }
-        return response.json()
+        return response.json();
       })
       .then((payload) => {
         if (payload) {
           setReports(payload);
         }
       })
-      .catch((error) => console.error("error Fetching Reports", error))
+      .catch((error) => console.error("error Fetching Reports", error));
   };
 
   useEffect(() => {
@@ -195,7 +195,7 @@ const ReportList = () => {
                           <StyledTableCell>Start Range Date</StyledTableCell>
                           <StyledTableCell>Range End Date</StyledTableCell>
                           <StyledTableCell>Goal Type</StyledTableCell>
-                          <StyledTableCell>Report URL</StyledTableCell>
+                          <StyledTableCell>Download Report</StyledTableCell>
                           <StyledTableCell>Delete</StyledTableCell>
                         </TableRow>
                       </TableHead>
@@ -208,7 +208,14 @@ const ReportList = () => {
                             <StyledTableCell>
                               <FormattedDate date={report.endDate} />
                             </StyledTableCell>
-                            <StyledTableCell>{report.goalType}</StyledTableCell>
+                            <StyledTableCell>
+                              {report.goalType === "spending"
+                                ? "Budget"
+                                : report.goalType === "saving"
+                                ? "Saving"
+                                : ""}
+                            </StyledTableCell>
+
                             <StyledTableCell>
                               {auth.user.token && (
                                 <a
