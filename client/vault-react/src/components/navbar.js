@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import { useContext } from "react";
 import "../style/dashboard.css";
-import Logo from "../images/piggy-bank-icon.png";
+import Logo from "../images/piggybank.png";
 import Box from "@mui/material/Box";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 

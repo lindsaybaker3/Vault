@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
+import { Box, Container} from "@mui/system";
+import { CssBaseline, TextField } from "@mui/material";
+import { Button} from "@mui/base";
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { Typography } from "@mui/material";
+import DrawerComponent from "./Drawer";
+import Logo from "../images/piggybank.png";
+
+
 
 const SignupForm = ({ addUser }) => {
   const [errors, setErrors] = useState([]);
@@ -61,8 +70,49 @@ const SignupForm = ({ addUser }) => {
   };
   console.log(errors, "errors");
   return (
-    <div className="login-form">
-      <h2>Create New User</h2>
+    <ThemeProvider theme={createTheme()}>
+    <CssBaseline />
+    <Box
+      component="main"
+      sx={{
+        backgroundColor: (theme) =>
+          theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+        paddingTop: '80px',
+      }}
+    >
+      <Container maxWidth="sm" sx={{ mt: 6, mb: 4 }}>
+        <Box
+          className="login-form"
+          sx={{
+            paddingTop: '20px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            gap: '10px',
+            paddingBottom: '20px',
+            paddingLeft: '10px',
+            paddingRight: '10px',
+            border: '8px solid #05391f',
+            backgroundColor: '#ffffff',
+          }}
+        >
+          {/* Logo image */}
+          <img
+            src={Logo}
+            alt="Logo"
+            style={{ width: '100px', marginBottom: '20px' }}
+          />
+        <Typography variant="h4" sx={{ fontWeight: "bold", color: "#05391f",
+          padding: '6px'}}>
+          Sign Up
+        </Typography>
+
+
+
       <form onSubmit={handleSubmit}>
         {errors.map((error, i) => (
           <div key={i}>{error}</div>
@@ -108,10 +158,15 @@ const SignupForm = ({ addUser }) => {
           />
         </fieldset>
         <div className="group-button">
-          <button type="submit">Create User</button>
-        </div>
+            <Button type="submit" variant="contained" alignItems="center">
+              Create User
+            </Button>        
+          </div>
       </form>
-    </div>
+    </Box>
+    </Container>
+    </Box>
+    </ThemeProvider>
   );
 };
 

@@ -172,7 +172,7 @@ const GoalsForm = (props) => {
         autoComplete="off"
         onSubmit={handleSubmit}
       >
-         <Typography variant="h5" sx={{ fontWeight: "bold", color: "#FAF9F6", textDecoration: 'underline',
+         <Typography variant="h5" sx={{ fontWeight: "bold", color: "#FAF9F6",
          backgroundColor: '#05391f',
          padding: '8px',
          borderRadius: '2px',
