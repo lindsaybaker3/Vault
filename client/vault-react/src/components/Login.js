@@ -33,7 +33,6 @@ export default function Login() {
         username,
         password,
       }),
-    
     });
 
     if (response.status === 200) {
