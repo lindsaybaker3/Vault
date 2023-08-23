@@ -70,9 +70,14 @@ const handleClose = () => {
 };
 
 const formatDate = (dateString) => {
-  const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
-  return new Date(dateString).toLocaleDateString(undefined, options)
-}
+  const options = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    timeZone: "UTC", // Set to UTC to avoid time zone discrepancies
+  };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
 
 const hasTransactions = goal.transactionsList && goal.transactionsList.length > 0;
 
@@ -123,6 +128,7 @@ return (
       className="goal-section"
       sx={{
         // padding: '10px',
+        paddingBottom: '35px',
         width: '100%', // Adjust width as needed
         borderBottom: '1px solid  #ccc'
       }}
@@ -133,6 +139,20 @@ return (
              <h1>{goal.categoryName}</h1>
              <h4> Budget: <AmountDisplay amount = {goal.amount} /> </h4>
              <h4>Current Balance: <AmountDisplay amount = {goal.currentBalance} /> </h4>
+             <Link
+              to={goal.type === 'spending' ? `/budgets` : `/savings`}
+            >
+               <Button
+              variant="contained" 
+              sx={{
+                marginTop: '16px',
+                backgroundColor: '#69B45E', 
+                color: '#FFFFFF',
+                '&:hover': {
+                  backgroundColor: '#05391F', 
+                },
+              }}> Back to List </Button>
+            </Link>
             
         </Grid>
         <Grid item xs = {2}>
