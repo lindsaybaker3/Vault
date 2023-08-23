@@ -31,6 +31,7 @@ import { Tab } from "@mui/base";
 const TransactionsList = () => {
   const auth = useContext(AuthContext);
   const [transactions, setTransactions] = useState([]);
+  const [dateFilter, setDateFilter] = useState('currentMonth');
 
   const loadTransactions = async () => {
     await fetch("http://localhost:8080/api/vault/transactions", {
@@ -63,6 +64,35 @@ const TransactionsList = () => {
   const sortedTransactions = transactions
     .slice() // Create a copy of the array to avoid mutating the original
     .sort((a, b) => new Date(b.transactionDate) - new Date(a.transactionDate));
+
+    const parseDateString = (dateString) => {
+      const [year, month, day] = dateString.split('-').map(Number);
+          return new Date(year, month - 1, day); 
+          };
+  
+      const filteredTransactions = sortedTransactions
+      .filter((transaction) => {
+        const transactionDate = parseDateString(transaction.transactionDate);//this goal date needs to be formatted different
+        
+        if (dateFilter === 'currentMonth') {
+          return transactionDate.getMonth() === currentDate.getMonth()
+    
+        } else if (dateFilter === 'lastMonth'){
+          const lastMonthStartDate = new Date(currentYear, currentMonth - 1, 1);
+          const lastMonthEndDate = new Date(currentYear, currentMonth, 0);
+           return transactionDate >= lastMonthStartDate && transactionDate <= lastMonthEndDate
+        } else if (dateFilter === 'pastThree') {
+          const lastThreeMonthsStartDate = new Date(currentYear, currentMonth -3, 1)
+          return transactionDate >= lastThreeMonthsStartDate
+        } else if (dateFilter === 'thisYear') {
+          return transactionDate.getFullYear() === currentDate.getFullYear()
+        } else if (dateFilter === 'lastYear') {
+          const lastYear = new Date(currentYear -1, currentMonth, 1)
+          return transactionDate.getFullYear() === lastYear.getFullYear()
+        }
+      
+        return true; 
+    });
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -123,6 +153,20 @@ const TransactionsList = () => {
                     </Button>
                   </Link>
                 </Grid>
+                <Grid item xs={12}>
+            <p>Filter By Date</p>
+            <select
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+            >
+              <option value="currentMonth">Current Month</option>
+              <option value="lastMonth">Last Month</option>
+              <option value="pastThree">Past Three Months</option>
+              <option value="thisYear">This Year</option>
+              <option value="lastYear">Last year</option>
+              <option value="All">All Transactions</option>
+            </select>
+          </Grid>
               </Grid>
             </Box>
             <Box
@@ -146,7 +190,7 @@ const TransactionsList = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {sortedTransactions?.map((transaction) => (
+                    {filteredTransactions?.map((transaction) => (
                       <TableRow key={transaction.transactionId}>
                         <StyledTableCell>
                           <FormattedDate date={transaction.transactionDate} />
