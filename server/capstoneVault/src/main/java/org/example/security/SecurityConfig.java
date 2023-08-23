@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.DELETE, "/api/vault/transaction/*").hasAnyAuthority("USER", "ADMIN")
 
                 .antMatchers(HttpMethod.GET, "/api/vault/reports").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/vault/report/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/vault/report/*/download").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/vault/report").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/vault/report/*").hasAnyAuthority("USER", "ADMIN")

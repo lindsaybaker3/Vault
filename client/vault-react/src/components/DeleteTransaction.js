@@ -3,7 +3,13 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import AmountDisplay from "../helpers/AmountDisplay";
 import FormattedDate from "../helpers/FormattedDate";
-import { Box, Container, ThemeProvider, createTheme } from "@mui/material";
+import {
+  Box,
+  Container,
+  ThemeProvider,
+  createTheme,
+  Button,
+} from "@mui/material";
 import { CssBaseline } from "@mui/material";
 import DrawerComponent from "./Drawer";
 
@@ -111,28 +117,74 @@ function ConfirmDelete() {
                 p: 4,
               }}
             >
-              <h2>Confirm Delete</h2>
-              <p>Delete this Transaction?</p>
-              <ul>
-                <li>Goal Type: {transaction.goalType}</li>
-                <li>Category: {transaction.category}</li>
-                <li>Description: {transaction.description}</li>
-                <li>
-                  Amount: <AmountDisplay amount={transaction.amount} />
-                </li>
-                <li>
-                  Date: <FormattedDate date={transaction.transactionDate} />
-                </li>
+              <div>
+                <h2 style={{ marginBottom: "20px" }}>
+                  Delete this Transaction?
+                </h2>
+                <div>
+                  <p>
+                    <strong> {message}</strong>
+                  </p>
+                  <p>Are you sure you want to delete this transaction?</p>
+                  <p>
+                    <strong>Goal Type:</strong> {transaction.goalType}
+                  </p>
+                  <p>
+                    <strong>Category:</strong> {transaction.category}
+                  </p>
+                  <p>
+                    <strong>Description:</strong> {transaction.description}
+                  </p>
+                  <p>
+                    <strong>Amount:</strong>{" "}
+                    <AmountDisplay amount={transaction.amount} />
+                  </p>
+                  <p>
+                    <strong>Date:</strong>{" "}
+                    <FormattedDate date={transaction.transactionDate} />
+                  </p>
+                </div>
+              </div>
 
-                {/* {message} on{" "}
-                <FormattedDate date={transaction.transactionDate} />, you spent{" "}
-                <AmountDisplay amount={transaction.amount} /> towards the
-                category "{transaction.category}" for {transaction.description}.
-                <br />
-                Are you sure you want to delete this transaction? */}
-              </ul>
-              <button onClick={handleDelete}>Delete Transaction</button>{" "}
-              <Link to="/transactions">Cancel</Link>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "20px",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    backgroundColor: "red",
+                    color: "#FFFFFF",
+                    "&:hover": {
+                      backgroundColor: "#69b45E",
+                    },
+                    marginRight: "10px",
+                  }}
+                  onClick={handleDelete}
+                >
+                  Delete
+                </Button>
+
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    backgroundColor: "#05391F",
+                    color: "#FFFFFF",
+                    "&:hover": {
+                      backgroundColor: "#69B45E",
+                    },
+                  }}
+                  component={Link}
+                  to="/transactions"
+                >
+                  Cancel
+                </Button>
+              </div>
             </Box>
           </Container>
         </Box>

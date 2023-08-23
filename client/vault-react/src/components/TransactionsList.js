@@ -5,7 +5,7 @@ import AmountDisplay from "../helpers/AmountDisplay";
 import FormattedDate from "../helpers/FormattedDate";
 import { Container } from "@mui/system";
 import DrawerComponent from "./Drawer";
-import { Modal, styled, tableCellClasses} from "@mui/material";
+import { Modal, styled, tableCellClasses } from "@mui/material";
 import {
   Box,
   Button,
@@ -24,7 +24,7 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import DeleteTransaction from "./DeleteTransaction"
+import DeleteTransaction from "./DeleteTransaction";
 import { Tab } from "@mui/base";
 // ------
 
@@ -39,10 +39,10 @@ const TransactionsList = () => {
       },
     })
       .then((response) => {
-      if (response.status === 403) {
-        auth.logout()
-      }
-       return response.json()
+        if (response.status === 403) {
+          auth.logout();
+        }
+        return response.json();
       })
       .then((payload) => {
         if (payload) {
@@ -58,7 +58,7 @@ const TransactionsList = () => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth(); // 0-indexed, so January is 0
-  
+
   // Sort transactions by transactionDate in descending order (most recent first)
   const sortedTransactions = transactions
     .slice() // Create a copy of the array to avoid mutating the original
@@ -66,7 +66,7 @@ const TransactionsList = () => {
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#05391F',
+      backgroundColor: "#05391F",
       color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
@@ -89,47 +89,48 @@ const TransactionsList = () => {
             flexGrow: 1,
             height: "100vh",
             overflow: "auto",
-            paddingTop: '64px',
-            border: '1px solid #000'
+            paddingTop: "64px",
+            border: "1px solid #000",
           }}
         >
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4}}>
-          <Box sx={{
-          display: 'flex',
-          paddingBottom: '45px',
-          borderBottom: '1px solid  #ccc',
-          
-        }}>
-          <Grid container>
-          <Grid item xs={10}>
-            <h1>Transactions</h1>
-          </Grid>
-          <Grid sx = {{paddingTop: '11px'}} item xs = {2}>
-          <Link to="/transaction/add">
-              <Button
-              variant="contained"
-              color="primary" 
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Box
               sx={{
-                marginTop: '16px',
-                backgroundColor: '#05391F', 
-                color: '#FFFFFF',
-                '&:hover': {
-                  backgroundColor: '#69B45E', 
-                },
-              }}>
-              Add Transaction
-                </Button>
-          </Link>
-          </Grid>
-          </Grid>
-          </Box>
+                display: "flex",
+                paddingBottom: "45px",
+                borderBottom: "1px solid  #ccc",
+              }}
+            >
+              <Grid container>
+                <Grid item xs={10}>
+                  <h1>Transactions</h1>
+                </Grid>
+                <Grid sx={{ paddingTop: "11px" }} item xs={2}>
+                  <Link to="/transaction/add">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      sx={{
+                        marginTop: "16px",
+                        backgroundColor: "#05391F",
+                        color: "#FFFFFF",
+                        "&:hover": {
+                          backgroundColor: "#69B45E",
+                        },
+                      }}
+                    >
+                      Add Transaction
+                    </Button>
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
                 gap: "16px", // Adjust the gap between cards
                 paddingTop: "64px",
-                
               }}
             >
               <TableContainer component={Paper}>
@@ -139,55 +140,68 @@ const TransactionsList = () => {
                       <StyledTableCell>Date</StyledTableCell>
                       <StyledTableCell>Goal</StyledTableCell>
                       <StyledTableCell>Description</StyledTableCell>
-                      <StyledTableCell align = 'left'>Amount</StyledTableCell>
-                      <StyledTableCell align = 'center'>Edit</StyledTableCell>
-                      <StyledTableCell align = 'center'>Delete</StyledTableCell>
+                      <StyledTableCell align="left">Amount</StyledTableCell>
+                      <StyledTableCell align="center">Edit</StyledTableCell>
+                      <StyledTableCell align="center">Delete</StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {sortedTransactions?.map((transaction) => (
                       <TableRow key={transaction.transactionId}>
                         <StyledTableCell>
-                          <FormattedDate date = {transaction.transactionDate} /></StyledTableCell>
-                        <StyledTableCell>{transaction.category}</StyledTableCell>
-                        <StyledTableCell>{transaction.description}</StyledTableCell>
-                        <StyledTableCell align = 'left'>
-                            {transaction.goalType === 'saving' ? '+' : '-'}{" "}
-                            <AmountDisplay amount={transaction.amount} />
+                          <FormattedDate date={transaction.transactionDate} />
                         </StyledTableCell>
-                        <StyledTableCell align = 'center'>
+                        <StyledTableCell>
+                          {transaction.category}
+                        </StyledTableCell>
+                        <StyledTableCell>
+                          {transaction.description}
+                        </StyledTableCell>
+                        <StyledTableCell align="left">
+                          {transaction.goalType === "saving" ? "+" : "-"}{" "}
+                          <AmountDisplay amount={transaction.amount} />
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
                           {auth.user && (
                             <Link to={`/edit/${transaction.transactionId}`}>
                               <Button
                                 variant="contained"
-                                color="primary" 
+                                color="primary"
                                 sx={{
                                   // marginTop: '16px',
-                                  backgroundColor: '#05391F', 
-                                  color: '#FFFFFF',
-                                  '&:hover': {
-                                    backgroundColor: '#69B45E', 
+                                  backgroundColor: "#05391F",
+                                  color: "#FFFFFF",
+                                  "&:hover": {
+                                    backgroundColor: "#69B45E",
                                   },
-                                }}> Edit </Button>
+                                }}
+                              >
+                                {" "}
+                                Edit{" "}
+                              </Button>
                             </Link>
                           )}
                         </StyledTableCell>
-                        <StyledTableCell align = 'center'>
+                        <StyledTableCell align="center">
                           {auth.user && (
-                            <Link to={`/delete/${transaction.transactionId}`}>
-                            <Button
-                              variant="contained"
-                              color="primary" 
-                              sx={{
-                                // marginTop: '16px',
-                                backgroundColor: 'red', 
-                                color: '#FFFFFF',
-                                '&:hover': {
-                                  backgroundColor: '#69B45E', 
-                                },
-                              }}>
-                              Delete </Button>
-                          </Link>
+                            <Link
+                              to={`/deleteTransaction/${transaction.transactionId}`}
+                            >
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                sx={{
+                                  // marginTop: '16px',
+                                  backgroundColor: "red",
+                                  color: "#FFFFFF",
+                                  "&:hover": {
+                                    backgroundColor: "#69B45E",
+                                  },
+                                }}
+                              >
+                                Delete{" "}
+                              </Button>
+                            </Link>
                           )}
                         </StyledTableCell>
                       </TableRow>

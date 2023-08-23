@@ -58,6 +58,9 @@ public class ReportsService {
         return repository.findByUserId(appUserId);
     }
 
+    public Reports findById(int reportId) {
+        return repository.findById(reportId);
+    }
 
     public Result create(Reports report) {
         Result result = validate(report);

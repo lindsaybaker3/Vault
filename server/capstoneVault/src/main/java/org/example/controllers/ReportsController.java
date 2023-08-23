@@ -42,6 +42,14 @@ public class ReportsController {
         AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
         return reportsService.findByUserId(appUser.getAppUserId());
     }
+    @GetMapping("/report/{reportId}")
+    public ResponseEntity<Reports> findById(@PathVariable int reportId) {
+        Reports report = reportsService.findById(reportId);
+        if (report == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(report, HttpStatus.OK);
+    }
 
     @GetMapping("/report/{reportId}/download")
     public ResponseEntity<Resource> download(@PathVariable int reportId) throws IOException {
