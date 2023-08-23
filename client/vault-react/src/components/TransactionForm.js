@@ -5,9 +5,22 @@ import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import "../styles/transactionForm/style.css";
 
+
+import DrawerComponent from "./Drawer";
+
+import { Box, Container} from "@mui/system";
+import { CssBaseline, TextField } from "@mui/material";
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { Typography, Button, MenuItem } from "@mui/material";
+
 const TransactionForm = () => {
   const params = useParams();
   const navigate = useNavigate();
+
+  const handleCancelClick = () => {
+    navigate(-1);
+  };
+
   const auth = useContext(AuthContext);
   const [goals, setGoals] = useState([]);
   const [goalType, setGoalType] = useState("spending");
@@ -206,93 +219,201 @@ const TransactionForm = () => {
   console.log(goalsId);
 
   return (
-    <form className="login-form" onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, index) => (
-          <li key={index}>{error}</li>
-        ))}
-      </ul>
-      <h2 className="title">
-        {params.transactionId ? "Edit Transaction!" : "Add your Transaction!"}
-      </h2>
-      <fieldset>
-        <label htmlFor="goal-input">Goal Type:</label>
-        <select
-          id="goal-input"
-          value={goalType}
-          onChange={(evt) => {
-            setGoalType(evt.target.value);
-            setFormChanged(true);
+    <ThemeProvider theme={createTheme()}>
+      <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+        <CssBaseline />
+        <DrawerComponent />
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === 'light'
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: '100vh',
+            overflow: 'auto',
+            paddingTop: '80px',
           }}
         >
-          {typesList.map((type) => (
-            <option key={type} value={type}>
-              {type === "spending" ? "Budgets" : "Saving"}
-            </option>
-          ))}
-        </select>
-      </fieldset>
-
-      <fieldset>
-        <label htmlFor="category-input">Category:</label>
-        <select
-          id="category-input"
-          value={category}
-          onChange={(evt) => {
-            setCategory(evt.target.value);
-            setFormChanged(true);
-            setGoalsId(
-              goals.find((item) => item.categoryName === evt.target.value)
-                ?.goalsId
-            );
-          }}
-        >
-          {filteredGoals?.map((category) => (
-            <option key={category.id} value={category.categoryName}>
-              {category.categoryName}
-            </option>
-          ))}
-        </select>
-      </fieldset>
-
-      <fieldset>
-        <label htmlFor="description-input">Description:</label>
-        <input
-          id="description-input"
-          value={description}
-          onChange={(evt) => setDescription(evt.target.value)}
-        />
-      </fieldset>
-
-      <fieldset>
-        <label htmlFor="amount-input">Amount:</label>
-        <input
-          id="amount-input"
-          type="number"
-          value={amount}
-          onChange={(evt) => setAmount(evt.target.value)}
-        />
-      </fieldset>
-
-      <fieldset>
-        <label htmlFor="date-input">Date:</label>
-        <input
-          id="date-input"
-          type="date"
-          value={transactionDate}
-          onChange={(evt) => setTransactionDate(evt.target.value)}
-        />
-      </fieldset>
-
-      <div className="group-button">
-        <Link className="btn btn-warning" to="/transactions">
-          Cancel
-        </Link>
-        <button type="submit" className="btn btn-primary">
-          Submit Transaction
-        </button>
-      </div>
-    </form>
+          <Container maxWidth="sm" sx={{ mt: 6, mb: 4 }}>
+            <Box
+              sx={{
+                paddingTop: '20px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+                gap: '10px',
+                paddingBottom: '20px',
+                paddingLeft: '10px',
+                paddingRight: '10px',
+                border: '8px solid #05391f',
+                backgroundColor: '#ffffff',
+              }}
+            >
+  
+              <Typography
+                variant="h4"
+                sx={{ fontWeight: 'bold', color: '#05391f', padding: '6px' }}
+              >
+                {params.transactionId ? "Edit Transaction!" : "Add your Transaction!"}
+              </Typography>
+              <Box
+                component="form"
+                sx={{
+                  paddingTop: '20px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  gap: '16px',
+                  paddingBottom: '20px',
+                  paddingLeft: '60px',
+                  paddingRight: '60px',
+                  width: '100%', // Adjust the width value as needed
+                }}
+                noValidate
+                autoComplete="off"
+                onSubmit={handleSubmit}
+              >
+                <ul>
+                  {errors.map((error, index) => (
+                    <li key={index}>{error}</li>
+                  ))}
+                </ul>
+                <TextField
+                  id="goal-input"
+                  select
+                  label="Goal Type"
+                  value={goalType}
+                  onChange={(evt) => {
+                    setGoalType(evt.target.value);
+                    setFormChanged(true);
+                  }}
+                  fullWidth
+                  sx={{
+                    width: '100%', // Adjust the width value as needed
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                >
+                  {typesList.map((type) => (
+                    <MenuItem key={type} value={type}>
+                      {type === "spending" ? "Budgets" : "Saving"}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <TextField
+                  id="category-input"
+                  select
+                  label="Category"
+                  value={category}
+                  onChange={(evt) => {
+                    setCategory(evt.target.value);
+                    setFormChanged(true);
+                    setGoalsId(
+                      goals.find((item) => item.categoryName === evt.target.value)?.goalsId
+                    );
+                  }}
+                  fullWidth
+                  sx={{
+                    width: '100%', // Adjust the width value as needed
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                >
+                  {filteredGoals?.map((category) => (
+                    <MenuItem key={category.id} value={category.categoryName}>
+                      {category.categoryName}
+                    </MenuItem>
+                  ))}
+                </TextField>
+  
+                <TextField
+                  id="description-input"
+                  label="Description"
+                  type="text"
+                  value={description}
+                  onChange={(evt) => setDescription(evt.target.value)}
+                  fullWidth
+                  sx={{
+                    width: '100%', // Adjust the width value as needed
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+  
+                <TextField
+                  id="amount-input"
+                  label="Amount"
+                  type="number"
+                  value={amount}
+                  onChange={(evt) => setAmount(evt.target.value)}
+                  fullWidth
+                  sx={{
+                    width: '100%', // Adjust the width value as needed
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                <TextField
+                  id="date-input"
+                  label="Date"
+                  type="date"
+                  value={transactionDate}
+                  onChange={(evt) => setTransactionDate(evt.target.value)}
+                  fullWidth
+                  sx={{
+                    width: '100%', // Adjust the width value as needed
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+  
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{
+                    marginTop: '16px',
+                    backgroundColor: "#05391F",
+                    color: "#FFFFFF",
+                    "&:hover": {
+                      backgroundColor: "#69B45E",
+                    },
+                  }}
+                >
+                  {" "}
+                  Submit Transaction{" "}
+                </Button>
+  
+                <Button
+                  variant="contained"
+                  onClick={handleCancelClick}
+                  color="primary"
+                  sx={{
+                    marginTop: '8px',
+                    backgroundColor: 'red',
+                    color: '#FFFFFF',
+                    '&:hover': {
+                      backgroundColor: '#69B45E',
+                    },
+                  }}
+                >
+                  Cancel
+                </Button>
+              </Box>
+            </Box>
+  
+          </Container>
+        </Box>
+      </Box>
+    </ThemeProvider>
   );
 };
 export default TransactionForm;

@@ -185,6 +185,7 @@ const Form = () => {
             <Button
                 type="submit"
                 variant="contained"
+                onClick={handleSubmit}
                 sx={{
                   marginTop: '16px',
                   backgroundColor: "#05391F",

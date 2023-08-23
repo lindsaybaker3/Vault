@@ -32,22 +32,58 @@ const Navbar = () => {
 
       {user ? (
         <>
-          <ListItemButton component={Link} to="/dashboard">
+          <ListItemButton component={Link} to="/dashboard"
+           sx={{
+            "&:hover": {
+              backgroundColor: "#69B45E",
+              color: "#FFFFFF",
+            },
+          }}>
             Dashboard
           </ListItemButton>
-          <ListItemButton component={Link} to="/transactions">
+          <ListItemButton component={Link} to="/transactions"
+           sx={{
+            "&:hover": {
+              backgroundColor: "#69B45E",
+              color: "#FFFFFF",
+            },
+          }}>
             Transactions
           </ListItemButton>
-          <ListItemButton component={Link} to="/budgets">
+          <ListItemButton component={Link} to="/budgets"
+           sx={{
+            "&:hover": {
+              backgroundColor: "#69B45E",
+              color: "#FFFFFF",
+            },
+          }}>
             Budgets
           </ListItemButton>
-          <ListItemButton component={Link} to="/savings">
+          <ListItemButton component={Link} to="/savings"
+           sx={{
+            "&:hover": {
+              backgroundColor: "#69B45E",
+              color: "#FFFFFF",
+            },
+          }}>
             Savings
           </ListItemButton>
-          <ListItemButton component={Link} to="/reports">
+          <ListItemButton component={Link} to="/reports"
+           sx={{
+            "&:hover": {
+              backgroundColor: "#69B45E",
+              color: "#FFFFFF",
+            },
+          }}>
             Reports
           </ListItemButton>
-          <ListItemButton onClick={auth.logout}> Logout </ListItemButton>
+          <ListItemButton onClick={auth.logout}
+           sx={{
+            "&:hover": {
+              backgroundColor: "#69B45E",
+              color: "#FFFFFF",
+            },
+          }}> Logout </ListItemButton>
         </>
       ) : (
         <>

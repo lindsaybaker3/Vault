@@ -78,7 +78,7 @@ export default function TransactionsForDashboard() {
                 <FormattedDate date = {transaction.transactionDate} /></TableCell>
               <TableCell>{transaction.category}</TableCell>
               <TableCell>{transaction.description}</TableCell>
-              <TableCell align="right">{formatCurrency(transaction.amount)}</TableCell>
+              <TableCell align="right"> {transaction.goalType === "saving" ? "+" : "-"}{" "}{formatCurrency(transaction.amount)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
