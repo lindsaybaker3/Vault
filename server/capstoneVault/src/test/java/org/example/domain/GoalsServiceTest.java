@@ -37,8 +37,8 @@ class GoalsServiceTest {
         assertEquals(2, goals.size());
     }
 
-    @Test
-    void findById() {
+//    @Test
+//    void findById() {
 //        Goals goalExpected = new Goals(1, 1, 1, "spending", BigDecimal.valueOf(100.00), LocalDate.now().plusDays(-10), LocalDate.now().plusDays(20));
 //        when(repository.findById(1)).thenReturn(goalExpected);
 //        when(transactionsRepository.findByGoalsId(1)).thenReturn(List.of(
@@ -49,7 +49,7 @@ class GoalsServiceTest {
 //        Goals actual = service.findById(1);
 //        assertEquals(goalExpected, actual);
 //        assertEquals(2, goalExpected.getTransactionsList().size());
-    }
+//    }
 
 
     @Test
