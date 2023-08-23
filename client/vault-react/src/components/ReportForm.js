@@ -220,20 +220,3 @@ const Form = () => {
   }
 
 export default Form;
-
-{
-  /* <fieldset>
-  <label htmlFor="goal-input">Goal Type:</label>
-  <select
-    id="goal-input"
-    value={goalType}
-    onChange={(evt) => setGoalType(evt.target.value)}
-  >
-    <option disabled value="">
-      Select a Goal type
-    </option>
-    <option value="spending">Budgets</option>
-    <option value="saving">Saving</option>
-  </select>
-</fieldset>; */
-}
