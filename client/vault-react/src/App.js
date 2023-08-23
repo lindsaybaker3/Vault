@@ -113,7 +113,7 @@ function App() {
           <Route
             path="/transactions"
             element={
-              user ? <TransactionsList user={user} /> : <Navigate to="/" />
+              user ? <TransactionsList user={user} /> : <Navigate to = "/" />
             }
           />
           <Route
