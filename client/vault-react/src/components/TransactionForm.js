@@ -11,9 +11,35 @@ const TransactionForm = () => {
   const auth = useContext(AuthContext);
   const [goals, setGoals] = useState([]);
   const [goalType, setGoalType] = useState("spending");
-
+  const [filteredGoals, setFilteredGoals] = useState([]);
   const typesList = getUniqueTypes(goals);
-  const filteredGoals = goals.filter((item) => item.type === goalType);
+  //  const filteredGoals = goals.filter((item) => item.type === goalType);
+
+  function isDateBetweenLimits(dateToCheck, startDate, endDate) {
+    const checkDateObj = new Date(dateToCheck);
+    const startDateObj = new Date(startDate);
+    const endDateObj = new Date(endDate);
+
+    return checkDateObj >= startDateObj && checkDateObj <= endDateObj;
+  }
+
+  useEffect(() => {
+    let listOfGoals = goals.filter((item) => {
+      const today = new Date();
+      const startDate = new Date(item.startDate);
+      const endDate = new Date(item.endDate);
+
+      today.setHours(0, 0, 0, 0);
+      return (
+        item.type === goalType && isDateBetweenLimits(today, startDate, endDate)
+      );
+    });
+    console.log(listOfGoals, "list of goals");
+    setFilteredGoals(listOfGoals);
+  }, [goalType, goals]);
+
+  console.log(filteredGoals, "filteredGoals");
+
   const [errors, setErrors] = useState([]);
   const [formChanged, setFormChanged] = useState(false);
 
@@ -59,6 +85,10 @@ const TransactionForm = () => {
     const uniqueTypes = [...new Set(goalsList.map((goal) => goal.type))];
     return uniqueTypes;
   }
+
+  // function capitalizeFirstLetter(string) {
+  //   return string.charAt(0).toUpperCase() + string.slice(1);
+  // }
 
   useEffect(() => {
     loadGoals();
@@ -180,7 +210,9 @@ const TransactionForm = () => {
           }}
         >
           {typesList.map((type) => (
-            <option value={type}>{type}</option>
+            <option key={type} value={type}>
+              {type === "spending" ? "Budgets" : "Saving"}
+            </option>
           ))}
         </select>
       </fieldset>
