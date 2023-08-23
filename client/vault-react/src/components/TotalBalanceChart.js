@@ -115,7 +115,7 @@ export default function TotalBalanceChart() {
               top: 10,
               right: 16,
               bottom: 0,
-              left: 24,
+              left: 32,
             }}
             
           >
@@ -141,6 +141,7 @@ export default function TotalBalanceChart() {
                   fill: theme.palette.text.primary,
                   ...theme.typography.body1,
                 }}
+                offset={26}
                 
               >
                 Total Balance

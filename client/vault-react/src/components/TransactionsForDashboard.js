@@ -61,6 +61,7 @@ export default function TransactionsForDashboard() {
 
   return (
     <React.Fragment>
+       <h4>Recent Transactions:</h4>
       <Table size="small">
         <TableHead>
           <TableRow>
