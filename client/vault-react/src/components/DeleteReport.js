@@ -134,14 +134,17 @@ function ConfirmDelete() {
                     <strong>
                       <FormattedDate date={report.endDate} />
                     </strong>
+                    .
                   </p>
                   <p>
-                    The report's goal type is <strong>{report.goalType}</strong>
+                    The report's goal type is{" "}
+                    <strong>
+                      {report.goalType === "spending" ? "Budget" : "Saving"}
+                    </strong>
                     .
                   </p>
                 </div>
               </div>
-
               <div
                 style={{
                   display: "flex",

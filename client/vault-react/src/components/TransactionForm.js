@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import "../styles/transactionForm/style.css";
 
-
 const TransactionForm = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -15,7 +14,16 @@ const TransactionForm = () => {
   const [filteredGoals, setFilteredGoals] = useState([]);
   const typesList = getUniqueTypes(goals);
 
-  //  const filteredGoals = goals.filter((item) => item.type === goalType);
+  const [errors, setErrors] = useState([]);
+
+  const [formChanged, setFormChanged] = useState(false);
+
+  const [appUserId, setAppUserId] = useState(auth.user?.appUserId || "");
+  const [goalsId, setGoalsId] = useState("");
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState("");
+  const [transactionDate, setTransactionDate] = useState("");
 
   function isDateBetweenLimits(dateToCheck, startDate, endDate) {
     const checkDateObj = new Date(dateToCheck);
@@ -26,8 +34,11 @@ const TransactionForm = () => {
   }
 
   useEffect(() => {
+    let today = new Date();
     let listOfGoals = goals.filter((item) => {
-      const today = new Date();
+      if (params.transactionId) {
+        today = new Date(transactionDate);
+      }
       const startDate = new Date(item.startDate);
       const endDate = new Date(item.endDate);
 
@@ -36,21 +47,24 @@ const TransactionForm = () => {
         item.type === goalType && isDateBetweenLimits(today, startDate, endDate)
       );
     });
+    console.log(params, "parametros");
+    console.log(today, "today");
     console.log(listOfGoals, "list of goals");
+    console.log(transactionDate, "transaction date");
+    console.log(params.transactionId, "transaction id");
     setFilteredGoals(listOfGoals);
-  }, [goalType, goals]);
+  }, [goalType, goals, params, params.transactionId, transactionDate]);
 
   console.log(filteredGoals, "filteredGoals");
 
-  const [errors, setErrors] = useState([]);
-  const [formChanged, setFormChanged] = useState(false);
+  const currentDate = new Date();
 
-  const [appUserId, setAppUserId] = useState(auth.user?.appUserId || "");
-  const [goalsId, setGoalsId] = useState("");
-  const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("");
-  const [transactionDate, setTransactionDate] = useState("");
+  // Calculate the date of tomorrow
+  const tomorrowDate = new Date(currentDate);
+  tomorrowDate.setDate(currentDate.getDate() + 1);
+
+  console.log(tomorrowDate, "amanha");
+  console.log(currentDate, "data de hoje");
 
   const resetState = () => {
     setGoalsId("");
