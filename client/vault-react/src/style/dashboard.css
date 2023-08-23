@@ -1,8 +1,7 @@
-
 /* 
 
 /* Sidebar Container */
- .sidebar {
+.sidebar {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,43 +11,45 @@
   color: white;
   padding-top: 20px;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
-} 
+}
 
 /* Sidebar Links */
- .sidebar a {
+.sidebar a {
   display: block;
   padding: 10px 20px;
   color: white;
   text-decoration: none;
   transition: background-color 0.3s ease;
-} 
+}
 
 /* Hover effect for Sidebar Links */
- .sidebar a:hover {
+.sidebar a:hover {
   background-color: #69b45e;
-} */
+}
+*/
 
 /* Active Sidebar Link */
  .sidebar a.active {
   background-color: #dfffcf;
-} 
+}
 
 /* this is nav list*/
 
- .nav-list {
-  background: #69b45e;
+.nav-list {
+  position: absolute;
+  top: 0;
+  background: #69b45ec5;
   display: flex;
   justify-content: space-between;
   width: 100%;
   padding: 15px 40px;
-  border-radius: 10px;
-} 
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
 
- .nav-list a {
+.nav-list a {
   text-decoration: none;
   color: #05391f;
   font-size: 28px;
   font-weight: bold;
-
-} 
-
+}

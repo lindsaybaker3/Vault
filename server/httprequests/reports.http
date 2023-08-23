@@ -33,11 +33,15 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2YXVsdCIsInN1YiI6ImpvaG5A
 
 
 ####
-DELETE http://localhost:8080/api/vault/report/54 HTTP/1.1
-Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5MjczMDU4NH0.ge82dq8vWbzl1OGMty_pzi6EHa0hMss4McqVViOjgKY
-
+DELETE http://localhost:8080/api/vault/report/58 HTTP/1.1
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5Mjc1MDI0M30.wdQnIqt6bDQytvMpSILTEM4dilF4_-uuvDE1NHEMPX4
 
 ####
 // Get reports by user id
 GET http://localhost:8080/api/vault/reports
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5MjczMDU4NH0.ge82dq8vWbzl1OGMty_pzi6EHa0hMss4McqVViOjgKY
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5Mjc1MTY4OX0.aMSuLlBQ1Fyj2EbYrC8G7PNHzIvYf5z9oOq7fz81lsU
+
+
+####
+GET  http://localhost:8080/api/vault/report/57 HTTP/1.1
+Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ2YXVsdCIsInN1YiI6ImpvaG5Ac21pdGguY29tIiwiYXV0aG9yaXRpZXMiOiJBRE1JTiIsImV4cCI6MTY5Mjc1MTc4N30.aGtZTZKOsYHvuw108k31HJ3ndzlSnXN_zQKyOHGoiKA

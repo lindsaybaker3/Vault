@@ -109,7 +109,7 @@ function App() {
 
           {/* loggin in only */}
           <Route path="/dashboard" element={<Dashboard />} />
-          
+
           <Route
             path="/transactions"
             element={
@@ -127,14 +127,13 @@ function App() {
             }
           />
           <Route
-            path="delete/:transactionId"
+            path="/deleteTransaction/:transactionId"
             element={user ? <DeleteTransaction /> : <Navigate to="/" />}
           />
 
           <Route
             path="/budgets"
-            element={user ? <GoalsList type="spending" /> : <Navigate to = "/"  />}
-            
+            element={user ? <GoalsList type="spending" /> : <Navigate to="/" />}
           />
           <Route
             path="/budgets/:goalsId"
@@ -148,11 +147,10 @@ function App() {
             path="/budgets/edit/:goalsId"
             element={user ? <GoalsForm type="spending" /> : <Navigate to="/" />}
           />
-          
+
           <Route
             path="/savings"
-            element={user ? <GoalsList type="saving" /> : <Navigate to = "/" />}
-            
+            element={user ? <GoalsList type="saving" /> : <Navigate to="/" />}
           />
           <Route
             path="savings/:goalId"
@@ -166,7 +164,6 @@ function App() {
             path="/savings/add"
             element={user ? <GoalsForm type="saving" /> : <Navigate to="/" />}
           />
-         
 
           <Route
             path="/reports"
@@ -177,7 +174,7 @@ function App() {
             element={user ? <ReportForm user={user} /> : <Navigate to="/" />}
           />
           <Route
-            path="/delete/:reportId"
+            path="/deleteReport/:reportId"
             element={user ? <DeleteReport /> : <Navigate to="/" />}
           />
 

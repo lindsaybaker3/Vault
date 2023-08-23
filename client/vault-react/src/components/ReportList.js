@@ -5,8 +5,10 @@ import { Link } from "react-router-dom";
 import { Container } from "@mui/system";
 import AWS from "aws-sdk";
 import DrawerComponent from "./Drawer";
+import { Modal, styled, tableCellClasses } from "@mui/material";
 import {
   Box,
+  Button,
   Card,
   CardContent,
   CssBaseline,
@@ -23,6 +25,7 @@ import {
   createTheme,
 } from "@mui/material";
 import { Tab } from "@mui/base";
+import FormattedDate from "../helpers/FormattedDate";
 // ------
 
 const accessKeyId = process.env.REACT_APP_AWS_ACCESS_KEY_ID;
@@ -101,6 +104,16 @@ const ReportList = () => {
     };
   }, [downloadLink]);
 
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: "#05391F",
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+
   return (
     <ThemeProvider theme={createTheme()}>
       <Box sx={{ display: "flex" }}>
@@ -116,9 +129,42 @@ const ReportList = () => {
             flexGrow: 1,
             height: "100vh",
             overflow: "auto",
+            paddingTop: "64px",
+            border: "1px solid #000",
           }}
         >
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Box
+              sx={{
+                display: "flex",
+                paddingBottom: "45px",
+                borderBottom: "1px solid #ccc",
+              }}
+            >
+              <Grid container>
+                <Grid item xs={10}>
+                  <h1>Reports</h1>
+                </Grid>
+                <Grid item xs={2} sx={{ paddingTop: "11px" }}>
+                  <Link to="/report/add">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      sx={{
+                        // marginTop: "16px",
+                        backgroundColor: "#05391F",
+                        color: "#FFFFFF",
+                        "&:hover": {
+                          backgroundColor: "#69B45E",
+                        },
+                      }}
+                    >
+                      Add Report
+                    </Button>
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
             <Box
               sx={{
                 display: "flex",
@@ -140,20 +186,24 @@ const ReportList = () => {
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                       <TableHead>
                         <TableRow>
-                          <TableCell>Start Range Date</TableCell>
-                          <TableCell>Range End Date</TableCell>
-                          <TableCell>Goal Type</TableCell>
-                          <TableCell>Report URL</TableCell>
-                          <TableCell>Delete</TableCell>
+                          <StyledTableCell>Start Range Date</StyledTableCell>
+                          <StyledTableCell>Range End Date</StyledTableCell>
+                          <StyledTableCell>Goal Type</StyledTableCell>
+                          <StyledTableCell>Report URL</StyledTableCell>
+                          <StyledTableCell>Delete</StyledTableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         {reports?.map((report) => (
                           <TableRow key={report.reportId}>
-                            <TableCell>{report.startDate}</TableCell>
-                            <TableCell>{report.endDate}</TableCell>
-                            <TableCell>{report.goalType}</TableCell>
-                            <TableCell>
+                            <StyledTableCell>
+                              <FormattedDate date={report.startDate} />
+                            </StyledTableCell>
+                            <StyledTableCell>
+                              <FormattedDate date={report.endDate} />
+                            </StyledTableCell>
+                            <StyledTableCell>{report.goalType}</StyledTableCell>
+                            <StyledTableCell>
                               {auth.user.token && (
                                 <a
                                   href={report.reportUrl}
@@ -161,32 +211,50 @@ const ReportList = () => {
                                     e.preventDefault();
                                     handleDownload(report.reportUrl);
                                   }}
+                                  style={{
+                                    display: "block",
+                                    backgroundColor: "#05391F",
+                                    color: "#FFFFFF",
+                                    padding: "8px 16px",
+                                    textAlign: "center",
+                                    textDecoration: "none",
+                                    cursor: "pointer",
+                                    borderRadius: "4px",
+                                    "&:hover": {
+                                      backgroundColor: "#69B45E",
+                                    },
+                                  }}
                                 >
                                   Download
                                 </a>
                               )}
-                            </TableCell>
-                            <TableCell>
+                            </StyledTableCell>
+                            <StyledTableCell align="center">
                               {auth.user && (
-                                <Link
-                                  to={`/delete/${report.reportId}`}
-                                  style={{ color: "red" }}
-                                >
-                                  Delete
+                                <Link to={`/deleteReport/${report.reportId}`}>
+                                  <Button
+                                    variant="contained"
+                                    color="primary"
+                                    sx={{
+                                      // marginTop: '16px',
+                                      backgroundColor: "red",
+                                      color: "#FFFFFF",
+                                      "&:hover": {
+                                        backgroundColor: "#69B45E",
+                                      },
+                                    }}
+                                  >
+                                    Delete
+                                  </Button>
                                 </Link>
                               )}
-                            </TableCell>
+                            </StyledTableCell>
                           </TableRow>
                         ))}
                       </TableBody>
                     </Table>
                   </TableContainer>
                 )}
-                <Link to="/report/add">
-                  <button style={{ marginLeft: "auto", marginTop: "10px" }}>
-                    Create Report
-                  </button>
-                </Link>
               </div>
             </Box>
           </Container>
@@ -195,7 +263,6 @@ const ReportList = () => {
     </ThemeProvider>
   );
 };
-
 export default ReportList;
 
 // return (

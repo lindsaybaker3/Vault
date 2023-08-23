@@ -3,10 +3,15 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import AmountDisplay from "../helpers/AmountDisplay";
 import FormattedDate from "../helpers/FormattedDate";
-import { ThemeProvider } from "@emotion/react";
-import { Box, Container, createTheme } from "@mui/system";
-import { CssBaseline } from "@mui/material";
 import DrawerComponent from "./Drawer";
+import {
+  Box,
+  Container,
+  ThemeProvider,
+  createTheme,
+  Button,
+} from "@mui/material";
+import { CssBaseline } from "@mui/material";
 
 function ConfirmDelete() {
   const params = useParams();
@@ -56,7 +61,7 @@ function ConfirmDelete() {
         }
       })
       .catch((error) => {
-        console.error("Error deleting transaction:", error);
+        console.error("Error deleting report:", error);
       });
   };
 
@@ -65,8 +70,17 @@ function ConfirmDelete() {
   }
 
   if (!report) {
-    return <p>Transaction not found.</p>;
+    return <p>Report not found.</p>;
   }
+
+  const getUsernameWithoutDomain = (username) => {
+    const parts = username.split("@");
+    return parts[0];
+  };
+
+  const message = `Hey ${getUsernameWithoutDomain(auth.user.username)
+    .charAt(0)
+    .toUpperCase()}${getUsernameWithoutDomain(auth.user.username).slice(1)}, `;
 
   return (
     <ThemeProvider theme={createTheme()}>
@@ -99,19 +113,74 @@ function ConfirmDelete() {
                 p: 4,
               }}
             >
-              <div className="delete-report">
-                <h2>Confirm Delete</h2>
-                <p>Delete this Report?</p>
-                <ul>
-                  <li>Start Range Date: {report.startDate}</li>
-                  <li>Start End Date: {report.endDate}</li>
-                  <li>Goal Type: {report.goalType}</li>
-                  <li>Report: {report.reportUrl}</li>
-                </ul>
-                <button onClick={handleDelete}>Delete Report</button>{" "}
-                <Link to="/reports">Cancel</Link>
-              </div>{" "}
+              <div>
+                <h2 style={{ marginBottom: "20px" }}>
+                  Confirm Report Deletion
+                </h2>
+                <div>
+                  <p>
+                    {message ? (
+                      <strong>{message}</strong>
+                    ) : (
+                      "Are you sure you want to delete this report?"
+                    )}
+                  </p>
+                  <p>
+                    This report covers the date range from{" "}
+                    <strong>
+                      <FormattedDate date={report.startDate} />
+                    </strong>{" "}
+                    to{" "}
+                    <strong>
+                      <FormattedDate date={report.endDate} />
+                    </strong>
+                  </p>
+                  <p>
+                    The report's goal type is <strong>{report.goalType}</strong>
+                    .
+                  </p>
+                </div>
+              </div>
 
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "20px",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    backgroundColor: "red",
+                    color: "#FFFFFF",
+                    "&:hover": {
+                      backgroundColor: "#69b45E",
+                    },
+                    marginRight: "10px",
+                  }}
+                  onClick={handleDelete}
+                >
+                  Delete
+                </Button>
+
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    backgroundColor: "#05391F",
+                    color: "#FFFFFF",
+                    "&:hover": {
+                      backgroundColor: "#69B45E",
+                    },
+                  }}
+                  component={Link}
+                  to="/reports"
+                >
+                  Cancel
+                </Button>
+              </div>
             </Box>
           </Container>
         </Box>
