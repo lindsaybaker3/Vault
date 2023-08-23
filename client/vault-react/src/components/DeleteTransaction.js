@@ -127,7 +127,12 @@ function ConfirmDelete() {
                   </p>
                   <p>Are you sure you want to delete this transaction?</p>
                   <p>
-                    <strong>Goal Type:</strong> {transaction.goalType}
+                    <div>
+                      <strong>Goal Type:</strong>{" "}
+                      {transaction.goalType === "spending"
+                        ? "Budget"
+                        : "Saving"}
+                    </div>
                   </p>
                   <p>
                     <strong>Category:</strong> {transaction.category}
