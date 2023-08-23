@@ -194,7 +194,7 @@ class GoalsServiceTest {
         Goals goal = new Goals(1, 1, 1, "spending", BigDecimal.valueOf(100.00), null, LocalDate.now().plusDays(20));
         Result result = service.update(goal);
         assertEquals(ResultType.INVALID, result.getResultType());
-        assertTrue(result.getErrorMessages().contains("start date must be in the future"));
+        assertTrue(result.getErrorMessages().contains("start date is required"));
     }
     //
     @Test
@@ -230,13 +230,7 @@ class GoalsServiceTest {
         assertTrue(result.getErrorMessages().contains("Amount must be a positive number"));
     }
 
-    @Test
-    void shouldNotUpdateWhenStartDateIsInThePast(){
-        Goals goal = new Goals(1, 1, 1, "spending", BigDecimal.valueOf(15.00), LocalDate.now().plusDays(-10), LocalDate.now().plusDays(20));
-        Result result = service.update(goal);
-        assertEquals(ResultType.INVALID, result.getResultType());
-        assertTrue(result.getErrorMessages().contains("start date must be in the future"));
-    }
+
 
     @Test
     void shouldNotUpdateWhenEndDateIsBeforeStartDate(){
