@@ -41,7 +41,9 @@ const GoalsList = ({ type }) => {
 
     useEffect(loadGoals, [])
 
-   
+    const sortedGoals = goals
+    .slice() // Create a copy of the array to avoid mutating the original
+    .sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
 
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -52,7 +54,7 @@ const GoalsList = ({ type }) => {
         return new Date(year, month - 1, day); 
         };
 
-    const filteredGoals = goals
+    const filteredGoals = sortedGoals
     .filter((goal) => goal.type === type)
     .filter((goal) => {
       const goalDate = parseDateString(goal.startDate);//this goal date needs to be formatted different
@@ -77,7 +79,7 @@ const GoalsList = ({ type }) => {
       return true; 
   });
    
-   
+
 
     const addLinkPath = type === "spending" ? "/budgets/add" : "/savings/add"
 
@@ -105,6 +107,13 @@ const GoalsList = ({ type }) => {
           display: 'flex',
           paddingBottom: '35px',
           borderBottom: '1px solid  #ccc',
+          position: 'sticky',
+          top: 0,
+          backgroundColor: (theme) =>
+          theme.palette.mode === 'light'
+            ? theme.palette.grey[100]
+            : theme.palette.grey[900],
+            zIndex: 100,
         }}>
           <Grid container>
           <Grid item xs={10}>
@@ -156,7 +165,7 @@ const GoalsList = ({ type }) => {
           {filteredGoals.map((goal) => (
         <Link key={goal.goalsId} to={`/budgets/${goal.goalsId}`} className="card">
             
-           <Card  variant="outlined" sx={{ minWidth: 500, border: '1px solid #000',}}>
+           <Card  variant="outlined" sx={{ minWidth: 500}}>
           <CardContent
             sx={{
               display: 'flex',
@@ -167,7 +176,7 @@ const GoalsList = ({ type }) => {
               borderRadius: '8px',
               // textAlign: 'left',
               textDecoration: 'none',
-              border: '1px solid #000',
+              
             }}
           >
             <Grid container spacing={2}>

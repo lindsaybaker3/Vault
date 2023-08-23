@@ -179,14 +179,14 @@ const TransactionsList = () => {
             >
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <TableHead>
+                  <TableHead  sx = {{ height: 70 }}>
                     <TableRow>
-                      <StyledTableCell>Date</StyledTableCell>
-                      <StyledTableCell>Goal</StyledTableCell>
-                      <StyledTableCell>Description</StyledTableCell>
-                      <StyledTableCell align="left">Amount</StyledTableCell>
-                      <StyledTableCell align="center">Edit</StyledTableCell>
-                      <StyledTableCell align="center">Delete</StyledTableCell>
+                      <StyledTableCell sx={{ fontSize: '1.1rem', fontWeight: 'bold' }}>Date</StyledTableCell>
+                      <StyledTableCell sx={{ fontSize: '1.1rem', fontWeight: 'bold' }}>Goal</StyledTableCell>
+                      <StyledTableCell sx={{ fontSize: '1.1rem', fontWeight: 'bold' }}>Description</StyledTableCell>
+                      <StyledTableCell sx={{ fontSize: '1.1rem', fontWeight: 'bold' }} align="left">Amount</StyledTableCell>
+                      <StyledTableCell sx={{ fontSize: '1.1rem', fontWeight: 'bold' }} align="center">Edit</StyledTableCell>
+                      <StyledTableCell sx={{ fontSize: '1.1rem', fontWeight: 'bold' }} align="center">Delete</StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
