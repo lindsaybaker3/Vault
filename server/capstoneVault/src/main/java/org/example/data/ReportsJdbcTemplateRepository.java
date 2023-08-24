@@ -23,6 +23,19 @@ public class ReportsJdbcTemplateRepository implements ReportsRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
+    public Reports findById(int reportId) {
+        final String sql = "SELECT * FROM reports " +
+                "WHERE reports_id = ?";
+        List<Reports> reports = jdbcTemplate.query(sql, new ReportsMapper(), reportId);
+        return reports.stream().findFirst().orElse(null);
+    }
+
+    @Override
+    public List<Reports> findByUserId(int appUserId) {
+        final String sql = "SELECT * FROM reports r WHERE r.app_user_id = ?";
+        return jdbcTemplate.query(sql, new ReportsMapper(), appUserId);
+    }
 
     @Override
     public Reports create(Reports report) {
@@ -48,19 +61,6 @@ public class ReportsJdbcTemplateRepository implements ReportsRepository {
         return report;
     }
 
-    @Override
-    public Reports findById(int reportId) {
-        final String sql = "SELECT * FROM reports " +
-                "WHERE reports_id = ?";
-        List<Reports> reports = jdbcTemplate.query(sql, new ReportsMapper(), reportId);
-        return reports.stream().findFirst().orElse(null);
-    }
-
-    @Override
-    public List<Reports> findByUserId(int appUserId) {
-        final String sql = "SELECT * FROM reports r WHERE r.app_user_id = ?";
-        return jdbcTemplate.query(sql, new ReportsMapper(), appUserId);
-    }
 
     @Override
     public boolean update(Reports report) {

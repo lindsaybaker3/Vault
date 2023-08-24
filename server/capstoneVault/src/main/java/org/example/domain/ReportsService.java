@@ -47,6 +47,7 @@ public class ReportsService {
     private final TransactionsJdbcTemplateRepository transactionsRepository;
     private final AppUserJdbcTemplateRepository appUserRepository;
 
+
     @Autowired
     public ReportsService(ReportsJdbcTemplateRepository repository, TransactionsJdbcTemplateRepository transactionsRepository, AppUserJdbcTemplateRepository appUserRepository) {
         this.repository = repository;
@@ -161,6 +162,8 @@ public class ReportsService {
 
         return table;
     }
+
+
 
     private static void addTableHeader(Table table) {
         String[] headers = {"Goal Type", "Category", "Amount", "Description", "Date"};

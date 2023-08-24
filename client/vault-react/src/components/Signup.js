@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/login.css";
+// import "../styles/login.css";
 import { Box, Container } from "@mui/system";
 import { CssBaseline, TextField } from "@mui/material";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
@@ -89,6 +89,7 @@ const SignupForm = ({ addUser }) => {
       >
         <Container maxWidth="sm" sx={{ mt: 6, mb: 4 }}>
           <Box
+            component="form"
             sx={{
               paddingTop: "20px",
               display: "flex",
