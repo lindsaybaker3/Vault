@@ -3,14 +3,11 @@ import AuthContext from "../context/AuthContext";
 import { useContext } from "react";
 import "../style/dashboard.css";
 import Logo from "../images/piggybank.png";
-import Box from "@mui/material/Box";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 
 import {
   Button,
   ListItemButton,
-  ListItemIcon,
-  ListItemText,
 } from "@mui/material";
 
 const Navbar = () => {
