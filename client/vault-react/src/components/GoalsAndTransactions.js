@@ -24,7 +24,7 @@ const GoalsAndTransactions = () => {
     const auth = useContext(AuthContext);
     const [goal, setGoal] = useState("");
     
-    //TODO: may need to add more pieces of state but this is what i have right now
+   
 
     const fetchGoalWithTransactions = () => {
         fetch(`http://localhost:8080/api/vault/goals/${params.goalsId}`,
@@ -57,7 +57,7 @@ useEffect(() => {
         fetchGoalWithTransactions()
     }
 }, [params.goalsId])
-console.log(goal)
+
 
 const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -127,7 +127,6 @@ return (
     <Box 
       className="goal-section"
       sx={{
-        // padding: '10px',
         paddingBottom: '35px',
         width: '100%', // Adjust width as needed
         borderBottom: '1px solid  #ccc'
@@ -194,16 +193,12 @@ return (
         </Grid>
       </Grid>
     </Box>
-    
         <Box sx = {{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <p> Transactions from: {formattedStart} to {formattedEnd}</p>
         </Box>
-    
-
     <Box
         className="transactions-section"
         sx={{
-          // padding: '16px',
           width: '100%', // Adjust width as needed
         }}
       >
@@ -239,13 +234,10 @@ return (
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-      
         <DeleteGoal
           goal={goal}
           onClose={handleClose}
         />
-      
-
       </Modal>
     </Box>
     </Container>
@@ -254,6 +246,6 @@ return (
     </ThemeProvider>
 )
 
-    //TODO: Do on success and create the actual return statement
+  
 }
 export default GoalsAndTransactions;

@@ -1,12 +1,10 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import Dashboard from "./Dashboard";
 import { Box, Container} from "@mui/system";
 import { CssBaseline, TextField } from "@mui/material";
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { Typography, Button } from "@mui/material";
-import DrawerComponent from "./Drawer";
 import Logo from "../images/piggybank.png";
 
 
@@ -40,7 +38,6 @@ export default function Login() {
 
     if (response.status === 200) {
       const { jwt_token } = await response.json();
-      console.log(jwt_token);
       auth.login(jwt_token);
       navigate("/dashboard");
     } else if (response.status === 403) {

@@ -57,7 +57,7 @@ const GoalsList = ({ type }) => {
     const filteredGoals = sortedGoals
     .filter((goal) => goal.type === type)
     .filter((goal) => {
-      const goalDate = parseDateString(goal.startDate);//this goal date needs to be formatted different
+      const goalDate = parseDateString(goal.startDate);
       
       if (dateFilter === 'currentMonth') {
         return goalDate.getFullYear() === currentDate.getFullYear() && goalDate.getMonth() === currentDate.getMonth()
@@ -171,10 +171,8 @@ const GoalsList = ({ type }) => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              // Adjust the background color
               padding: '16px',
               borderRadius: '8px',
-              // textAlign: 'left',
               textDecoration: 'none',
               
             }}
@@ -217,15 +215,14 @@ const GoalsList = ({ type }) => {
                     {((goal.currentBalance / goal.amount) * 100).toFixed(2)}% to your goal
                   </Typography>
           </CardContent>
-
-            </Card>
-        </Link>
-      ))}
+        </Card>
+      </Link>
+    ))}
     </Stack>
-    </Container>
-    </Box>
-    </Box>
-    </ThemeProvider>
+  </Container>
+  </Box>
+  </Box>
+  </ThemeProvider>
   );
 };
 
