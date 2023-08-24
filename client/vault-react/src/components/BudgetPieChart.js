@@ -22,7 +22,7 @@ const BudgetPieChart = () => {
     })
     .then(response => response.json())
     .then(payload => {
-        console.log("Fetched transactions:", payload); // Add this line
+        console.log("Fetched transactions:", payload);
         setTransactions(payload);
     })
     .catch((error) => console.error("error Fetching goals:", error))
@@ -60,8 +60,6 @@ console.log(transactions);
     return groups;
   }, {})
 
-  
-
 
   const budgetData = Object.values(groupedTransaction).map(group => ({
     name: group.category,
@@ -75,28 +73,24 @@ console.log(transactions);
   return (
     <React.Fragment>
       <h4>Current Budgets:</h4>
-    <ResponsiveContainer>
-      <PieChart>
-      <Pie
-        data={budgetData}
-        // cx={200}
-        // cy={150}
-        // innerRadius={60}
-        outerRadius={80}
-        fill="#8884d8"
-        dataKey="value"
-        
-      >
-        {budgetData.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
-      </Pie>
-      <Tooltip formatter={(value) => formatCurrency(value)}/>
-      <Legend
-    />
-    </PieChart>
-    </ResponsiveContainer>
-    
+      <ResponsiveContainer>
+        <PieChart>
+          <Pie
+            data={budgetData}
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="value"
+            
+          >
+            {budgetData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip formatter={(value) => formatCurrency(value)}/>
+          <Legend
+          />
+        </PieChart>
+      </ResponsiveContainer>
     </React.Fragment>
   );
 };

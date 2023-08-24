@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import AmountDisplay from "../helpers/AmountDisplay";
 import FormattedDate from "../helpers/FormattedDate";
 import DrawerComponent from "./Drawer";
 import {

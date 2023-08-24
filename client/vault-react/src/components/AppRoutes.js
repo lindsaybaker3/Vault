@@ -1,15 +1,8 @@
 import "../style/dashboard.css";
 import React, { useState, useEffect } from "react";
-import jwtDecode from "jwt-decode";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AuthContext from '../context/AuthContext';
 import { useContext } from 'react';
-import NavSideList from "./NavSideList";
-
-
-
-
-
 import Landing from "./Landing";
 import Login from "./Login";
 import NotFound from "./NotFound";
@@ -45,15 +38,10 @@ const AppRoutes = () => {
 
           {/* loggin in only */}
           <Route path="/dashboard" element={<Dashboard />} />
-          {/* <Route
-            path="/transactions"
-            element={user ? <TransactionsList /> : <Navigate to="/" />}
-          /> */}
           <Route
             path="/transactions"
             element={user ? <TransactionsList /> : <Navigate to="/" />}
           />
-
           <Route
             path="/edit/:transactionId"
             element={user ? <TransactionForm /> : <Navigate to="/" />}
@@ -66,7 +54,6 @@ const AppRoutes = () => {
             path="delete/:transactionId"
             element={user ? <DeleteTransaction /> : <Navigate to="/" />}
           />
-
           <Route
             path="/budgets"
             element={user ? <GoalsList /> : <Navigate to="/" />}
@@ -87,8 +74,6 @@ const AppRoutes = () => {
             path="delete/:budgetsId"
             element={user ? <DeleteGoal /> : <Navigate to="/" />}
           />
-          {/* the budgets and savings are using the same table in the backend, do they just use the same forms in the Front end? */}
-
           <Route
             path="/user/:userId/savings"
             element={user ? <GoalsList /> : <Navigate to="/" />}
@@ -105,17 +90,13 @@ const AppRoutes = () => {
             path="/user/:userId/savings/delete"
             element={user ? <DeleteGoal /> : <Navigate to="/" />}
           />
-
           <Route
             path="/user/:userId/reports"
             element={user ? <ReportList /> : <Navigate to="/" />}
           />
-
           {/* always */}
           <Route path="*" element={<NotFound />} />
-    </Routes>
-
-
+          </Routes>
     );
     };
 };
