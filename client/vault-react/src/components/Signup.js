@@ -142,6 +142,7 @@ const SignupForm = ({ addUser }) => {
                 id="firstname-input"
                 label="First Name:"
                 type="text"
+                name = "firstName"
                 value={userData.firstName}
                 onChange={handleInputChange}
                 sx={{
@@ -155,6 +156,7 @@ const SignupForm = ({ addUser }) => {
                 id="lastname-input"
                 label="Last Name:"
                 type="text"
+                name="lastName"
                 value={userData.lastName}
                 onChange={handleInputChange}
                 sx={{
@@ -168,6 +170,7 @@ const SignupForm = ({ addUser }) => {
                 id="username-input"
                 label="Username:"
                 type="text"
+                name="username"
                 value={userData.username}
                 onChange={handleInputChange}
                 sx={{
@@ -181,6 +184,7 @@ const SignupForm = ({ addUser }) => {
                 id="password-input"
                 label="Password:"
                 type="text"
+                name="password"
                 value={userData.password}
                 onChange={handleInputChange}
                 sx={{
