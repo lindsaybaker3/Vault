@@ -172,8 +172,8 @@ INSERT INTO goals (app_user_id, category_id, goal_type, goal_amount, start_date,
 VALUES
   -- User 1 Goals
   (1, 8, 'spending', 1500.00, '2023-08-01', '2023-08-31'), -- current month spending childcare
-  (1, 10, 'spending', 1500.00, '2023-08-01', '2023-08-31'), -- current month spending rent
-  (1, 11, 'spending', 550.00, '2023-08-01', '2023-08-31'),-- current month spending food
+  (1, 10, 'spending', 1500.00, '2023-08-03', '2023-08-31'), -- current month spending rent
+  (1, 11, 'spending', 550.00, '2023-08-05', '2023-08-31'),-- current month spending food
   (1, 16, 'spending', 550.00, '2023-07-01', '2023-07-31'), -- last month spending Gas
   (1, 11, 'spending', 1200.00, '2023-06-01', '2023-06-30'), -- last 3 months spending Food
   (1, 21, 'spending', 1500.00, '2022-08-01', '2022-08-31'), -- last year spending Health
