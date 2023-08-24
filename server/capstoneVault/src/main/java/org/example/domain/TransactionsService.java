@@ -76,6 +76,9 @@ public class TransactionsService {
         return result;
     }
 
+
+
+
     private Result validate(Transactions transactions) {
         Result result = new Result();
 
@@ -90,13 +93,18 @@ public class TransactionsService {
             result.addErrorMessage("Transaction date needs to be a past date.", ResultType.INVALID);
         } else {
             Goals goal = goalsJdbcTemplateRepository.findById(transactions.getGoalsId());
-            LocalDate goalStartDate = goal.getStartDate();
-            LocalDate goalEndDate = goal.getEndDate();
-            LocalDate transactionDate = transactions.getTransactionDate();
 
-            if (!(transactionDate.isEqual(goalStartDate) || transactionDate.isEqual(goalEndDate) ||
-                    (transactionDate.isAfter(goalStartDate) && transactionDate.isBefore(goalEndDate)))) {
-                result.addErrorMessage("Transaction date is outside the goal range", ResultType.INVALID);
+            if (goal == null) {
+                result.addErrorMessage("Goal not found for given ID.", ResultType.INVALID);
+            } else {
+                LocalDate goalStartDate = goal.getStartDate();
+                LocalDate goalEndDate = goal.getEndDate();
+                LocalDate transactionDate = transactions.getTransactionDate();
+
+                if (!(transactionDate.isEqual(goalStartDate) || transactionDate.isEqual(goalEndDate) ||
+                        (transactionDate.isAfter(goalStartDate) && transactionDate.isBefore(goalEndDate)))) {
+                    result.addErrorMessage("Transaction date is outside the goal range", ResultType.INVALID);
+                }
             }
         }
 
@@ -110,5 +118,6 @@ public class TransactionsService {
 
         return result;
     }
+
 
 }

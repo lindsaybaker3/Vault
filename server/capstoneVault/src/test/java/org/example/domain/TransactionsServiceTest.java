@@ -1,6 +1,8 @@
 package org.example.domain;
 
+import org.example.data.GoalsJdbcTemplateRepository;
 import org.example.data.TransactionsJdbcTemplateRepository;
+import org.example.models.Goals;
 import org.example.models.Transactions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,15 +28,8 @@ class TransactionsServiceTest {
     @MockBean
     TransactionsJdbcTemplateRepository repository;
 
-// this.transactionId = transactionId;
-//        this.appUserId = appUserId;
-//        this.goalsId = goalsId;
-//        this.goal_type = goal_type;
-//        this.category = category;
-//        this.description = description;
-//        this.amount = amount;
-//        this.transactionDate
-
+    @MockBean
+    GoalsJdbcTemplateRepository goalsJdbcTemplateRepository;
 
     @Test
     void ShouldFindListOfTransaction() {
@@ -76,12 +72,26 @@ class TransactionsServiceTest {
 
     @Test
     void shouldCreateTransaction() {
+        Goals goal = new Goals();
+        goal.setGoalsId(1);
+        goal.setAppUserId(123);
+        goal.setCategoryId(456);
+        goal.setType("spending");
+        goal.setAmount(new BigDecimal("1000.00"));
+        goal.setStartDate(LocalDate.of(2023, 1, 1));
+        goal.setEndDate(LocalDate.of(2023, 12, 31));
+        goal.setCategoryName("Shopping");
+
+
         Transactions transactions = new Transactions();
         transactions.setAppUserId(1);
         transactions.setGoalsId(1);
         transactions.setDescription("Purchase");
         transactions.setAmount(new BigDecimal("50"));
         transactions.setTransactionDate(LocalDate.of(2023, 8, 15));
+
+
+        when(goalsJdbcTemplateRepository.findById(transactions.getGoalsId())).thenReturn(goal);
 
         Result result = service.create(transactions);
 
@@ -90,7 +100,6 @@ class TransactionsServiceTest {
 
         verify(repository).create(transactions);
     }
-
 
 
     @Test
@@ -103,7 +112,6 @@ class TransactionsServiceTest {
         assertEquals(1, result.getErrorMessages().size());
         assertTrue(result.getErrorMessages().contains("Transaction cannot be null."));
     }
-
 
     @Test
     void shouldNotCreateWithNullDate() {
@@ -182,7 +190,6 @@ class TransactionsServiceTest {
         assertTrue(result.getErrorMessages().contains("Transaction description is required."));
     }
 
-
     @Test
     void shouldNotCreateWithNoGoal() {
         Transactions transactions = new Transactions();
@@ -194,12 +201,72 @@ class TransactionsServiceTest {
         Result result = service.create(transactions);
 
         assertFalse(result.isSuccess());
-        assertTrue(result.getErrorMessages().contains("Goal is required."));
+        assertTrue(result.getErrorMessages().contains("Goal not found for given ID."));
+    }
+
+
+    @Test
+    void shouldNotCreateWithNullGoal() {
+        Transactions transaction = new Transactions();
+        transaction.setAppUserId(123);
+        transaction.setGoalType("spending");
+        transaction.setCategory("grocery");
+        transaction.setDescription("Monthly grocery");
+        transaction.setAmount(new BigDecimal("1000.00"));
+        transaction.setTransactionDate(LocalDate.of(2022, 6, 15));
+
+
+        Result result = service.create(transaction);
+
+        assertFalse(result.isSuccess());
+        assertEquals("Goal not found for given ID.", result.getErrorMessages().get(0));
+        assertEquals(ResultType.INVALID, result.getResultType());
+    }
+
+
+    @Test
+    void shouldNotCreateWithDateOutGoalRange() {
+        Goals goal = new Goals();
+        goal.setGoalsId(1);
+        goal.setStartDate(LocalDate.of(2023, 1, 1));
+        goal.setEndDate(LocalDate.of(2023, 12, 31));
+        goal.setTransactionsList(new ArrayList<>()); // Initialize the transactions list
+
+        Transactions transaction = new Transactions();
+        transaction.setAppUserId(123);
+        transaction.setGoalsId(1);
+        transaction.setGoalType("spending");
+        transaction.setCategory("grocery");
+        transaction.setDescription("Monthly grocery");
+        transaction.setAmount(new BigDecimal("1000.00"));
+        transaction.setTransactionDate(LocalDate.of(2022, 6, 15));
+
+
+        goal.getTransactionsList().add(transaction);
+
+        when(goalsJdbcTemplateRepository.findById(transaction.getGoalsId())).thenReturn(goal);
+
+        Result result = service.create(transaction);
+
+        assertFalse(result.isSuccess());
+        assertEquals(result.getErrorMessages().get(0), "Transaction date is outside the goal range");
+
     }
 
 
     @Test
     void shouldUpdateTransaction() {
+        Goals goal = new Goals();
+        goal.setGoalsId(1);
+        goal.setAppUserId(123);
+        goal.setCategoryId(456);
+        goal.setType("spending");
+        goal.setAmount(new BigDecimal("1000.00"));
+        goal.setStartDate(LocalDate.of(2023, 1, 1));
+        goal.setEndDate(LocalDate.of(2023, 12, 31));
+        goal.setCategoryName("Shopping");
+
+
         Transactions transactions = new Transactions();
         transactions.setTransactionId(1);
         transactions.setAppUserId(1);
@@ -208,6 +275,7 @@ class TransactionsServiceTest {
         transactions.setAmount(new BigDecimal("100"));
         transactions.setTransactionDate(LocalDate.of(2023, 8, 15));
 
+        when(goalsJdbcTemplateRepository.findById(transactions.getGoalsId())).thenReturn(goal);
         when(repository.update(any(Transactions.class))).thenReturn(true);
 
         Result result = service.update(transactions);
@@ -300,21 +368,58 @@ class TransactionsServiceTest {
         assertTrue(result.getErrorMessages().contains("Transaction description is required."));
     }
 
-
     @Test
-    void shouldNotUpdateWithNoGoal() {
-        Transactions transactions = new Transactions();
-        transactions.setTransactionId(1);
-        transactions.setAppUserId(1);
-        transactions.setDescription("theater");
-        transactions.setAmount(new BigDecimal("50"));
-        transactions.setTransactionDate(LocalDate.of(2023, 8, 15));
+    void shouldNotUpdateWithDateOutGoalRange() {
+        Goals goal = new Goals();
+        goal.setGoalsId(1);
+        goal.setStartDate(LocalDate.of(2023, 1, 1));
+        goal.setEndDate(LocalDate.of(2023, 12, 31));
+        goal.setTransactionsList(new ArrayList<>());
 
-        Result result = service.update(transactions);
+        Transactions transaction = new Transactions();
+        transaction.setTransactionId(1);
+        transaction.setAppUserId(123);
+        transaction.setGoalsId(1);
+        transaction.setGoalType("spending");
+        transaction.setCategory("grocery");
+        transaction.setDescription("Monthly grocery");
+        transaction.setAmount(new BigDecimal("1000.00"));
+        transaction.setTransactionDate(LocalDate.of(2022, 6, 15));
+
+
+        goal.getTransactionsList().add(transaction);
+        when(goalsJdbcTemplateRepository.findById(transaction.getGoalsId())).thenReturn(goal);
+
+        Result result = service.update(transaction);
+
 
         assertFalse(result.isSuccess());
-        assertTrue(result.getErrorMessages().contains("Goal is required."));
+        assertEquals(result.getErrorMessages().get(0), "Transaction date is outside the goal range");
+
     }
+
+
+
+    @Test
+    void shouldNotUpdateWithNullGoal() {
+        Transactions transaction = new Transactions();
+        transaction.setTransactionId(1);
+        transaction.setAppUserId(123);
+        transaction.setGoalType("spending");
+        transaction.setCategory("grocery");
+        transaction.setDescription("Monthly grocery");
+        transaction.setAmount(new BigDecimal("1000.00"));
+        transaction.setTransactionDate(LocalDate.of(2022, 6, 15));
+
+
+        Result result = service.create(transaction);
+
+        assertFalse(result.isSuccess());
+        assertEquals("Goal not found for given ID.", result.getErrorMessages().get(0));
+        assertEquals(ResultType.INVALID, result.getResultType());
+    }
+
+
 
 
     @Test

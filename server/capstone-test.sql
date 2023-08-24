@@ -58,6 +58,7 @@ create table reports (
     app_user_id int not null,
     start_date date not null,
     end_date date not null,
+    goal_type text not null,
     report_url text not null,
     constraint fk_reports_app_user_app_user_id
         foreign key (app_user_id)
@@ -136,10 +137,10 @@ insert into goals (app_user_id, category_id, goal_type, goal_amount, start_date,
     (2, 4, 'spending', 65.00, '2023-08-01', '2023-08-31');
     
 
-insert into reports (app_user_id, start_date, end_date, report_url)
+insert into reports (app_user_id, start_date, end_date, goal_type, report_url)
 	values
-    (1, '2023-08-01', '2023-08-31', 'https://example.com/report/john_august.pdf'), 
-    (2, '2023-08-01', '2023-08-31', 'https://example.com/report/sally_august.pdf');
+    (1, '2023-08-01', '2023-08-31', 'spending', 'https://example.com/report/john_august.pdf'), 
+    (2, '2023-08-01', '2023-08-31', 'saving','https://example.com/report/sally_august.pdf');
     
 insert into transaction (app_user_id, goals_id, amount, transaction_date, `description`)
 	values
@@ -157,3 +158,5 @@ delimiter ;
 -- select * from transaction;
 
 select * from goals;
+
+select * from reports;
