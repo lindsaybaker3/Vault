@@ -192,11 +192,37 @@ const ReportList = () => {
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                       <TableHead>
                         <TableRow>
-                          <StyledTableCell>Start Range Date</StyledTableCell>
+                          <StyledTableCell
+                            sx={{ fontSize: "1.0rem", fontWeight: "bold" }}
+                          >
+                            Start Range Date
+                          </StyledTableCell>
+                          <StyledTableCell
+                            sx={{ fontSize: "1.0rem", fontWeight: "bold" }}
+                          >
+                            Range End Date
+                          </StyledTableCell>
+                          <StyledTableCell
+                            sx={{ fontSize: "1.0rem", fontWeight: "bold" }}
+                          >
+                            Goal Type
+                          </StyledTableCell>
+                          <StyledTableCell
+                            sx={{ fontSize: "1.0rem", fontWeight: "bold" }}
+                          >
+                            Download Report
+                          </StyledTableCell>
+
+                          <StyledTableCell
+                            sx={{ fontSize: "1.0rem", fontWeight: "bold" }}
+                          >
+                            Delete
+                          </StyledTableCell>
+                          {/* <StyledTableCell>Start Range Date</StyledTableCell>
                           <StyledTableCell>Range End Date</StyledTableCell>
                           <StyledTableCell>Goal Type</StyledTableCell>
                           <StyledTableCell>Download Report</StyledTableCell>
-                          <StyledTableCell>Delete</StyledTableCell>
+                          <StyledTableCell>Delete</StyledTableCell> */}
                         </TableRow>
                       </TableHead>
                       <TableBody>
