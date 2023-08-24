@@ -95,7 +95,7 @@ export default function Login() {
             </Typography>
   
             <Box
-              component="form"
+              
               sx={{
                 paddingTop: '20px',
                 display: 'flex',

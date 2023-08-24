@@ -18,7 +18,7 @@ const GoalsList = ({ type }) => {
 
    
     const loadGoals = () => {
-      
+        
         if(!auth.user || !auth.user.token){
             navigate("/");
             return;
