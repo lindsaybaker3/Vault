@@ -182,7 +182,7 @@ const SignupForm = ({ addUser }) => {
               <TextField
                 id="password-input"
                 label="Password:"
-                type="text"
+                type="password"
                 name="password"
                 value={userData.password}
                 onChange={handleInputChange}

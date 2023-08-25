@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import AuthContext from "../context/AuthContext"
 import { useNavigate, useParams } from "react-router";
-import { Link } from "react-router-dom";
 import '../style/goalslist.css'
 import { Box, Container} from "@mui/system";
 import { CssBaseline, TextField, Button } from "@mui/material";
@@ -69,19 +68,18 @@ const GoalsForm = (props) => {
         }
     }, [auth.user.token, params.goalsId])
 
-    //TODO: Handle Submit and the return form
-    //TODO: figure out what needs to be different for a budget vs a savings goal
+   
     const handleSubmit = (evt) => {
         evt.preventDefault()
         const newGoal = {
 
             appUserId: auth.user.appUserId,
             categoryId: categoryId,
-            type: props.type, //props.type
+            type: props.type, 
             amount: amount,
             startDate: startDate,
             endDate: endDate,
-            //TODO: Check that all of these varialbe names are the right ones
+            
         }
 
         if (appUserId) {
@@ -115,8 +113,6 @@ const GoalsForm = (props) => {
                 } else {
                     navigate("/savings")
                 }
-                
-                //TODO: make this conditional so that it returns to saving or budget depending
             } else {
                 response.json().then((errors) => {
                     if(Array.isArray(errors)) {
@@ -145,11 +141,7 @@ const GoalsForm = (props) => {
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
-            // display: 'flex',
-            // flexDirection: 'column',
-            // alignItems: 'center',
             paddingTop: '80px',
-            // paddingLeft: '270px'
           }}
         >
         <Container maxWidth = "sm" sx={{ mt: 6, mb: 4}}>
@@ -161,7 +153,6 @@ const GoalsForm = (props) => {
             alignItems: 'center',
             flexDirection: 'column',
             gap: '16px',  
-            // maxWidth: '400px', 
             paddingBottom: '20px',
             paddingLeft: '20px',
             paddingRight: '20px',
