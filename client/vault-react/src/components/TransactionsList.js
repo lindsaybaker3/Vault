@@ -5,12 +5,10 @@ import AmountDisplay from "../helpers/AmountDisplay";
 import FormattedDate from "../helpers/FormattedDate";
 import { Container } from "@mui/system";
 import DrawerComponent from "./Drawer";
-import { Modal, styled, tableCellClasses } from "@mui/material";
+import { styled, tableCellClasses } from "@mui/material";
 import {
   Box,
   Button,
-  Card,
-  CardContent,
   CssBaseline,
   Grid,
   Paper,
@@ -21,17 +19,14 @@ import {
   TableHead,
   TableRow,
   ThemeProvider,
-  Typography,
   createTheme,
 } from "@mui/material";
-import DeleteTransaction from "./DeleteTransaction";
-import { Tab } from "@mui/base";
 // ------
 
 const TransactionsList = () => {
   const auth = useContext(AuthContext);
   const [transactions, setTransactions] = useState([]);
-  const [dateFilter, setDateFilter] = useState('currentMonth');
+  const [dateFilter, setDateFilter] = useState("currentMonth");
 
   const loadTransactions = async () => {
     await fetch("http://localhost:8080/api/vault/transactions", {
@@ -65,34 +60,39 @@ const TransactionsList = () => {
     .slice() // Create a copy of the array to avoid mutating the original
     .sort((a, b) => new Date(b.transactionDate) - new Date(a.transactionDate));
 
-    const parseDateString = (dateString) => {
-      const [year, month, day] = dateString.split('-').map(Number);
-          return new Date(year, month - 1, day); 
-          };
-  
-      const filteredTransactions = sortedTransactions
-      .filter((transaction) => {
-        const transactionDate = parseDateString(transaction.transactionDate);//this goal date needs to be formatted different
-        
-        if (dateFilter === 'currentMonth') {
-          return transactionDate.getMonth() === currentDate.getMonth()
-    
-        } else if (dateFilter === 'lastMonth'){
-          const lastMonthStartDate = new Date(currentYear, currentMonth - 1, 1);
-          const lastMonthEndDate = new Date(currentYear, currentMonth, 0);
-           return transactionDate >= lastMonthStartDate && transactionDate <= lastMonthEndDate
-        } else if (dateFilter === 'pastThree') {
-          const lastThreeMonthsStartDate = new Date(currentYear, currentMonth -3, 1)
-          return transactionDate >= lastThreeMonthsStartDate
-        } else if (dateFilter === 'thisYear') {
-          return transactionDate.getFullYear() === currentDate.getFullYear()
-        } else if (dateFilter === 'lastYear') {
-          const lastYear = new Date(currentYear -1, currentMonth, 1)
-          return transactionDate.getFullYear() === lastYear.getFullYear()
-        }
-      
-        return true; 
-    });
+  const parseDateString = (dateString) => {
+    const [year, month, day] = dateString.split("-").map(Number);
+    return new Date(year, month - 1, day);
+  };
+
+  const filteredTransactions = sortedTransactions.filter((transaction) => {
+    const transactionDate = parseDateString(transaction.transactionDate); //this goal date needs to be formatted different
+
+    if (dateFilter === "currentMonth") {
+      return transactionDate.getMonth() === currentDate.getMonth();
+    } else if (dateFilter === "lastMonth") {
+      const lastMonthStartDate = new Date(currentYear, currentMonth - 1, 1);
+      const lastMonthEndDate = new Date(currentYear, currentMonth, 0);
+      return (
+        transactionDate >= lastMonthStartDate &&
+        transactionDate <= lastMonthEndDate
+      );
+    } else if (dateFilter === "pastThree") {
+      const lastThreeMonthsStartDate = new Date(
+        currentYear,
+        currentMonth - 3,
+        1
+      );
+      return transactionDate >= lastThreeMonthsStartDate;
+    } else if (dateFilter === "thisYear") {
+      return transactionDate.getFullYear() === currentDate.getFullYear();
+    } else if (dateFilter === "lastYear") {
+      const lastYear = new Date(currentYear - 1, currentMonth, 1);
+      return transactionDate.getFullYear() === lastYear.getFullYear();
+    }
+
+    return true;
+  });
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -154,19 +154,19 @@ const TransactionsList = () => {
                   </Link>
                 </Grid>
                 <Grid item xs={12}>
-            <p>Filter By Date</p>
-            <select
-              value={dateFilter}
-              onChange={(e) => setDateFilter(e.target.value)}
-            >
-              <option value="currentMonth">Current Month</option>
-              <option value="lastMonth">Last Month</option>
-              <option value="pastThree">Past Three Months</option>
-              <option value="thisYear">This Year</option>
-              <option value="lastYear">Last year</option>
-              <option value="All">All Transactions</option>
-            </select>
-          </Grid>
+                  <p>Filter By Date</p>
+                  <select
+                    value={dateFilter}
+                    onChange={(e) => setDateFilter(e.target.value)}
+                  >
+                    <option value="currentMonth">Current Month</option>
+                    <option value="lastMonth">Last Month</option>
+                    <option value="pastThree">Past Three Months</option>
+                    <option value="thisYear">This Year</option>
+                    <option value="lastYear">Last year</option>
+                    <option value="All">All Transactions</option>
+                  </select>
+                </Grid>
               </Grid>
             </Box>
             <Box
@@ -179,14 +179,41 @@ const TransactionsList = () => {
             >
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <TableHead  sx = {{ height: 70 }}>
+                  <TableHead sx={{ height: 70 }}>
                     <TableRow>
-                      <StyledTableCell sx={{ fontSize: '1.1rem', fontWeight: 'bold' }}>Date</StyledTableCell>
-                      <StyledTableCell sx={{ fontSize: '1.1rem', fontWeight: 'bold' }}>Goal</StyledTableCell>
-                      <StyledTableCell sx={{ fontSize: '1.1rem', fontWeight: 'bold' }}>Description</StyledTableCell>
-                      <StyledTableCell sx={{ fontSize: '1.1rem', fontWeight: 'bold' }} align="left">Amount</StyledTableCell>
-                      <StyledTableCell sx={{ fontSize: '1.1rem', fontWeight: 'bold' }} align="center">Edit</StyledTableCell>
-                      <StyledTableCell sx={{ fontSize: '1.1rem', fontWeight: 'bold' }} align="center">Delete</StyledTableCell>
+                      <StyledTableCell
+                        sx={{ fontSize: "1.1rem", fontWeight: "bold" }}
+                      >
+                        Date
+                      </StyledTableCell>
+                      <StyledTableCell
+                        sx={{ fontSize: "1.1rem", fontWeight: "bold" }}
+                      >
+                        Goal
+                      </StyledTableCell>
+                      <StyledTableCell
+                        sx={{ fontSize: "1.1rem", fontWeight: "bold" }}
+                      >
+                        Description
+                      </StyledTableCell>
+                      <StyledTableCell
+                        sx={{ fontSize: "1.1rem", fontWeight: "bold" }}
+                        align="left"
+                      >
+                        Amount
+                      </StyledTableCell>
+                      <StyledTableCell
+                        sx={{ fontSize: "1.1rem", fontWeight: "bold" }}
+                        align="center"
+                      >
+                        Edit
+                      </StyledTableCell>
+                      <StyledTableCell
+                        sx={{ fontSize: "1.1rem", fontWeight: "bold" }}
+                        align="center"
+                      >
+                        Delete
+                      </StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

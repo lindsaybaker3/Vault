@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import "../styles/login.css";
 import { Box, Container } from "@mui/system";
 import { CssBaseline, TextField } from "@mui/material";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
@@ -69,7 +68,6 @@ const SignupForm = ({ addUser }) => {
       [name]: value,
     }));
   };
-  // console.log(errors, "errors");
 
   return (
     <ThemeProvider theme={createTheme()}>
@@ -143,7 +141,7 @@ const SignupForm = ({ addUser }) => {
                 id="firstname-input"
                 label="First Name:"
                 type="text"
-                name = "firstName"
+                name="firstName"
                 value={userData.firstName}
                 onChange={handleInputChange}
                 sx={{

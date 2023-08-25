@@ -1,3 +1,4 @@
+
 drop database if exists budget;
 create database budget;
 use budget;

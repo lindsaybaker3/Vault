@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import { Box, Container} from "@mui/system";
+import Dashboard from "./Dashboard";
+import { Box, Container } from "@mui/system";
+
 import { CssBaseline, TextField } from "@mui/material";
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import { Typography, Button } from "@mui/material";
 import Logo from "../images/piggybank.png";
-
-
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -19,7 +19,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleCancelClick = () => {
-    navigate('/');
+    navigate("/");
   };
 
   const handleSubmit = async (event) => {
@@ -54,55 +54,57 @@ export default function Login() {
         component="main"
         sx={{
           backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
+            theme.palette.mode === "light"
               ? theme.palette.grey[100]
               : theme.palette.grey[900],
           flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto',
-          paddingTop: '80px',
+          height: "100vh",
+          overflow: "auto",
+          paddingTop: "80px",
         }}
       >
         <Container maxWidth="sm" sx={{ mt: 6, mb: 4 }}>
           <Box
             component="form"
             sx={{
-              paddingTop: '20px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-              gap: '16px',
-              paddingBottom: '20px',
-              paddingLeft: '20px',
-              paddingRight: '20px',
-              border: '8px solid #05391f',
-              backgroundColor: "#ffffff"
+              paddingTop: "20px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              gap: "16px",
+              paddingBottom: "20px",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              border: "8px solid #05391f",
+              backgroundColor: "#ffffff",
             }}
           >
             {/* Logo image */}
             <img
               src={Logo}
               alt="Logo"
-              style={{ width: '100px', marginBottom: '10px' }}
+              style={{ width: "100px", marginBottom: "10px" }}
             />
-  
-            <Typography variant="h4" sx={{ fontWeight: "bold", color: "#05391f", padding: '6px' }}>
+
+            <Typography
+              variant="h4"
+              sx={{ fontWeight: "bold", color: "#05391f", padding: "6px" }}
+            >
               Login
             </Typography>
-  
+
             <Box
-              
               sx={{
-                paddingTop: '20px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-                gap: '16px',
-                paddingBottom: '20px',
-                paddingLeft: '60px',
-                paddingRight: '60px',
+                paddingTop: "20px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+                gap: "16px",
+                paddingBottom: "20px",
+                paddingLeft: "60px",
+                paddingRight: "60px",
               }}
               noValidate
               autoComplete="off"
@@ -121,7 +123,7 @@ export default function Login() {
                 onChange={(event) => setUsername(event.target.value)}
                 fullWidth
                 sx={{
-                  width: '160%', // Adjust the width value as needed
+                  width: "160%", // Adjust the width value as needed
                 }}
                 InputLabelProps={{
                   shrink: true,
@@ -135,7 +137,7 @@ export default function Login() {
                 onChange={(event) => setPassword(event.target.value)}
                 fullWidth
                 sx={{
-                  width: '160%', // Adjust the width value as needed
+                  width: "160%", // Adjust the width value as needed
                 }}
                 InputLabelProps={{
                   shrink: true,
@@ -146,7 +148,7 @@ export default function Login() {
                 variant="contained"
                 onClick={handleSubmit}
                 sx={{
-                  marginTop: '16px',
+                  marginTop: "16px",
                   backgroundColor: "#05391F",
                   color: "#FFFFFF",
                   "&:hover": {
@@ -161,11 +163,11 @@ export default function Login() {
                 onClick={handleCancelClick}
                 color="primary"
                 sx={{
-                  marginTop: '8px',
-                  color: '#ffffff',
-                  backgroundColor: '#05391f',
-                  '&:hover': {
-                    backgroundColor: 'red',
+                  marginTop: "8px",
+                  color: "#ffffff",
+                  backgroundColor: "#05391f",
+                  "&:hover": {
+                    backgroundColor: "red",
                   },
                 }}
               >
