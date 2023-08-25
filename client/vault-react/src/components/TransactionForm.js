@@ -5,12 +5,11 @@ import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import "../styles/transactionForm/style.css";
 
-
 import DrawerComponent from "./Drawer";
 
-import { Box, Container} from "@mui/system";
+import { Box, Container } from "@mui/system";
 import { CssBaseline, TextField } from "@mui/material";
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import { Typography, Button, MenuItem } from "@mui/material";
 
 const TransactionForm = () => {
@@ -60,24 +59,14 @@ const TransactionForm = () => {
         item.type === goalType && isDateBetweenLimits(today, startDate, endDate)
       );
     });
-    console.log(params, "parametros");
-    console.log(today, "today");
-    console.log(listOfGoals, "list of goals");
-    console.log(transactionDate, "transaction date");
-    console.log(params.transactionId, "transaction id");
     setFilteredGoals(listOfGoals);
   }, [goalType, goals, params, params.transactionId, transactionDate]);
-
-  console.log(filteredGoals, "filteredGoals");
 
   const currentDate = new Date();
 
   // Calculate the date of tomorrow
   const tomorrowDate = new Date(currentDate);
   tomorrowDate.setDate(currentDate.getDate() + 1);
-
-  console.log(tomorrowDate, "amanha");
-  console.log(currentDate, "data de hoje");
 
   const resetState = () => {
     setGoalsId("");
@@ -87,8 +76,6 @@ const TransactionForm = () => {
     setTransactionDate("");
   };
 
-  console.log(category, "category");
-  console.log(goals, "goals");
   const loadGoals = () => {
     if (!auth.user || !auth.user.token) {
       navigate("/");
@@ -125,7 +112,6 @@ const TransactionForm = () => {
 
   useEffect(() => {
     if (!params.transactionId && !formChanged) {
-      console.log("passou aqui");
       setCategory(filteredGoals[0]?.categoryName);
       setGoalsId(filteredGoals[0]?.goalsId);
     }
@@ -168,7 +154,6 @@ const TransactionForm = () => {
     }
   }, [auth.user.token, params.transactionId]);
 
-  console.log(params);
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const newTransaction = {
@@ -215,63 +200,62 @@ const TransactionForm = () => {
       }
     });
   };
-  console.log(goals);
-  console.log(goalsId);
 
   return (
     <ThemeProvider theme={createTheme()}>
-      <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+      <Box sx={{ display: "flex", flexDirection: "row" }}>
         <CssBaseline />
         <DrawerComponent />
         <Box
           component="main"
           sx={{
             backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
+              theme.palette.mode === "light"
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
-            paddingTop: '80px',
+            height: "100vh",
+            overflow: "auto",
+            paddingTop: "80px",
           }}
         >
           <Container maxWidth="sm" sx={{ mt: 6, mb: 4 }}>
             <Box
               sx={{
-                paddingTop: '20px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-                gap: '10px',
-                paddingBottom: '20px',
-                paddingLeft: '10px',
-                paddingRight: '10px',
-                border: '8px solid #05391f',
-                backgroundColor: '#ffffff',
+                paddingTop: "20px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+                gap: "10px",
+                paddingBottom: "20px",
+                paddingLeft: "10px",
+                paddingRight: "10px",
+                border: "8px solid #05391f",
+                backgroundColor: "#ffffff",
               }}
             >
-  
               <Typography
                 variant="h4"
-                sx={{ fontWeight: 'bold', color: '#05391f', padding: '6px' }}
+                sx={{ fontWeight: "bold", color: "#05391f", padding: "6px" }}
               >
-                {params.transactionId ? "Edit Transaction!" : "Add your Transaction!"}
+                {params.transactionId
+                  ? "Edit Transaction!"
+                  : "Add your Transaction!"}
               </Typography>
               <Box
                 component="form"
                 sx={{
-                  paddingTop: '20px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'column',
-                  gap: '16px',
-                  paddingBottom: '20px',
-                  paddingLeft: '60px',
-                  paddingRight: '60px',
-                  width: '100%', // Adjust the width value as needed
+                  paddingTop: "20px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  gap: "16px",
+                  paddingBottom: "20px",
+                  paddingLeft: "60px",
+                  paddingRight: "60px",
+                  width: "100%", // Adjust the width value as needed
                 }}
                 noValidate
                 autoComplete="off"
@@ -293,7 +277,7 @@ const TransactionForm = () => {
                   }}
                   fullWidth
                   sx={{
-                    width: '100%', // Adjust the width value as needed
+                    width: "100%", // Adjust the width value as needed
                   }}
                   InputLabelProps={{
                     shrink: true,
@@ -314,12 +298,14 @@ const TransactionForm = () => {
                     setCategory(evt.target.value);
                     setFormChanged(true);
                     setGoalsId(
-                      goals.find((item) => item.categoryName === evt.target.value)?.goalsId
+                      goals.find(
+                        (item) => item.categoryName === evt.target.value
+                      )?.goalsId
                     );
                   }}
                   fullWidth
                   sx={{
-                    width: '100%', // Adjust the width value as needed
+                    width: "100%", // Adjust the width value as needed
                   }}
                   InputLabelProps={{
                     shrink: true,
@@ -331,7 +317,7 @@ const TransactionForm = () => {
                     </MenuItem>
                   ))}
                 </TextField>
-  
+
                 <TextField
                   id="description-input"
                   label="Description"
@@ -340,13 +326,13 @@ const TransactionForm = () => {
                   onChange={(evt) => setDescription(evt.target.value)}
                   fullWidth
                   sx={{
-                    width: '100%', // Adjust the width value as needed
+                    width: "100%", // Adjust the width value as needed
                   }}
                   InputLabelProps={{
                     shrink: true,
                   }}
                 />
-  
+
                 <TextField
                   id="amount-input"
                   label="Amount"
@@ -355,7 +341,7 @@ const TransactionForm = () => {
                   onChange={(evt) => setAmount(evt.target.value)}
                   fullWidth
                   sx={{
-                    width: '100%', // Adjust the width value as needed
+                    width: "100%", // Adjust the width value as needed
                   }}
                   InputLabelProps={{
                     shrink: true,
@@ -369,18 +355,18 @@ const TransactionForm = () => {
                   onChange={(evt) => setTransactionDate(evt.target.value)}
                   fullWidth
                   sx={{
-                    width: '100%', // Adjust the width value as needed
+                    width: "100%", // Adjust the width value as needed
                   }}
                   InputLabelProps={{
                     shrink: true,
                   }}
                 />
-  
+
                 <Button
                   type="submit"
                   variant="contained"
                   sx={{
-                    marginTop: '16px',
+                    marginTop: "16px",
                     backgroundColor: "#05391F",
                     color: "#FFFFFF",
                     "&:hover": {
@@ -391,17 +377,17 @@ const TransactionForm = () => {
                   {" "}
                   Submit Transaction{" "}
                 </Button>
-  
+
                 <Button
                   variant="contained"
                   onClick={handleCancelClick}
                   color="primary"
                   sx={{
-                    marginTop: '8px',
-                    backgroundColor: 'red',
-                    color: '#FFFFFF',
-                    '&:hover': {
-                      backgroundColor: '#69B45E',
+                    marginTop: "8px",
+                    backgroundColor: "red",
+                    color: "#FFFFFF",
+                    "&:hover": {
+                      backgroundColor: "#69B45E",
                     },
                   }}
                 >
@@ -409,7 +395,6 @@ const TransactionForm = () => {
                 </Button>
               </Box>
             </Box>
-  
           </Container>
         </Box>
       </Box>

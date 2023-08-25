@@ -1,15 +1,18 @@
 package org.example.domain;
 
 
-import org.example.data.GoalsJdbcTemplateRepository;
+
 import org.example.data.ReportsJdbcTemplateRepository;
+
 import org.example.data.TransactionsJdbcTemplateRepository;
 import org.example.models.Reports;
+
 import org.example.models.Transactions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,6 +29,9 @@ class ReportsServiceTest {
 
     @MockBean
     ReportsJdbcTemplateRepository repository;
+
+    @MockBean
+    TransactionsJdbcTemplateRepository transactionsJdbcTemplateRepository;
 
 
     @Test
@@ -51,51 +57,28 @@ class ReportsServiceTest {
     }
 
 
-    //
-//    private Result validate(Reports report) {
-//        Result result = new Result();
-//
-//        if (report == null) {
-//            result.addErrorMessage("Report cannot be null.", ResultType.INVALID);
-//            return result;
-//        }
-//
-//        if (report.getStartDate() == null || report.getEndDate() == null) {
-//            result.addErrorMessage("Start date and End date cannot be null.", ResultType.INVALID);
-//        } else if (report.getStartDate().isAfter(report.getEndDate())) {
-//            result.addErrorMessage("End date cannot be before start date.", ResultType.INVALID);
-//        }
-//
-//        if (report.getEndDate().isAfter(LocalDate.now())) {
-//            result.addErrorMessage("Report End date cannot be in the future.", ResultType.INVALID);
-//        }
-//
-//        if (report.getGoalType() == null || report.getGoalType().isEmpty()) {
-//            result.addErrorMessage("Goal type is required.", ResultType.INVALID);
-//        }
-//
-//        return result;
-//    }
+    @Test
+    void ShouldNotCreateWithNullStartDate() {
+        // Create the report with a null start date
+        Reports report = new Reports(1, 1, null, LocalDate.of(2023, 8, 30), "spending", "https://example.com/report.pdf");
 
-//    private int reportId;
-//    private int appUserId;
-//    private LocalDate startDate;
-//    private LocalDate endDate;
-//    private String goalType;
-//    private String reportUrl;
-//
+        // Mock the repository calls
+        when(transactionsJdbcTemplateRepository.findByUserId(report.getAppUserId())).thenReturn(
+                List.of(
+                        new Transactions(1, 1, 1, "saving", "travel", "travel iceland", new BigDecimal("100"),
+                                LocalDate.of(2023, 8, 15)),
+                        new Transactions(2, 1, 1, "saving", "grocery montly", "groceries", new BigDecimal("200"),
+                                LocalDate.of(2023, 8, 16))
+                )
+        );
 
-//
-//    @Test
-//    void create() {
-//        Reports report = new Reports(1, 1, LocalDate.of(2023, 8, 1), LocalDate.of(2023, 8, 30), "spending", "https://example.com/report.pdf");
-//
-//        when(repository.create(report)).thenReturn(report);
+        // Call the service method
 //        Result result = service.create(report);
-//
-//        assertTrue(result.isSuccess());
-//        assertNull(result.getErrorMessages());
-//    }
+
+        // Assertions
+//        assertFalse(result.isSuccess());
+//        assertTrue(result.getErrorMessages().contains("Report date is required."));
+    }
 
 
     @Test

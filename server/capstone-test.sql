@@ -80,10 +80,9 @@ create table `transaction` (
         references goals(goals_id)
 );
 
-
-    delimiter //
+DELIMITER //
 create procedure set_known_good_state()
-begin
+BEGIN
 
     delete from `transaction`;
     alter table `transaction` auto_increment = 1;
@@ -151,12 +150,6 @@ insert into transaction (app_user_id, goals_id, amount, transaction_date, `descr
     
     end //
 
-delimiter ;
+DELIMITER ;
 
--- SET SQL_SAFE_UPDATES = 0;
--- CALL set_known_good_state();
--- select * from transaction;
 
-select * from goals;
-
-select * from reports;

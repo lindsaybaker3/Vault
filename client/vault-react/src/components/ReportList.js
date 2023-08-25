@@ -5,12 +5,10 @@ import { Link } from "react-router-dom";
 import { Container } from "@mui/system";
 import AWS from "aws-sdk";
 import DrawerComponent from "./Drawer";
-import { Modal, styled, tableCellClasses } from "@mui/material";
+import { styled, tableCellClasses } from "@mui/material";
 import {
   Box,
   Button,
-  Card,
-  CardContent,
   CssBaseline,
   Grid,
   Paper,
@@ -21,10 +19,8 @@ import {
   TableHead,
   TableRow,
   ThemeProvider,
-  Typography,
   createTheme,
 } from "@mui/material";
-import { Tab } from "@mui/base";
 import FormattedDate from "../helpers/FormattedDate";
 // ------
 
@@ -195,12 +191,12 @@ const ReportList = () => {
                           <StyledTableCell
                             sx={{ fontSize: "1.0rem", fontWeight: "bold" }}
                           >
-                            Start Range Date
+                            Start Date
                           </StyledTableCell>
                           <StyledTableCell
                             sx={{ fontSize: "1.0rem", fontWeight: "bold" }}
                           >
-                            Range End Date
+                            End Date
                           </StyledTableCell>
                           <StyledTableCell
                             sx={{ fontSize: "1.0rem", fontWeight: "bold" }}
@@ -303,96 +299,3 @@ const ReportList = () => {
   );
 };
 export default ReportList;
-
-// return (
-//   <ThemeProvider theme={createTheme()}>
-//     <Box sx={{ display: "flex" }}>
-//       <CssBaseline />
-//       <DrawerComponent />
-//       <Box
-//         component="main"
-//         sx={{
-//           backgroundColor: (theme) =>
-//             theme.palette.mode === "light"
-//               ? theme.palette.grey[100]
-//               : theme.palette.grey[900],
-//           flexGrow: 1,
-//           height: "100vh",
-//           overflow: "auto",
-//         }}
-//       >
-//         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-//           <Box
-//             sx={{
-//               display: "flex",
-//               justifyContent: "center",
-//               gap: "16px",
-//               paddingTop: "64px",
-//             }}
-//           >
-//             <div>
-//               {reports.length === 0 ? (
-//                 <p>
-//                   {message}
-//                   <br></br>
-//                   No reports available . <br></br>Let's create a report.
-//                 </p>
-//               ) : (
-//                 <table>
-//                   <thead>
-//                     <tr>
-//                       <th>Start Range Date</th>
-//                       <th>Range End Date</th>
-//                       <th>Goal Type</th>
-//                       <th>Report URL</th>
-//                       <th>Delete</th>
-//                     </tr>
-//                   </thead>
-//                   <tbody>
-//                     {reports.map((report) => (
-//                       <tr key={report.reportId}>
-//                         <td>{report.startDate}</td>
-//                         <td>{report.endDate}</td>
-//                         <td>{report.goalType}</td>
-
-//                         <td>
-//                           {auth.user.token && (
-//                             <a
-//                               href={report.reportUrl}
-//                               onClick={(e) => {
-//                                 e.preventDefault();
-//                                 handleDownload(report.reportUrl);
-//                               }}
-//                             >
-//                               Download
-//                             </a>
-//                           )}
-//                         </td>
-//                         <td>
-//                           {auth.user && (
-//                             <Link
-//                               to={`/delete/${report.reportId}`}
-//                               // style={{ color: "red" }}
-//                             >
-//                               Delete
-//                             </Link>
-//                           )}
-//                         </td>
-//                       </tr>
-//                     ))}
-//                   </tbody>
-//                 </table>
-//               )}
-//               <Link to="/report/add">
-//                 <button>&nbsp;&nbsp;Create Report</button>
-//               </Link>
-//             </div>
-//           </Box>
-//         </Container>
-//       </Box>
-//     </Box>
-//   </ThemeProvider>
-// );
-// };
-
-// export default ReportList;
